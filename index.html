@@ -1,1507 +1,1293 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Full Stack Web Developer Roadmap & Tracker</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-<style>
-:root {
-    --bg-primary: #06080f;
-    --bg-secondary: #0d1117;
-    --bg-glass: rgba(255,255,255,0.025);
-    --bg-glass-hover: rgba(255,255,255,0.045);
-    --border-glass: rgba(255,255,255,0.07);
-    --border-glass-hover: rgba(255,255,255,0.14);
-    --text-primary: #f0f2f5;
-    --text-secondary: #9ca3af;
-    --text-muted: #5c6370;
-    --accent-blue: #3b82f6;
-    --accent-purple: #8b5cf6;
-    --accent-pink: #ec4899;
-    --phase-red: #ef4444;
-    --phase-yellow: #eab308;
-    --phase-green: #22c55e;
-    --success: #10b981;
-    --danger: #ef4444;
-    --badge-easy: #10b981;
-    --badge-medium: #f59e0b;
-    --badge-hard: #ef4444;
-    --radius-sm: 6px;
-    --radius-md: 12px;
-    --radius-lg: 16px;
-    --radius-xl: 20px;
-    --transition: all 0.3s cubic-bezier(0.4,0,0.2,1);
-    --font: 'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
-}
-*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
-html{scroll-behavior:smooth}
-body{
-    font-family:var(--font);background:var(--bg-primary);color:var(--text-primary);
-    line-height:1.6;min-height:100vh;-webkit-font-smoothing:antialiased;overflow-x:hidden;
-}
-body::before{
-    content:'';position:fixed;inset:0;
-    background:
-        radial-gradient(ellipse 80% 60% at 15% 50%,rgba(59,130,246,0.07),transparent),
-        radial-gradient(ellipse 60% 50% at 85% 20%,rgba(139,92,246,0.06),transparent),
-        radial-gradient(ellipse 70% 40% at 50% 90%,rgba(16,185,129,0.04),transparent);
-    pointer-events:none;z-index:0;
-}
-::-webkit-scrollbar{width:7px}
-::-webkit-scrollbar-track{background:var(--bg-primary)}
-::-webkit-scrollbar-thumb{background:rgba(255,255,255,0.08);border-radius:4px}
-::-webkit-scrollbar-thumb:hover{background:rgba(255,255,255,0.15)}
-#app{position:relative;z-index:1;max-width:1140px;margin:0 auto;padding:16px 16px 80px}
-.header{text-align:center;padding:36px 16px 28px}
-.header h1{
-    font-size:clamp(22px,5vw,44px);font-weight:900;letter-spacing:-.5px;margin-bottom:6px;
-    background:linear-gradient(135deg,#3b82f6 0%,#8b5cf6 40%,#ec4899 100%);
-    -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
-}
-.header p{color:var(--text-secondary);font-size:clamp(13px,2.5vw,15px)}
-.overall-progress{
-    background:var(--bg-glass);backdrop-filter:blur(24px);
-    border:1px solid var(--border-glass);border-radius:var(--radius-lg);
-    padding:22px 24px;margin-bottom:20px;
-}
-.overall-progress-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;flex-wrap:wrap;gap:6px}
-.overall-progress-header h3{font-size:15px;font-weight:600}
-.overall-progress-header span{font-size:13px;font-weight:700;color:var(--accent-blue)}
-.progress-bar-track{width:100%;height:10px;background:rgba(255,255,255,0.04);border-radius:999px;overflow:hidden}
-.progress-bar-fill{
-    height:100%;border-radius:999px;position:relative;
-    background:linear-gradient(90deg,#3b82f6,#8b5cf6,#ec4899);
-    transition:width .6s cubic-bezier(.4,0,.2,1);
-}
-.progress-bar-fill::after{
-    content:'';position:absolute;inset:0;
-    background:linear-gradient(90deg,transparent,rgba(255,255,255,.25),transparent);
-    animation:shimmer 2.5s infinite;
-}
-@keyframes shimmer{0%{transform:translateX(-100%)}100%{transform:translateX(200%)}}
-.stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px;margin-bottom:20px}
-.stat-card{
-    background:var(--bg-glass);backdrop-filter:blur(24px);
-    border:1px solid var(--border-glass);border-radius:var(--radius-lg);
-    padding:18px 14px;text-align:center;transition:var(--transition);
-}
-.stat-card:hover{transform:translateY(-2px);border-color:var(--border-glass-hover)}
-.stat-label{font-size:11px;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:.6px;margin-bottom:6px}
-.stat-value{font-size:26px;font-weight:800}
-.stat-card.phase-stat{display:flex;flex-direction:column;align-items:center;gap:6px}
-.circ-wrap{position:relative;width:64px;height:64px}
-.circ-wrap svg{transform:rotate(-90deg);width:64px;height:64px}
-.circ-bg{fill:none;stroke:rgba(255,255,255,0.05);stroke-width:5}
-.circ-fg{fill:none;stroke-width:5;stroke-linecap:round;transition:stroke-dashoffset .7s cubic-bezier(.4,0,.2,1)}
-.circ-pct{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700}
-.toolbar{
-    background:var(--bg-glass);backdrop-filter:blur(24px);
-    border:1px solid var(--border-glass);border-radius:var(--radius-lg);
-    padding:14px 18px;margin-bottom:28px;
-    display:flex;flex-wrap:wrap;gap:10px;align-items:center;
-}
-.search-wrap{flex:1;min-width:200px;position:relative}
-.search-wrap::before{content:'🔍';position:absolute;left:12px;top:50%;transform:translateY(-50%);font-size:13px;pointer-events:none}
-.search-input{
-    width:100%;padding:9px 14px 9px 36px;
-    background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);
-    border-radius:var(--radius-md);color:var(--text-primary);
-    font-family:var(--font);font-size:13px;outline:none;transition:var(--transition);
-}
-.search-input:focus{border-color:var(--accent-blue);box-shadow:0 0 0 3px rgba(59,130,246,.12)}
-.search-input::placeholder{color:var(--text-muted)}
-.filter-btns{display:flex;gap:5px}
-.filter-btn{
-    padding:7px 14px;border:1px solid rgba(255,255,255,0.08);border-radius:var(--radius-sm);
-    background:transparent;color:var(--text-secondary);font-family:var(--font);
-    font-size:12px;font-weight:500;cursor:pointer;transition:var(--transition);white-space:nowrap;
-}
-.filter-btn:hover{background:rgba(255,255,255,0.04);color:var(--text-primary)}
-.filter-btn.active{background:var(--accent-blue);border-color:var(--accent-blue);color:#fff}
-.reset-btn{
-    padding:7px 14px;border:1px solid rgba(239,68,68,.25);border-radius:var(--radius-sm);
-    background:rgba(239,68,68,.08);color:#fca5a5;font-family:var(--font);
-    font-size:12px;font-weight:600;cursor:pointer;transition:var(--transition);white-space:nowrap;
-}
-.reset-btn:hover{background:rgba(239,68,68,.18);border-color:rgba(239,68,68,.45)}
-.phase-section{
-    margin-bottom:28px;background:var(--bg-glass);backdrop-filter:blur(24px);
-    border:1px solid var(--border-glass);border-radius:var(--radius-xl);overflow:hidden;
-}
-.phase-section.p-high{border-left:4px solid var(--phase-red)}
-.phase-section.p-medium{border-left:4px solid var(--phase-yellow)}
-.phase-section.p-low{border-left:4px solid var(--phase-green)}
-.phase-hdr{
-    display:flex;justify-content:space-between;align-items:center;
-    padding:18px 22px;cursor:pointer;user-select:none;transition:var(--transition);gap:12px;
-}
-.phase-hdr:hover{background:rgba(255,255,255,0.015)}
-.phase-hdr-left{display:flex;align-items:center;gap:12px;flex:1;min-width:0}
-.phase-badge{
-    padding:3px 10px;border-radius:999px;font-size:10px;font-weight:700;
-    text-transform:uppercase;letter-spacing:.5px;white-space:nowrap;flex-shrink:0;
-}
-.phase-badge.high{background:rgba(239,68,68,.12);color:#fca5a5;border:1px solid rgba(239,68,68,.25)}
-.phase-badge.medium{background:rgba(234,179,8,.12);color:#fde047;border:1px solid rgba(234,179,8,.25)}
-.phase-badge.low{background:rgba(34,197,94,.12);color:#86efac;border:1px solid rgba(34,197,94,.25)}
-.phase-title-wrap{min-width:0}
-.phase-title{font-size:clamp(14px,3vw,18px);font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.phase-sub{font-size:12px;color:var(--text-muted);font-weight:400}
-.phase-hdr-right{display:flex;align-items:center;gap:10px;flex-shrink:0}
-.phase-prog{font-size:12px;font-weight:600;color:var(--text-secondary);white-space:nowrap}
-.chevron{font-size:11px;color:var(--text-muted);transition:transform .3s ease;display:inline-block}
-.chevron.shut{transform:rotate(-90deg)}
-.phase-body{padding:0 22px 22px;overflow:hidden;transition:max-height .45s ease,padding .3s ease,opacity .3s ease;max-height:200000px;opacity:1}
-.phase-body.shut{max-height:0!important;padding-top:0;padding-bottom:0;opacity:0}
-.cat{margin-bottom:14px;background:rgba(255,255,255,0.015);border:1px solid rgba(255,255,255,0.04);border-radius:var(--radius-md);overflow:hidden}
-.cat:last-child{margin-bottom:0}
-.cat-hdr{
-    display:flex;justify-content:space-between;align-items:center;
-    padding:12px 14px;cursor:pointer;user-select:none;transition:var(--transition);
-}
-.cat-hdr:hover{background:rgba(255,255,255,0.025)}
-.cat-hdr-left{display:flex;align-items:center;gap:8px;font-weight:600;font-size:14px;min-width:0}
-.cat-emoji{font-size:17px;flex-shrink:0}
-.cat-name{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.cat-hdr-right{display:flex;align-items:center;gap:8px;flex-shrink:0}
-.cat-prog{
-    font-size:11px;font-weight:600;color:var(--text-muted);
-    background:rgba(255,255,255,0.04);padding:2px 9px;border-radius:999px;
-}
-.cat-prog.done{background:rgba(16,185,129,.12);color:#6ee7b7}
-.cat-body{padding:2px 6px 6px;max-height:200000px;overflow:hidden;transition:max-height .35s ease,opacity .25s ease,padding .25s ease;opacity:1}
-.cat-body.shut{max-height:0;opacity:0;padding:0 6px}
-.t-item{
-    display:flex;flex-direction:column;gap:0;
-    padding:0;border-radius:var(--radius-sm);transition:var(--transition);
-}
-.t-item.gone{display:none}
-.t-row{
-    display:flex;align-items:center;gap:10px;padding:9px 10px;border-radius:var(--radius-sm);
-    transition:var(--transition);
-}
-.t-row:hover{background:rgba(255,255,255,0.025)}
-.t-item.done .t-row{background:rgba(16,185,129,0.07)}
-.t-item.done .t-name{text-decoration:line-through;color:var(--text-muted)}
-.t-cb{
-    appearance:none;-webkit-appearance:none;width:20px;height:20px;min-width:20px;
-    border:2px solid rgba(255,255,255,0.18);border-radius:4px;cursor:pointer;
-    transition:var(--transition);position:relative;background:transparent;flex-shrink:0;
-}
-.t-cb:checked{background:var(--success);border-color:var(--success)}
-.t-cb:checked::after{content:'✓';position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:#fff;font-size:11px;font-weight:700}
-.t-cb:hover{border-color:rgba(255,255,255,0.35)}
-.t-label{flex:1;display:flex;align-items:center;gap:8px;cursor:pointer;flex-wrap:wrap}
-.t-name{font-size:13px;font-weight:500;color:var(--text-primary);transition:var(--transition)}
-.t-meta{display:flex;align-items:center;gap:7px;margin-left:auto}
-.diff{padding:1px 7px;border-radius:999px;font-size:9.5px;font-weight:700;text-transform:uppercase;letter-spacing:.3px}
-.diff.easy{background:rgba(16,185,129,.12);color:#6ee7b7}
-.diff.medium{background:rgba(245,158,11,.12);color:#fcd34d}
-.diff.hard{background:rgba(239,68,68,.12);color:#fca5a5}
-.t-time{font-size:10.5px;color:var(--text-muted);font-weight:500;white-space:nowrap}
-.sub-toggle{
-    display:inline-flex;align-items:center;gap:4px;
-    background:rgba(139,92,246,0.08);border:1px solid rgba(139,92,246,0.18);
-    color:#c4b5fd;font-family:var(--font);font-size:10px;font-weight:600;
-    padding:2px 8px;border-radius:999px;cursor:pointer;transition:var(--transition);
-    white-space:nowrap;margin-left:4px;flex-shrink:0;
-}
-.sub-toggle:hover{background:rgba(139,92,246,0.16);border-color:rgba(139,92,246,0.3)}
-.sub-toggle .arrow{display:inline-block;transition:transform .25s ease;font-size:8px}
-.sub-toggle .arrow.open{transform:rotate(90deg)}
-.sub-prog-pill{
-    font-size:9px;font-weight:700;padding:1px 6px;border-radius:999px;
-    background:rgba(255,255,255,0.04);color:var(--text-muted);margin-left:2px;
-}
-.sub-prog-pill.alldone{background:rgba(16,185,129,.15);color:#6ee7b7}
-.subs-list{
-    width:100%;padding:0 0 0 40px;
-    max-height:0;overflow:hidden;opacity:0;
-    transition:max-height .35s ease,opacity .25s ease,padding .2s ease;
-}
-.subs-list.open{max-height:200000px;opacity:1;padding:4px 0 8px 40px}
-.sub-item{
-    display:flex;align-items:center;gap:8px;
-    padding:4px 10px;font-size:12px;color:var(--text-secondary);
-    transition:var(--transition);border-radius:4px;cursor:pointer;user-select:none;
-}
-.sub-item:hover{color:var(--text-primary);background:rgba(255,255,255,0.025)}
-.sub-item.sub-done{background:rgba(16,185,129,0.06)}
-.sub-item.sub-done .sub-text{text-decoration:line-through;color:var(--text-muted)}
-.sub-item.sub-done .sub-dot{background:var(--success)}
-.sub-cb{
-    appearance:none;-webkit-appearance:none;width:16px;height:16px;min-width:16px;
-    border:2px solid rgba(255,255,255,0.14);border-radius:3px;cursor:pointer;
-    transition:var(--transition);position:relative;background:transparent;flex-shrink:0;
-}
-.sub-cb:checked{background:var(--success);border-color:var(--success)}
-.sub-cb:checked::after{content:'✓';position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:#fff;font-size:9px;font-weight:700}
-.sub-cb:hover{border-color:rgba(255,255,255,0.3)}
-.sub-dot{
-    width:5px;height:5px;min-width:5px;border-radius:50%;
-    background:rgba(139,92,246,0.5);flex-shrink:0;display:none;
-}
-.sub-text{line-height:1.5;transition:var(--transition)}
-.modal-ov{
-    position:fixed;inset:0;background:rgba(0,0,0,.7);backdrop-filter:blur(6px);
-    display:flex;align-items:center;justify-content:center;z-index:1000;
-    animation:fadeUp .2s ease;
-}
-.modal-box{
-    background:#161b26;border:1px solid var(--border-glass);border-radius:var(--radius-lg);
-    padding:30px 28px;max-width:380px;width:92%;text-align:center;
-}
-.modal-box h3{font-size:18px;margin-bottom:10px}
-.modal-box p{color:var(--text-secondary);font-size:13px;margin-bottom:22px;line-height:1.5}
-.modal-btns{display:flex;gap:10px;justify-content:center}
-.m-btn{
-    padding:9px 22px;border-radius:var(--radius-sm);border:none;
-    font-family:var(--font);font-size:13px;font-weight:600;cursor:pointer;transition:var(--transition);
-}
-.m-btn.cancel{background:rgba(255,255,255,0.08);color:var(--text-primary)}
-.m-btn.cancel:hover{background:rgba(255,255,255,0.14)}
-.m-btn.confirm{background:var(--danger);color:#fff}
-.m-btn.confirm:hover{background:#dc2626}
-.no-res{text-align:center;padding:48px 20px;color:var(--text-muted)}
-.no-res .big{font-size:44px;display:block;margin-bottom:10px}
-.no-res p{font-size:15px}
-@keyframes fadeUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
-.phase-section{animation:fadeUp .45s ease both}
-.phase-section:nth-child(2){animation-delay:.08s}
-.phase-section:nth-child(3){animation-delay:.16s}
-body.loaded .phase-section{animation:none}
-@media(max-width:768px){
-    #app{padding:10px 10px 60px}
-    .header{padding:24px 10px 18px}
-    .stats-grid{grid-template-columns:repeat(2,1fr);gap:10px}
-    .toolbar{padding:10px 12px}
-    .search-wrap{min-width:100%}
-    .filter-btns{width:100%;justify-content:center}
-    .phase-hdr{padding:14px 14px}
-    .phase-body{padding:0 14px 14px}
-    .phase-body.shut{padding:0}
-    .t-label{flex-direction:column;align-items:flex-start;gap:4px}
-    .t-meta{margin-left:0}
-    .stat-card{padding:12px 8px}
-    .stat-value{font-size:20px}
-    .circ-wrap,.circ-wrap svg{width:54px;height:54px}
-    .circ-pct{font-size:11px}
-    .overall-progress{padding:16px}
-    .subs-list,.subs-list.open{padding-left:30px}
-}
-@media(max-width:480px){
-    .stats-grid{grid-template-columns:1fr 1fr}
-    .filter-btn{padding:6px 10px;font-size:11px}
-    .phase-title{font-size:13px}
-    .phase-badge{font-size:9px;padding:2px 7px}
-    .cat-hdr-left{font-size:12.5px}
-    .t-name{font-size:12px}
-    .phase-hdr{flex-wrap:wrap}
-    .subs-list,.subs-list.open{padding-left:20px}
-}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Full Stack Web Dev Roadmap & Tracker</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        * { font-family: 'Inter', sans-serif; }
+        body { background: #0a0a0f; }
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #1a1a2e; }
+        ::-webkit-scrollbar-thumb { background: #4f46e5; border-radius: 3px; }
+
+        .glass { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06); backdrop-filter: blur(10px); }
+        .glass-strong { background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1); backdrop-filter: blur(20px); }
+
+        .glow-indigo { box-shadow: 0 0 30px rgba(79,70,229,0.15); }
+        .glow-green { box-shadow: 0 0 30px rgba(16,185,129,0.15); }
+        .glow-amber { box-shadow: 0 0 30px rgba(245,158,11,0.15); }
+        .glow-rose { box-shadow: 0 0 30px rgba(244,63,94,0.15); }
+
+        .phase-badge-job { background: linear-gradient(135deg, #10b981, #059669); }
+        .phase-badge-growing { background: linear-gradient(135deg, #6366f1, #4f46e5); }
+        .phase-badge-advanced { background: linear-gradient(135deg, #f59e0b, #d97706); }
+        .phase-badge-expert { background: linear-gradient(135deg, #f43f5e, #e11d48); }
+
+        .topic-card { transition: all 0.3s ease; }
+        .topic-card:hover { transform: translateY(-2px); background: rgba(255,255,255,0.07); }
+
+        .checkbox-custom { appearance: none; width: 20px; height: 20px; border: 2px solid rgba(255,255,255,0.2); border-radius: 5px; cursor: pointer; transition: all 0.3s; position: relative; flex-shrink: 0; }
+        .checkbox-custom:checked { background: linear-gradient(135deg, #10b981, #059669); border-color: #10b981; }
+        .checkbox-custom:checked::after { content: '✓'; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); color: white; font-size: 12px; font-weight: 700; }
+        .checkbox-custom:hover { border-color: #6366f1; }
+
+        .progress-bar-bg { background: rgba(255,255,255,0.08); }
+        .progress-fill { transition: width 0.8s cubic-bezier(0.4,0,0.2,1); }
+
+        .badge-most { background: rgba(239,68,68,0.15); color: #fca5a5; border: 1px solid rgba(239,68,68,0.3); }
+        .badge-mid { background: rgba(245,158,11,0.15); color: #fcd34d; border: 1px solid rgba(245,158,11,0.3); }
+        .badge-less { background: rgba(59,130,246,0.15); color: #93c5fd; border: 1px solid rgba(59,130,246,0.3); }
+
+        .section-toggle { cursor: pointer; user-select: none; }
+        .section-content { max-height: 0; overflow: hidden; transition: max-height 0.5s ease; }
+        .section-content.open { max-height: 50000px; }
+        .chevron { transition: transform 0.3s ease; }
+        .chevron.rotated { transform: rotate(180deg); }
+
+        .sidebar-link { transition: all 0.2s; }
+        .sidebar-link:hover, .sidebar-link.active { background: rgba(79,70,229,0.2); border-left: 3px solid #6366f1; }
+
+        .hero-gradient { background: linear-gradient(135deg, rgba(79,70,229,0.2) 0%, rgba(16,185,129,0.1) 50%, rgba(245,158,11,0.1) 100%); }
+
+        .stat-card { transition: transform 0.3s; }
+        .stat-card:hover { transform: scale(1.03); }
+
+        .confetti { position: fixed; top: -10px; z-index: 9999; pointer-events: none; animation: confettiFall 3s ease-in forwards; }
+        @keyframes confettiFall {
+            0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+        }
+
+        @keyframes pulse-glow {
+            0%, 100% { opacity: 0.5; }
+            50% { opacity: 1; }
+        }
+        .animate-pulse-glow { animation: pulse-glow 2s ease-in-out infinite; }
+
+        .search-highlight { background: rgba(245, 158, 11, 0.3); border-radius: 2px; }
+    </style>
 </head>
-<body>
-<div id="app"></div>
-<script>
-// ===== ROADMAP DATA WITH SUBTOPICS =====
-const ROADMAP=[
-{
-  id:'phase1',phase:1,emoji:'🚀',
-  title:'PHASE 1: GET THE JOB',
-  subtitle:'Entry Level • Target: 4-6 months',
-  priority:'high',priorityLabel:'HIGH PRIORITY',color:'#ef4444',
-  categories:[
-    {name:'HTML & CSS Fundamentals',emoji:'🎨',topics:[
-      {id:'p1_hc1',name:'Semantic HTML5',difficulty:'Easy',time:'3-4 days',subs:[
-        {id:'p1_hc1_s1',text:'header, nav, main, footer elements'},
-        {id:'p1_hc1_s2',text:'section, article, aside usage'},
-        {id:'p1_hc1_s3',text:'figure & figcaption'},
-        {id:'p1_hc1_s4',text:'details & summary'},
-        {id:'p1_hc1_s5',text:'time, mark, progress elements'},
-        {id:'p1_hc1_s6',text:'When & why to use semantic tags'},
-        {id:'p1_hc1_s7',text:'SEO benefits of semantic HTML'},
-        {id:'p1_hc1_s8',text:'Accessibility improvements'}
-      ]},
-      {id:'p1_hc2',name:'CSS Flexbox',difficulty:'Easy',time:'4-5 days',subs:[
-        {id:'p1_hc2_s1',text:'display: flex & inline-flex'},
-        {id:'p1_hc2_s2',text:'flex-direction (row, column, reverse)'},
-        {id:'p1_hc2_s3',text:'justify-content (center, space-between, etc.)'},
-        {id:'p1_hc2_s4',text:'align-items & align-self'},
-        {id:'p1_hc2_s5',text:'flex-wrap & flex-flow'},
-        {id:'p1_hc2_s6',text:'flex-grow, flex-shrink, flex-basis'},
-        {id:'p1_hc2_s7',text:'gap property'},
-        {id:'p1_hc2_s8',text:'order property'},
-        {id:'p1_hc2_s9',text:'Nested flex containers'}
-      ]},
-      {id:'p1_hc3',name:'CSS Grid',difficulty:'Medium',time:'5-7 days',subs:[
-        {id:'p1_hc3_s1',text:'display: grid'},
-        {id:'p1_hc3_s2',text:'grid-template-columns & grid-template-rows'},
-        {id:'p1_hc3_s3',text:'fr units & repeat()'},
-        {id:'p1_hc3_s4',text:'grid-gap / gap'},
-        {id:'p1_hc3_s5',text:'grid-area & grid-template-areas'},
-        {id:'p1_hc3_s6',text:'auto-fill & auto-fit'},
-        {id:'p1_hc3_s7',text:'minmax() function'},
-        {id:'p1_hc3_s8',text:'span keyword'},
-        {id:'p1_hc3_s9',text:'Grid alignment (justify-items, align-items)'},
-        {id:'p1_hc3_s10',text:'Implicit vs explicit grid'},
-        {id:'p1_hc3_s11',text:'Nested grids'}
-      ]},
-      {id:'p1_hc4',name:'Responsive Design (Media Queries)',difficulty:'Easy',time:'3-5 days',subs:[
-        {id:'p1_hc4_s1',text:'Viewport meta tag'},
-        {id:'p1_hc4_s2',text:'Mobile-first approach'},
-        {id:'p1_hc4_s3',text:'min-width & max-width queries'},
-        {id:'p1_hc4_s4',text:'Common breakpoints (sm, md, lg, xl)'},
-        {id:'p1_hc4_s5',text:'Responsive images (srcset, sizes)'},
-        {id:'p1_hc4_s6',text:'Responsive typography (clamp, vw units)'},
-        {id:'p1_hc4_s7',text:'Responsive navigation patterns'},
-        {id:'p1_hc4_s8',text:'Testing on multiple devices'}
-      ]},
-      {id:'p1_hc5',name:'CSS Variables',difficulty:'Easy',time:'1-2 days',subs:[
-        {id:'p1_hc5_s1',text:'Declaring custom properties (--var-name)'},
-        {id:'p1_hc5_s2',text:'var() function usage'},
-        {id:'p1_hc5_s3',text:'Fallback values'},
-        {id:'p1_hc5_s4',text:'Scoping (global :root vs local)'},
-        {id:'p1_hc5_s5',text:'Dynamic theming with CSS variables'},
-        {id:'p1_hc5_s6',text:'Updating CSS variables with JavaScript'},
-        {id:'p1_hc5_s7',text:'Media query-based variable changes'}
-      ]},
-      {id:'p1_hc6',name:'Basic Animations / Transitions',difficulty:'Medium',time:'3-4 days',subs:[
-        {id:'p1_hc6_s1',text:'transition property shorthand'},
-        {id:'p1_hc6_s2',text:'transition-duration & timing functions'},
-        {id:'p1_hc6_s3',text:'transition-delay'},
-        {id:'p1_hc6_s4',text:'transform: translate, scale, rotate, skew'},
-        {id:'p1_hc6_s5',text:'@keyframes rule'},
-        {id:'p1_hc6_s6',text:'animation property shorthand'},
-        {id:'p1_hc6_s7',text:'animation-iteration-count & direction'},
-        {id:'p1_hc6_s8',text:'Hover & focus effects'},
-        {id:'p1_hc6_s9',text:'Entrance/exit animations'},
-        {id:'p1_hc6_s10',text:'will-change & performance tips'}
-      ]}
-    ]},
-    {name:'JavaScript Core',emoji:'⚡',topics:[
-      {id:'p1_js1',name:'Variables, Data Types, Operators',difficulty:'Easy',time:'3-4 days',subs:[
-        {id:'p1_js1_s1',text:'var, let, const differences'},
-        {id:'p1_js1_s2',text:'Strings, Numbers, Booleans'},
-        {id:'p1_js1_s3',text:'null vs undefined'},
-        {id:'p1_js1_s4',text:'BigInt & Symbol (overview)'},
-        {id:'p1_js1_s5',text:'typeof operator'},
-        {id:'p1_js1_s6',text:'Arithmetic operators (+, -, *, /, %, **)'},
-        {id:'p1_js1_s7',text:'Comparison operators (==, ===, !=, !==)'},
-        {id:'p1_js1_s8',text:'Logical operators (&&, ||, !)'},
-        {id:'p1_js1_s9',text:'Ternary operator'},
-        {id:'p1_js1_s10',text:'Type coercion & conversion'},
-        {id:'p1_js1_s11',text:'Template literals basics'}
-      ]},
-      {id:'p1_js2',name:'Functions (Arrow, Callback, Higher Order)',difficulty:'Medium',time:'5-7 days',subs:[
-        {id:'p1_js2_s1',text:'Function declarations vs expressions'},
-        {id:'p1_js2_s2',text:'Arrow function syntax'},
-        {id:'p1_js2_s3',text:'Implicit vs explicit return'},
-        {id:'p1_js2_s4',text:'Callback functions pattern'},
-        {id:'p1_js2_s5',text:'Higher-order functions concept'},
-        {id:'p1_js2_s6',text:'IIFE (Immediately Invoked Function Expressions)'},
-        {id:'p1_js2_s7',text:'Default parameters'},
-        {id:'p1_js2_s8',text:'Rest parameters in functions'},
-        {id:'p1_js2_s9',text:'Closures basics'},
-        {id:'p1_js2_s10',text:'Function scope vs block scope'},
-        {id:'p1_js2_s11',text:'The "this" keyword in functions'}
-      ]},
-      {id:'p1_js3',name:'DOM Manipulation',difficulty:'Medium',time:'4-5 days',subs:[
-        {id:'p1_js3_s1',text:'getElementById & getElementsByClassName'},
-        {id:'p1_js3_s2',text:'querySelector & querySelectorAll'},
-        {id:'p1_js3_s3',text:'createElement & createTextNode'},
-        {id:'p1_js3_s4',text:'appendChild & append'},
-        {id:'p1_js3_s5',text:'innerHTML vs textContent vs innerText'},
-        {id:'p1_js3_s6',text:'classList (add, remove, toggle, contains)'},
-        {id:'p1_js3_s7',text:'setAttribute & getAttribute'},
-        {id:'p1_js3_s8',text:'style property manipulation'},
-        {id:'p1_js3_s9',text:'Removing elements (remove, removeChild)'},
-        {id:'p1_js3_s10',text:'parentNode, childNodes, nextSibling'},
-        {id:'p1_js3_s11',text:'Document fragments for performance'},
-        {id:'p1_js3_s12',text:'Cloning nodes'}
-      ]},
-      {id:'p1_js4',name:'Event Handling',difficulty:'Easy',time:'2-3 days',subs:[
-        {id:'p1_js4_s1',text:'addEventListener syntax'},
-        {id:'p1_js4_s2',text:'Event object & its properties'},
-        {id:'p1_js4_s3',text:'Event bubbling & capturing'},
-        {id:'p1_js4_s4',text:'Event delegation pattern'},
-        {id:'p1_js4_s5',text:'preventDefault()'},
-        {id:'p1_js4_s6',text:'stopPropagation()'},
-        {id:'p1_js4_s7',text:'Common events: click, submit, input, change'},
-        {id:'p1_js4_s8',text:'Keyboard events: keydown, keyup, keypress'},
-        {id:'p1_js4_s9',text:'Mouse events: mouseover, mouseout, mousemove'},
-        {id:'p1_js4_s10',text:'Load & DOMContentLoaded events'},
-        {id:'p1_js4_s11',text:'Custom events basics'}
-      ]},
-      {id:'p1_js5',name:'ES6+ Features (let/const, destructuring, spread/rest, template literals)',difficulty:'Medium',time:'5-7 days',subs:[
-        {id:'p1_js5_s1',text:'let & const block scoping'},
-        {id:'p1_js5_s2',text:'Template literals & multi-line strings'},
-        {id:'p1_js5_s3',text:'Tagged template literals'},
-        {id:'p1_js5_s4',text:'Array destructuring'},
-        {id:'p1_js5_s5',text:'Object destructuring'},
-        {id:'p1_js5_s6',text:'Nested destructuring'},
-        {id:'p1_js5_s7',text:'Spread operator for arrays & objects'},
-        {id:'p1_js5_s8',text:'Rest parameters'},
-        {id:'p1_js5_s9',text:'Default parameter values'},
-        {id:'p1_js5_s10',text:'Optional chaining (?.)'},
-        {id:'p1_js5_s11',text:'Nullish coalescing (??)'},
-        {id:'p1_js5_s12',text:'Short-circuit evaluation'},
-        {id:'p1_js5_s13',text:'Object shorthand properties'},
-        {id:'p1_js5_s14',text:'Computed property names'}
-      ]},
-      {id:'p1_js6',name:'Array Methods (map, filter, reduce, find, forEach)',difficulty:'Medium',time:'4-5 days',subs:[
-        {id:'p1_js6_s1',text:'forEach() for iteration'},
-        {id:'p1_js6_s2',text:'map() for transformation'},
-        {id:'p1_js6_s3',text:'filter() for filtering'},
-        {id:'p1_js6_s4',text:'reduce() for accumulation'},
-        {id:'p1_js6_s5',text:'find() & findIndex()'},
-        {id:'p1_js6_s6',text:'some() & every()'},
-        {id:'p1_js6_s7',text:'sort() with compare functions'},
-        {id:'p1_js6_s8',text:'flat() & flatMap()'},
-        {id:'p1_js6_s9',text:'Array.from() & Array.of()'},
-        {id:'p1_js6_s10',text:'includes() method'},
-        {id:'p1_js6_s11',text:'slice() vs splice()'},
-        {id:'p1_js6_s12',text:'Chaining array methods'},
-        {id:'p1_js6_s13',text:'Immutable array patterns'}
-      ]},
-      {id:'p1_js7',name:'Promises & Async/Await',difficulty:'Hard',time:'5-7 days',subs:[
-        {id:'p1_js7_s1',text:'Promise constructor (resolve, reject)'},
-        {id:'p1_js7_s2',text:'then() / catch() / finally()'},
-        {id:'p1_js7_s3',text:'Promise chaining'},
-        {id:'p1_js7_s4',text:'Promise.all() for parallel execution'},
-        {id:'p1_js7_s5',text:'Promise.race()'},
-        {id:'p1_js7_s6',text:'Promise.allSettled()'},
-        {id:'p1_js7_s7',text:'Promise.any()'},
-        {id:'p1_js7_s8',text:'async function declaration'},
-        {id:'p1_js7_s9',text:'await keyword'},
-        {id:'p1_js7_s10',text:'Error handling in async/await (try/catch)'},
-        {id:'p1_js7_s11',text:'Sequential vs parallel async operations'},
-        {id:'p1_js7_s12',text:'Converting callbacks to promises'},
-        {id:'p1_js7_s13',text:'Top-level await'}
-      ]},
-      {id:'p1_js8',name:'Fetch API / HTTP Requests',difficulty:'Medium',time:'3-4 days',subs:[
-        {id:'p1_js8_s1',text:'fetch() basics & syntax'},
-        {id:'p1_js8_s2',text:'GET requests'},
-        {id:'p1_js8_s3',text:'POST requests with body'},
-        {id:'p1_js8_s4',text:'Setting headers (Content-Type, Authorization)'},
-        {id:'p1_js8_s5',text:'Handling JSON responses (.json())'},
-        {id:'p1_js8_s6',text:'Handling text responses (.text())'},
-        {id:'p1_js8_s7',text:'Request & Response objects'},
-        {id:'p1_js8_s8',text:'Query parameters'},
-        {id:'p1_js8_s9',text:'AbortController for cancelling requests'},
-        {id:'p1_js8_s10',text:'Error handling with fetch'},
-        {id:'p1_js8_s11',text:'HTTP status codes overview'},
-        {id:'p1_js8_s12',text:'FormData with fetch'}
-      ]},
-      {id:'p1_js9',name:'Error Handling (try/catch)',difficulty:'Easy',time:'1-2 days',subs:[
-        {id:'p1_js9_s1',text:'try / catch / finally blocks'},
-        {id:'p1_js9_s2',text:'throw statement'},
-        {id:'p1_js9_s3',text:'Error object types (TypeError, ReferenceError, etc.)'},
-        {id:'p1_js9_s4',text:'Custom error classes'},
-        {id:'p1_js9_s5',text:'Error handling patterns'},
-        {id:'p1_js9_s6',text:'Debugging with console.log, console.error'},
-        {id:'p1_js9_s7',text:'console.table, console.warn, console.group'},
-        {id:'p1_js9_s8',text:'Breakpoints in DevTools'},
-        {id:'p1_js9_s9',text:'Stack trace reading'}
-      ]},
-      {id:'p1_js10',name:'Local Storage / Session Storage',difficulty:'Easy',time:'1-2 days',subs:[
-        {id:'p1_js10_s1',text:'localStorage.setItem() & getItem()'},
-        {id:'p1_js10_s2',text:'localStorage.removeItem() & clear()'},
-        {id:'p1_js10_s3',text:'sessionStorage differences'},
-        {id:'p1_js10_s4',text:'JSON.stringify() for storing objects'},
-        {id:'p1_js10_s5',text:'JSON.parse() for retrieving objects'},
-        {id:'p1_js10_s6',text:'Storage event listener'},
-        {id:'p1_js10_s7',text:'Storage size limits (~5MB)'},
-        {id:'p1_js10_s8',text:'Common use cases (theme, cart, tokens)'},
-        {id:'p1_js10_s9',text:'Security considerations'}
-      ]}
-    ]},
-    {name:'Version Control',emoji:'📦',topics:[
-      {id:'p1_g1',name:'Git basics (init, add, commit, push, pull, branch, merge)',difficulty:'Easy',time:'2-3 days',subs:[
-        {id:'p1_g1_s1',text:'git init — initialize repo'},
-        {id:'p1_g1_s2',text:'git add — staging files (., -A, specific files)'},
-        {id:'p1_g1_s3',text:'git commit -m — saving snapshots'},
-        {id:'p1_g1_s4',text:'git push — pushing to remote'},
-        {id:'p1_g1_s5',text:'git pull — fetching & merging'},
-        {id:'p1_g1_s6',text:'git branch — creating & listing branches'},
-        {id:'p1_g1_s7',text:'git checkout / git switch — switching branches'},
-        {id:'p1_g1_s8',text:'git merge — merging branches'},
-        {id:'p1_g1_s9',text:'git status — checking state'},
-        {id:'p1_g1_s10',text:'git log — viewing history'},
-        {id:'p1_g1_s11',text:'git diff — viewing changes'},
-        {id:'p1_g1_s12',text:'git stash — saving work temporarily'}
-      ]},
-      {id:'p1_g2',name:'GitHub (repo, PR, clone, fork)',difficulty:'Easy',time:'2-3 days',subs:[
-        {id:'p1_g2_s1',text:'Creating a GitHub repository'},
-        {id:'p1_g2_s2',text:'git clone — cloning repos locally'},
-        {id:'p1_g2_s3',text:'Forking a repository'},
-        {id:'p1_g2_s4',text:'Creating Pull Requests (PR)'},
-        {id:'p1_g2_s5',text:'Reviewing & merging PRs'},
-        {id:'p1_g2_s6',text:'Issues & issue tracking'},
-        {id:'p1_g2_s7',text:'GitHub Pages basics'},
-        {id:'p1_g2_s8',text:'README.md writing (Markdown)'},
-        {id:'p1_g2_s9',text:'Repository settings & visibility'},
-        {id:'p1_g2_s10',text:'Collaborators & permissions'},
-        {id:'p1_g2_s11',text:'GitHub notifications'}
-      ]},
-      {id:'p1_g3',name:'.gitignore',difficulty:'Easy',time:'1 day',subs:[
-        {id:'p1_g3_s1',text:'Creating .gitignore file'},
-        {id:'p1_g3_s2',text:'File patterns (*.log, *.env)'},
-        {id:'p1_g3_s3',text:'Directory patterns (node_modules/, dist/)'},
-        {id:'p1_g3_s4',text:'Negation rules (!important.log)'},
-        {id:'p1_g3_s5',text:'Global .gitignore (~/.gitignore_global)'},
-        {id:'p1_g3_s6',text:'Common entries: node_modules, .env, .DS_Store, build/'},
-        {id:'p1_g3_s7',text:'gitignore templates for Node.js'}
-      ]},
-      {id:'p1_g4',name:'Basic Git workflow',difficulty:'Easy',time:'1-2 days',subs:[
-        {id:'p1_g4_s1',text:'Feature branch workflow'},
-        {id:'p1_g4_s2',text:'Writing good commit messages'},
-        {id:'p1_g4_s3',text:'Branching strategy (main/develop/feature)'},
-        {id:'p1_g4_s4',text:'Merge vs rebase basics'},
-        {id:'p1_g4_s5',text:'Resolving merge conflicts'},
-        {id:'p1_g4_s6',text:'Pull before push habit'},
-        {id:'p1_g4_s7',text:'Code review process'},
-        {id:'p1_g4_s8',text:'Keeping branches up to date'}
-      ]}
-    ]},
-    {name:'React.js (Frontend Framework)',emoji:'⚛️',topics:[
-      {id:'p1_r1',name:'JSX',difficulty:'Easy',time:'1-2 days',subs:[
-        {id:'p1_r1_s1',text:'JSX syntax & rules'},
-        {id:'p1_r1_s2',text:'Expressions in JSX with {}'},
-        {id:'p1_r1_s3',text:'JSX vs HTML differences'},
-        {id:'p1_r1_s4',text:'className instead of class'},
-        {id:'p1_r1_s5',text:'htmlFor instead of for'},
-        {id:'p1_r1_s6',text:'Self-closing tags'},
-        {id:'p1_r1_s7',text:'React Fragments (<> </>)'},
-        {id:'p1_r1_s8',text:'JSX compilation to React.createElement'},
-        {id:'p1_r1_s9',text:'Embedding JavaScript logic in JSX'},
-        {id:'p1_r1_s10',text:'Comments in JSX'}
-      ]},
-      {id:'p1_r2',name:'Components (Functional)',difficulty:'Easy',time:'2-3 days',subs:[
-        {id:'p1_r2_s1',text:'Functional component structure'},
-        {id:'p1_r2_s2',text:'Component naming (PascalCase)'},
-        {id:'p1_r2_s3',text:'Export / import (default, named)'},
-        {id:'p1_r2_s4',text:'Component composition (nesting)'},
-        {id:'p1_r2_s5',text:'File & folder organization'},
-        {id:'p1_r2_s6',text:'Single responsibility principle'},
-        {id:'p1_r2_s7',text:'Component reusability'},
-        {id:'p1_r2_s8',text:'Component vs helper function'}
-      ]},
-      {id:'p1_r3',name:'Props & State',difficulty:'Medium',time:'3-4 days',subs:[
-        {id:'p1_r3_s1',text:'Passing props to children'},
-        {id:'p1_r3_s2',text:'Accessing props in component'},
-        {id:'p1_r3_s3',text:'Default props'},
-        {id:'p1_r3_s4',text:'children prop'},
-        {id:'p1_r3_s5',text:'Prop drilling concept'},
-        {id:'p1_r3_s6',text:'State initialization with useState'},
-        {id:'p1_r3_s7',text:'Updating state (immutably)'},
-        {id:'p1_r3_s8',text:'State vs props difference'},
-        {id:'p1_r3_s9',text:'Lifting state up pattern'},
-        {id:'p1_r3_s10',text:'Derived state (computing from state)'}
-      ]},
-      {id:'p1_r4',name:'useState, useEffect',difficulty:'Medium',time:'4-5 days',subs:[
-        {id:'p1_r4_s1',text:'useState with primitives'},
-        {id:'p1_r4_s2',text:'useState with objects & arrays'},
-        {id:'p1_r4_s3',text:'Functional updater pattern'},
-        {id:'p1_r4_s4',text:'useEffect basic usage'},
-        {id:'p1_r4_s5',text:'useEffect dependency array'},
-        {id:'p1_r4_s6',text:'Empty dependency array (run once)'},
-        {id:'p1_r4_s7',text:'useEffect cleanup function'},
-        {id:'p1_r4_s8',text:'Multiple useEffect hooks'},
-        {id:'p1_r4_s9',text:'Common side effects (data fetching, timers, subscriptions)'},
-        {id:'p1_r4_s10',text:'Rules of Hooks'},
-        {id:'p1_r4_s11',text:'Stale closure pitfalls'}
-      ]},
-      {id:'p1_r5',name:'Conditional Rendering',difficulty:'Easy',time:'1-2 days',subs:[
-        {id:'p1_r5_s1',text:'if/else outside JSX'},
-        {id:'p1_r5_s2',text:'Ternary operator in JSX'},
-        {id:'p1_r5_s3',text:'Logical && operator'},
-        {id:'p1_r5_s4',text:'Nullish rendering'},
-        {id:'p1_r5_s5',text:'Switch case pattern'},
-        {id:'p1_r5_s6',text:'Rendering nothing (return null)'},
-        {id:'p1_r5_s7',text:'Conditional CSS classes'},
-        {id:'p1_r5_s8',text:'Showing/hiding components'}
-      ]},
-      {id:'p1_r6',name:'Lists & Keys',difficulty:'Easy',time:'1-2 days',subs:[
-        {id:'p1_r6_s1',text:'Mapping arrays to elements'},
-        {id:'p1_r6_s2',text:'key prop importance & purpose'},
-        {id:'p1_r6_s3',text:'Using unique IDs as keys'},
-        {id:'p1_r6_s4',text:'Why index as key is an anti-pattern'},
-        {id:'p1_r6_s5',text:'Rendering nested lists'},
-        {id:'p1_r6_s6',text:'Filtering & mapping combined'},
-        {id:'p1_r6_s7',text:'Conditional rendering in lists'},
-        {id:'p1_r6_s8',text:'Empty list handling'}
-      ]},
-      {id:'p1_r7',name:'Event Handling in React',difficulty:'Easy',time:'1-2 days',subs:[
-        {id:'p1_r7_s1',text:'Synthetic events in React'},
-        {id:'p1_r7_s2',text:'onClick, onChange, onSubmit'},
-        {id:'p1_r7_s3',text:'Event handler naming conventions'},
-        {id:'p1_r7_s4',text:'Passing arguments to handlers'},
-        {id:'p1_r7_s5',text:'Inline vs named handlers'},
-        {id:'p1_r7_s6',text:'Preventing default behavior'},
-        {id:'p1_r7_s7',text:'Event object access'},
-        {id:'p1_r7_s8',text:'Handling keyboard events'}
-      ]},
-      {id:'p1_r8',name:'React Router (basic routing)',difficulty:'Medium',time:'3-4 days',subs:[
-        {id:'p1_r8_s1',text:'Installing react-router-dom'},
-        {id:'p1_r8_s2',text:'BrowserRouter setup'},
-        {id:'p1_r8_s3',text:'Route & Routes components'},
-        {id:'p1_r8_s4',text:'Link & NavLink components'},
-        {id:'p1_r8_s5',text:'useNavigate hook'},
-        {id:'p1_r8_s6',text:'useParams for URL parameters'},
-        {id:'p1_r8_s7',text:'useSearchParams for query strings'},
-        {id:'p1_r8_s8',text:'Nested routes & Outlet'},
-        {id:'p1_r8_s9',text:'Redirect / Navigate component'},
-        {id:'p1_r8_s10',text:'404 Not Found page'},
-        {id:'p1_r8_s11',text:'Active link styling'}
-      ]},
-      {id:'p1_r9',name:'Form Handling',difficulty:'Medium',time:'2-3 days',subs:[
-        {id:'p1_r9_s1',text:'Controlled components pattern'},
-        {id:'p1_r9_s2',text:'Handling input, textarea, select'},
-        {id:'p1_r9_s3',text:'Checkbox & radio handling'},
-        {id:'p1_r9_s4',text:'Form submission with onSubmit'},
-        {id:'p1_r9_s5',text:'Multiple input fields with one handler'},
-        {id:'p1_r9_s6',text:'Form validation (basic)'},
-        {id:'p1_r9_s7',text:'Displaying validation errors'},
-        {id:'p1_r9_s8',text:'Resetting form state'},
-        {id:'p1_r9_s9',text:'File input handling basics'}
-      ]},
-      {id:'p1_r10',name:'useContext (basic state management)',difficulty:'Medium',time:'2-3 days',subs:[
-        {id:'p1_r10_s1',text:'createContext() function'},
-        {id:'p1_r10_s2',text:'Provider component setup'},
-        {id:'p1_r10_s3',text:'useContext hook usage'},
-        {id:'p1_r10_s4',text:'Context vs prop drilling'},
-        {id:'p1_r10_s5',text:'When to use context'},
-        {id:'p1_r10_s6',text:'Global state patterns (auth, theme)'},
-        {id:'p1_r10_s7',text:'Multiple contexts'},
-        {id:'p1_r10_s8',text:'Context with useState'},
-        {id:'p1_r10_s9',text:'Updating context values'},
-        {id:'p1_r10_s10',text:'Context performance considerations'}
-      ]},
-      {id:'p1_r11',name:'Custom Hooks (basic)',difficulty:'Medium',time:'3-4 days',subs:[
-        {id:'p1_r11_s1',text:'Why custom hooks'},
-        {id:'p1_r11_s2',text:'Naming convention (use prefix)'},
-        {id:'p1_r11_s3',text:'Extracting component logic'},
-        {id:'p1_r11_s4',text:'useLocalStorage hook example'},
-        {id:'p1_r11_s5',text:'useFetch / useAPI hook example'},
-        {id:'p1_r11_s6',text:'useToggle hook example'},
-        {id:'p1_r11_s7',text:'useDebounce hook example'},
-        {id:'p1_r11_s8',text:'Sharing stateful logic between components'},
-        {id:'p1_r11_s9',text:'Rules of custom hooks'},
-        {id:'p1_r11_s10',text:'Composing hooks together'}
-      ]},
-      {id:'p1_r12',name:'API Integration in React (fetch/axios)',difficulty:'Medium',time:'3-4 days',subs:[
-        {id:'p1_r12_s1',text:'Fetching data in useEffect'},
-        {id:'p1_r12_s2',text:'Loading state management'},
-        {id:'p1_r12_s3',text:'Error state management'},
-        {id:'p1_r12_s4',text:'Displaying fetched data'},
-        {id:'p1_r12_s5',text:'Axios installation & setup'},
-        {id:'p1_r12_s6',text:'Axios vs fetch comparison'},
-        {id:'p1_r12_s7',text:'Creating an API service/module'},
-        {id:'p1_r12_s8',text:'Setting base URL & headers'},
-        {id:'p1_r12_s9',text:'Request interceptors'},
-        {id:'p1_r12_s10',text:'POST/PUT/DELETE requests'},
-        {id:'p1_r12_s11',text:'Handling API responses'},
-        {id:'p1_r12_s12',text:'Refresh on data change'}
-      ]}
-    ]},
-    {name:'Node.js & Express.js (Backend)',emoji:'🖥️',topics:[
-      {id:'p1_n1',name:'Node.js basics',difficulty:'Easy',time:'2-3 days',subs:[
-        {id:'p1_n1_s1',text:'What is Node.js (V8 engine, runtime)'},
-        {id:'p1_n1_s2',text:'REPL (Read-Eval-Print Loop)'},
-        {id:'p1_n1_s3',text:'CommonJS modules (require / module.exports)'},
-        {id:'p1_n1_s4',text:'ES Modules (import / export)'},
-        {id:'p1_n1_s5',text:'File system module (fs) basics'},
-        {id:'p1_n1_s6',text:'Path module basics'},
-        {id:'p1_n1_s7',text:'Process object (process.env, process.argv)'},
-        {id:'p1_n1_s8',text:'Event loop overview'},
-        {id:'p1_n1_s9',text:'__dirname & __filename'},
-        {id:'p1_n1_s10',text:'Console methods in Node'}
-      ]},
-      {id:'p1_n2',name:'npm & package.json',difficulty:'Easy',time:'1-2 days',subs:[
-        {id:'p1_n2_s1',text:'npm init & npm init -y'},
-        {id:'p1_n2_s2',text:'Installing packages (npm install)'},
-        {id:'p1_n2_s3',text:'dependencies vs devDependencies'},
-        {id:'p1_n2_s4',text:'scripts section (start, dev, build)'},
-        {id:'p1_n2_s5',text:'Semantic versioning (^, ~)'},
-        {id:'p1_n2_s6',text:'package-lock.json purpose'},
-        {id:'p1_n2_s7',text:'npx — running packages without installing'},
-        {id:'p1_n2_s8',text:'Global vs local installation'},
-        {id:'p1_n2_s9',text:'Updating & removing packages'},
-        {id:'p1_n2_s10',text:'node_modules folder'}
-      ]},
-      {id:'p1_n3',name:'Express server setup',difficulty:'Easy',time:'1-2 days',subs:[
-        {id:'p1_n3_s1',text:'Installing Express'},
-        {id:'p1_n3_s2',text:'Creating an Express app'},
-        {id:'p1_n3_s3',text:'app.listen() on a port'},
-        {id:'p1_n3_s4',text:'Basic route (app.get)'},
-        {id:'p1_n3_s5',text:'Request & Response objects'},
-        {id:'p1_n3_s6',text:'Sending JSON responses'},
-        {id:'p1_n3_s7',text:'Serving static files (express.static)'},
-        {id:'p1_n3_s8',text:'Nodemon for auto-restart'},
-        {id:'p1_n3_s9',text:'Project folder structure'},
-        {id:'p1_n3_s10',text:'Basic Express boilerplate'}
-      ]},
-      {id:'p1_n4',name:'Routing',difficulty:'Easy',time:'2-3 days',subs:[
-        {id:'p1_n4_s1',text:'Route methods (get, post, put, delete, patch)'},
-        {id:'p1_n4_s2',text:'Route parameters (/users/:id)'},
-        {id:'p1_n4_s3',text:'Query strings (?key=value)'},
-        {id:'p1_n4_s4',text:'Route grouping & organization'},
-        {id:'p1_n4_s5',text:'express.Router() for modular routes'},
-        {id:'p1_n4_s6',text:'Route chaining (.route())'},
-        {id:'p1_n4_s7',text:'Wildcard routes'},
-        {id:'p1_n4_s8',text:'Route order importance'},
-        {id:'p1_n4_s9',text:'Mounting routers with app.use()'}
-      ]},
-      {id:'p1_n5',name:'Middleware',difficulty:'Medium',time:'2-3 days',subs:[
-        {id:'p1_n5_s1',text:'What is middleware (req, res, next)'},
-        {id:'p1_n5_s2',text:'app.use() for global middleware'},
-        {id:'p1_n5_s3',text:'Built-in middleware (express.json, express.urlencoded)'},
-        {id:'p1_n5_s4',text:'Third-party middleware (cors, morgan, helmet)'},
-        {id:'p1_n5_s5',text:'Custom middleware creation'},
-        {id:'p1_n5_s6',text:'Middleware execution order'},
-        {id:'p1_n5_s7',text:'Route-specific middleware'},
-        {id:'p1_n5_s8',text:'Error-handling middleware (4 params)'},
-        {id:'p1_n5_s9',text:'next() function & next(err)'},
-        {id:'p1_n5_s10',text:'Authentication middleware example'}
-      ]},
-      {id:'p1_n6',name:'REST API design (GET, POST, PUT, DELETE)',difficulty:'Medium',time:'3-5 days',subs:[
-        {id:'p1_n6_s1',text:'REST principles & constraints'},
-        {id:'p1_n6_s2',text:'HTTP methods & their purposes'},
-        {id:'p1_n6_s3',text:'Resource naming conventions (/users, /posts)'},
-        {id:'p1_n6_s4',text:'Proper status codes (200, 201, 400, 404, 500)'},
-        {id:'p1_n6_s5',text:'Request body for POST/PUT'},
-        {id:'p1_n6_s6',text:'URL parameters for specific resources'},
-        {id:'p1_n6_s7',text:'Query parameters for filtering/sorting'},
-        {id:'p1_n6_s8',text:'Response format consistency'},
-        {id:'p1_n6_s9',text:'CRUD operations mapping'},
-        {id:'p1_n6_s10',text:'RESTful endpoint design examples'},
-        {id:'p1_n6_s11',text:'API versioning basics (/api/v1)'}
-      ]},
-      {id:'p1_n7',name:'Request / Response handling',difficulty:'Easy',time:'1-2 days',subs:[
-        {id:'p1_n7_s1',text:'req.body — request body data'},
-        {id:'p1_n7_s2',text:'req.params — URL parameters'},
-        {id:'p1_n7_s3',text:'req.query — query string parameters'},
-        {id:'p1_n7_s4',text:'req.headers — request headers'},
-        {id:'p1_n7_s5',text:'res.json() — send JSON'},
-        {id:'p1_n7_s6',text:'res.status() — set status code'},
-        {id:'p1_n7_s7',text:'res.send() — send response'},
-        {id:'p1_n7_s8',text:'res.redirect() — redirect'},
-        {id:'p1_n7_s9',text:'Content-Type header'},
-        {id:'p1_n7_s10',text:'Setting custom response headers'}
-      ]},
-      {id:'p1_n8',name:'Environment Variables (.env)',difficulty:'Easy',time:'1 day',subs:[
-        {id:'p1_n8_s1',text:'dotenv package installation & setup'},
-        {id:'p1_n8_s2',text:'Creating .env file'},
-        {id:'p1_n8_s3',text:'process.env access'},
-        {id:'p1_n8_s4',text:'PORT, DATABASE_URL, JWT_SECRET examples'},
-        {id:'p1_n8_s5',text:'Adding .env to .gitignore'},
-        {id:'p1_n8_s6',text:'Config file pattern'},
-        {id:'p1_n8_s7',text:'Different .env for environments'},
-        {id:'p1_n8_s8',text:'Default values for variables'}
-      ]},
-      {id:'p1_n9',name:'CORS',difficulty:'Easy',time:'1 day',subs:[
-        {id:'p1_n9_s1',text:'What is CORS & why it exists'},
-        {id:'p1_n9_s2',text:'Same-origin policy'},
-        {id:'p1_n9_s3',text:'cors npm package'},
-        {id:'p1_n9_s4',text:'Configuring allowed origins'},
-        {id:'p1_n9_s5',text:'Configuring allowed methods & headers'},
-        {id:'p1_n9_s6',text:'Credentials & cookies cross-origin'},
-        {id:'p1_n9_s7',text:'Preflight requests (OPTIONS)'},
-        {id:'p1_n9_s8',text:'CORS errors & debugging'}
-      ]},
-      {id:'p1_n10',name:'Error handling middleware',difficulty:'Medium',time:'1-2 days',subs:[
-        {id:'p1_n10_s1',text:'Error middleware signature (err, req, res, next)'},
-        {id:'p1_n10_s2',text:'Centralized error handler'},
-        {id:'p1_n10_s3',text:'Custom error classes (AppError)'},
-        {id:'p1_n10_s4',text:'Async error catching (try/catch or wrapper)'},
-        {id:'p1_n10_s5',text:'express-async-errors package'},
-        {id:'p1_n10_s6',text:'404 Not Found handler'},
-        {id:'p1_n10_s7',text:'Sending proper error responses'},
-        {id:'p1_n10_s8',text:'Different errors for dev vs production'},
-        {id:'p1_n10_s9',text:'Validation error formatting'},
-        {id:'p1_n10_s10',text:'Unhandled rejection & uncaught exception handling'}
-      ]}
-    ]},
-    {name:'Database (MongoDB)',emoji:'🗄️',topics:[
-      {id:'p1_d1',name:'MongoDB basics & CRUD',difficulty:'Medium',time:'3-4 days',subs:[
-        {id:'p1_d1_s1',text:'Documents, collections, databases concepts'},
-        {id:'p1_d1_s2',text:'MongoDB Shell basics'},
-        {id:'p1_d1_s3',text:'insertOne() & insertMany()'},
-        {id:'p1_d1_s4',text:'find() & findOne()'},
-        {id:'p1_d1_s5',text:'updateOne() & updateMany()'},
-        {id:'p1_d1_s6',text:'deleteOne() & deleteMany()'},
-        {id:'p1_d1_s7',text:'$set, $unset, $push, $pull operators'},
-        {id:'p1_d1_s8',text:'Document structure (BSON, _id)'},
-        {id:'p1_d1_s9',text:'MongoDB vs SQL comparison'},
-        {id:'p1_d1_s10',text:'MongoDB Compass GUI'}
-      ]},
-      {id:'p1_d2',name:'Mongoose ODM',difficulty:'Medium',time:'3-4 days',subs:[
-        {id:'p1_d2_s1',text:'What is an ODM'},
-        {id:'p1_d2_s2',text:'Installing Mongoose'},
-        {id:'p1_d2_s3',text:'Connecting to MongoDB with Mongoose'},
-        {id:'p1_d2_s4',text:'Connection events (open, error, disconnected)'},
-        {id:'p1_d2_s5',text:'Mongoose vs native MongoDB driver'},
-        {id:'p1_d2_s6',text:'Model methods (create, find, findById, etc.)'},
-        {id:'p1_d2_s7',text:'Instance methods'},
-        {id:'p1_d2_s8',text:'Static methods'},
-        {id:'p1_d2_s9',text:'Virtuals (computed properties)'},
-        {id:'p1_d2_s10',text:'Mongoose plugins overview'}
-      ]},
-      {id:'p1_d3',name:'Schema & Models',difficulty:'Medium',time:'2-3 days',subs:[
-        {id:'p1_d3_s1',text:'Defining a Schema'},
-        {id:'p1_d3_s2',text:'Schema types (String, Number, Boolean, Date, Array, ObjectId)'},
-        {id:'p1_d3_s3',text:'Required fields validation'},
-        {id:'p1_d3_s4',text:'Default values'},
-        {id:'p1_d3_s5',text:'Enum validation'},
-        {id:'p1_d3_s6',text:'Min/max validators'},
-        {id:'p1_d3_s7',text:'Custom validators'},
-        {id:'p1_d3_s8',text:'Timestamps option (createdAt, updatedAt)'},
-        {id:'p1_d3_s9',text:'Schema methods & statics'},
-        {id:'p1_d3_s10',text:'Creating a Model from Schema'},
-        {id:'p1_d3_s11',text:'Nested schemas / subdocuments'}
-      ]},
-      {id:'p1_d4',name:'Basic Queries',difficulty:'Easy',time:'2-3 days',subs:[
-        {id:'p1_d4_s1',text:'Comparison operators ($gt, $gte, $lt, $lte, $in, $nin)'},
-        {id:'p1_d4_s2',text:'Logical operators ($and, $or, $not)'},
-        {id:'p1_d4_s3',text:'Sorting (.sort())'},
-        {id:'p1_d4_s4',text:'Limiting results (.limit())'},
-        {id:'p1_d4_s5',text:'Skipping results (.skip())'},
-        {id:'p1_d4_s6',text:'Projection — selecting fields (.select())'},
-        {id:'p1_d4_s7',text:'Counting documents (.countDocuments())'},
-        {id:'p1_d4_s8',text:'Distinct values (.distinct())'},
-        {id:'p1_d4_s9',text:'Chaining query methods'},
-        {id:'p1_d4_s10',text:'Lean queries for performance'}
-      ]},
-      {id:'p1_d5',name:'MongoDB Atlas (cloud setup)',difficulty:'Easy',time:'1 day',subs:[
-        {id:'p1_d5_s1',text:'Creating an Atlas account'},
-        {id:'p1_d5_s2',text:'Building a free-tier cluster'},
-        {id:'p1_d5_s3',text:'Creating database user & password'},
-        {id:'p1_d5_s4',text:'Network access / IP whitelist'},
-        {id:'p1_d5_s5',text:'Getting connection string'},
-        {id:'p1_d5_s6',text:'Connecting via Compass'},
-        {id:'p1_d5_s7',text:'Connecting via Node.js/Mongoose'},
-        {id:'p1_d5_s8',text:'Atlas dashboard & monitoring'},
-        {id:'p1_d5_s9',text:'Database backup basics'},
-        {id:'p1_d5_s10',text:'Cluster scaling overview'}
-      ]},
-      {id:'p1_d6',name:'Connecting MongoDB with Express',difficulty:'Easy',time:'1-2 days',subs:[
-        {id:'p1_d6_s1',text:'Connection setup in app entry file'},
-        {id:'p1_d6_s2',text:'Using connection string from .env'},
-        {id:'p1_d6_s3',text:'Handling connection errors'},
-        {id:'p1_d6_s4',text:'Connection pooling basics'},
-        {id:'p1_d6_s5',text:'Graceful shutdown handling'},
-        {id:'p1_d6_s6',text:'Separate db.js config file'},
-        {id:'p1_d6_s7',text:'Verifying connection success'},
-        {id:'p1_d6_s8',text:'Using models in route handlers'}
-      ]}
-    ]},
-    {name:'Authentication',emoji:'🔐',topics:[
-      {id:'p1_a1',name:'JWT (JSON Web Token) basics',difficulty:'Medium',time:'2-3 days',subs:[
-        {id:'p1_a1_s1',text:'JWT structure: header.payload.signature'},
-        {id:'p1_a1_s2',text:'How JWT works (signing & verifying)'},
-        {id:'p1_a1_s3',text:'jsonwebtoken package (sign, verify)'},
-        {id:'p1_a1_s4',text:'Setting token expiration'},
-        {id:'p1_a1_s5',text:'Storing tokens (localStorage, httpOnly cookies)'},
-        {id:'p1_a1_s6',text:'Sending tokens in Authorization header'},
-        {id:'p1_a1_s7',text:'Bearer token format'},
-        {id:'p1_a1_s8',text:'Refresh tokens concept'},
-        {id:'p1_a1_s9',text:'JWT vs session-based auth'},
-        {id:'p1_a1_s10',text:'Token payload best practices'}
-      ]},
-      {id:'p1_a2',name:'Login / Register system',difficulty:'Medium',time:'3-5 days',subs:[
-        {id:'p1_a2_s1',text:'Registration endpoint & flow'},
-        {id:'p1_a2_s2',text:'Input validation (email, password strength)'},
-        {id:'p1_a2_s3',text:'Checking for duplicate users'},
-        {id:'p1_a2_s4',text:'Creating user in database'},
-        {id:'p1_a2_s5',text:'Login endpoint & flow'},
-        {id:'p1_a2_s6',text:'Verifying email & password'},
-        {id:'p1_a2_s7',text:'Generating JWT on successful login'},
-        {id:'p1_a2_s8',text:'Sending token in response'},
-        {id:'p1_a2_s9',text:'Frontend login/register forms'},
-        {id:'p1_a2_s10',text:'Storing token on client side'},
-        {id:'p1_a2_s11',text:'Logout implementation'},
-        {id:'p1_a2_s12',text:'Error messages (generic for security)'}
-      ]},
-      {id:'p1_a3',name:'Password hashing (bcrypt)',difficulty:'Easy',time:'1-2 days',subs:[
-        {id:'p1_a3_s1',text:'Why never store plain text passwords'},
-        {id:'p1_a3_s2',text:'bcryptjs / bcrypt installation'},
-        {id:'p1_a3_s3',text:'Salt rounds (cost factor)'},
-        {id:'p1_a3_s4',text:'bcrypt.hash() for hashing'},
-        {id:'p1_a3_s5',text:'bcrypt.compare() for verification'},
-        {id:'p1_a3_s6',text:'Mongoose pre-save hook for hashing'},
-        {id:'p1_a3_s7',text:'Hashing only when password is modified'},
-        {id:'p1_a3_s8',text:'Timing attacks & constant-time comparison'}
-      ]},
-      {id:'p1_a4',name:'Protected Routes',difficulty:'Medium',time:'2-3 days',subs:[
-        {id:'p1_a4_s1',text:'Auth middleware creation'},
-        {id:'p1_a4_s2',text:'Extracting token from headers'},
-        {id:'p1_a4_s3',text:'Verifying token & decoding payload'},
-        {id:'p1_a4_s4',text:'Attaching user to req object (req.user)'},
-        {id:'p1_a4_s5',text:'Protecting specific routes'},
-        {id:'p1_a4_s6',text:'Role-based access control (admin, user)'},
-        {id:'p1_a4_s7',text:'Middleware chaining for authorization'},
-        {id:'p1_a4_s8',text:'Frontend route protection (private routes)'},
-        {id:'p1_a4_s9',text:'Redirect to login if unauthenticated'},
-        {id:'p1_a4_s10',text:'Token expiration handling'}
-      ]}
-    ]},
-    {name:'Deployment',emoji:'🌐',topics:[
-      {id:'p1_dp1',name:'Deploy Frontend (Vercel / Netlify)',difficulty:'Easy',time:'1-2 days',subs:[
-        {id:'p1_dp1_s1',text:'Vercel account setup & GitHub integration'},
-        {id:'p1_dp1_s2',text:'Netlify account setup & GitHub integration'},
-        {id:'p1_dp1_s3',text:'Build command configuration'},
-        {id:'p1_dp1_s4',text:'Output directory setting'},
-        {id:'p1_dp1_s5',text:'Environment variables in dashboard'},
-        {id:'p1_dp1_s6',text:'Custom domain setup'},
-        {id:'p1_dp1_s7',text:'Continuous deployment from Git'},
-        {id:'p1_dp1_s8',text:'Preview deployments for PRs'},
-        {id:'p1_dp1_s9',text:'Redirect rules (for SPA routing)'},
-        {id:'p1_dp1_s10',text:'Deployment logs & debugging'}
-      ]},
-      {id:'p1_dp2',name:'Deploy Backend (Render / Railway)',difficulty:'Medium',time:'2-3 days',subs:[
-        {id:'p1_dp2_s1',text:'Render account setup'},
-        {id:'p1_dp2_s2',text:'Railway account setup'},
-        {id:'p1_dp2_s3',text:'Connecting Git repository'},
-        {id:'p1_dp2_s4',text:'Setting start command (node server.js)'},
-        {id:'p1_dp2_s5',text:'Environment variables configuration'},
-        {id:'p1_dp2_s6',text:'Auto-deploy from main branch'},
-        {id:'p1_dp2_s7',text:'Monitoring deployment logs'},
-        {id:'p1_dp2_s8',text:'Free tier limitations'},
-        {id:'p1_dp2_s9',text:'Health check endpoint setup'},
-        {id:'p1_dp2_s10',text:'Sleep/wake behavior on free plans'}
-      ]},
-      {id:'p1_dp3',name:'Deploy Database (MongoDB Atlas)',difficulty:'Easy',time:'1 day',subs:[
-        {id:'p1_dp3_s1',text:'Atlas cluster already set up'},
-        {id:'p1_dp3_s2',text:'Updating connection string for production'},
-        {id:'p1_dp3_s3',text:'IP whitelist (allow all: 0.0.0.0/0 for cloud)'},
-        {id:'p1_dp3_s4',text:'Database user permissions'},
-        {id:'p1_dp3_s5',text:'Connection string as env variable'},
-        {id:'p1_dp3_s6',text:'Verifying production database connection'},
-        {id:'p1_dp3_s7',text:'Monitoring database metrics'},
-        {id:'p1_dp3_s8',text:'Backup & restore basics'}
-      ]},
-      {id:'p1_dp4',name:'Environment Variables in production',difficulty:'Easy',time:'1 day',subs:[
-        {id:'p1_dp4_s1',text:'Setting env vars in Vercel/Netlify dashboard'},
-        {id:'p1_dp4_s2',text:'Setting env vars in Render/Railway dashboard'},
-        {id:'p1_dp4_s3',text:'Secrets management best practices'},
-        {id:'p1_dp4_s4',text:'REACT_APP_ prefix for CRA'},
-        {id:'p1_dp4_s5',text:'VITE_ prefix for Vite'},
-        {id:'p1_dp4_s6',text:'Different configs per environment'},
-        {id:'p1_dp4_s7',text:'Never commit .env to git'},
-        {id:'p1_dp4_s8',text:'Verifying env vars are loaded'}
-      ]},
-      {id:'p1_dp5',name:'Basic domain setup',difficulty:'Easy',time:'1-2 days',subs:[
-        {id:'p1_dp5_s1',text:'Domain registration (Namecheap, Google Domains)'},
-        {id:'p1_dp5_s2',text:'DNS configuration basics'},
-        {id:'p1_dp5_s3',text:'A records & CNAME records'},
-        {id:'p1_dp5_s4',text:'Pointing domain to hosting provider'},
-        {id:'p1_dp5_s5',text:'SSL/HTTPS (usually automatic)'},
-        {id:'p1_dp5_s6',text:'www vs non-www redirect'},
-        {id:'p1_dp5_s7',text:'DNS propagation time'},
-        {id:'p1_dp5_s8',text:'Custom subdomain setup'}
-      ]}
-    ]},
-    {name:'Portfolio & Job Prep',emoji:'💼',topics:[
-      {id:'p1_pf1',name:'Build 3 real projects minimum',difficulty:'Hard',time:'4-6 weeks',subs:[
-        {id:'p1_pf1_s1',text:'Full-stack CRUD application (e.g., task manager)'},
-        {id:'p1_pf1_s2',text:'API-based project (e.g., weather app, movie browser)'},
-        {id:'p1_pf1_s3',text:'Real-world problem solver (e.g., expense tracker, blog)'},
-        {id:'p1_pf1_s4',text:'Clean code & folder structure'},
-        {id:'p1_pf1_s5',text:'README with screenshots & live demo'},
-        {id:'p1_pf1_s6',text:'Mobile responsive design'},
-        {id:'p1_pf1_s7',text:'Authentication implementation'},
-        {id:'p1_pf1_s8',text:'Deployment of all projects'},
-        {id:'p1_pf1_s9',text:'Error handling & edge cases'},
-        {id:'p1_pf1_s10',text:'Code comments & documentation'}
-      ]},
-      {id:'p1_pf2',name:'Portfolio Website',difficulty:'Medium',time:'1-2 weeks',subs:[
-        {id:'p1_pf2_s1',text:'Hero section with intro'},
-        {id:'p1_pf2_s2',text:'About me section'},
-        {id:'p1_pf2_s3',text:'Skills & technologies section'},
-        {id:'p1_pf2_s4',text:'Projects showcase with links'},
-        {id:'p1_pf2_s5',text:'Contact form (Formspree / EmailJS)'},
-        {id:'p1_pf2_s6',text:'Responsive design (mobile-first)'},
-        {id:'p1_pf2_s7',text:'Smooth animations & transitions'},
-        {id:'p1_pf2_s8',text:'Hosting on custom domain'},
-        {id:'p1_pf2_s9',text:'SEO meta tags'},
-        {id:'p1_pf2_s10',text:'Performance optimization'}
-      ]},
-      {id:'p1_pf3',name:'Resume tailored for dev jobs',difficulty:'Easy',time:'2-3 days',subs:[
-        {id:'p1_pf3_s1',text:'One-page format'},
-        {id:'p1_pf3_s2',text:'Technical skills section prominently placed'},
-        {id:'p1_pf3_s3',text:'Project descriptions with tech stack'},
-        {id:'p1_pf3_s4',text:'Quantified achievements (where possible)'},
-        {id:'p1_pf3_s5',text:'ATS-friendly format (simple layout)'},
-        {id:'p1_pf3_s6',text:'Action verbs (Built, Developed, Implemented)'},
-        {id:'p1_pf3_s7',text:'Education & certifications'},
-        {id:'p1_pf3_s8',text:'Links to GitHub, portfolio, LinkedIn'},
-        {id:'p1_pf3_s9',text:'Tailoring for each application'},
-        {id:'p1_pf3_s10',text:'PDF format'}
-      ]},
-      {id:'p1_pf4',name:'GitHub profile optimization',difficulty:'Easy',time:'1-2 days',subs:[
-        {id:'p1_pf4_s1',text:'Profile README (special repository)'},
-        {id:'p1_pf4_s2',text:'Pinned repositories (best projects)'},
-        {id:'p1_pf4_s3',text:'Consistent contribution graph'},
-        {id:'p1_pf4_s4',text:'Meaningful commit messages'},
-        {id:'p1_pf4_s5',text:'Clean, documented code in repos'},
-        {id:'p1_pf4_s6',text:'Repository descriptions & topics'},
-        {id:'p1_pf4_s7',text:'README files with setup instructions'},
-        {id:'p1_pf4_s8',text:'Open source contributions (if any)'},
-        {id:'p1_pf4_s9',text:'Profile photo & bio'}
-      ]},
-      {id:'p1_pf5',name:'LinkedIn optimization',difficulty:'Easy',time:'1-2 days',subs:[
-        {id:'p1_pf5_s1',text:'Professional headline'},
-        {id:'p1_pf5_s2',text:'About section — your story & skills'},
-        {id:'p1_pf5_s3',text:'Experience section with dev projects'},
-        {id:'p1_pf5_s4',text:'Skills endorsements — add relevant skills'},
-        {id:'p1_pf5_s5',text:'Featured section (portfolio, projects)'},
-        {id:'p1_pf5_s6',text:'Networking — connect with developers & recruiters'},
-        {id:'p1_pf5_s7',text:'Engaging with dev content'},
-        {id:'p1_pf5_s8',text:'Recommendations from peers/mentors'},
-        {id:'p1_pf5_s9',text:'Custom LinkedIn URL'}
-      ]},
-      {id:'p1_pf6',name:'Basic DSA for interviews',difficulty:'Medium',time:'2-4 weeks',subs:[
-        {id:'p1_pf6_s1',text:'Arrays & string manipulation'},
-        {id:'p1_pf6_s2',text:'Hash maps / objects for lookups'},
-        {id:'p1_pf6_s3',text:'Two pointers technique'},
-        {id:'p1_pf6_s4',text:'Sliding window pattern'},
-        {id:'p1_pf6_s5',text:'Basic sorting (bubble, selection, merge sort)'},
-        {id:'p1_pf6_s6',text:'Binary search'},
-        {id:'p1_pf6_s7',text:'Stack & queue usage'},
-        {id:'p1_pf6_s8',text:'Linked list basics'},
-        {id:'p1_pf6_s9',text:'Time complexity (Big O notation)'},
-        {id:'p1_pf6_s10',text:'LeetCode Easy problems practice'},
-        {id:'p1_pf6_s11',text:'Common interview patterns'}
-      ]}
-    ]}
-  ]
-},
-// ===== PHASE 2 =====
-{
-  id:'phase2',phase:2,emoji:'💼',
-  title:'PHASE 2: GROW AT JOB',
-  subtitle:'On-the-Job Growth • First 6-12 months at job',
-  priority:'medium',priorityLabel:'MEDIUM PRIORITY',color:'#eab308',
-  categories:[
-    {name:'Advanced React',emoji:'⚛️',topics:[
-      {id:'p2_ar1',name:'useReducer, useMemo, useCallback',difficulty:'Medium',time:'3-5 days',subs:[
-        {id:'p2_ar1_s1',text:'useReducer pattern (state, action, dispatch)'},
-        {id:'p2_ar1_s2',text:'Reducer function structure'},
-        {id:'p2_ar1_s3',text:'dispatch actions with type & payload'},
-        {id:'p2_ar1_s4',text:'useReducer vs useState (when to use)'},
-        {id:'p2_ar1_s5',text:'useMemo for expensive calculations'},
-        {id:'p2_ar1_s6',text:'useMemo dependency array'},
-        {id:'p2_ar1_s7',text:'useCallback for stable function references'},
-        {id:'p2_ar1_s8',text:'useCallback with event handlers'},
-        {id:'p2_ar1_s9',text:'React.memo for component memoization'},
-        {id:'p2_ar1_s10',text:'When NOT to optimize (premature optimization)'}
-      ]},
-      {id:'p2_ar2',name:'React Query / TanStack Query',difficulty:'Medium',time:'3-5 days',subs:[
-        {id:'p2_ar2_s1',text:'Installation & QueryClientProvider'},
-        {id:'p2_ar2_s2',text:'useQuery for fetching data'},
-        {id:'p2_ar2_s3',text:'Query keys & caching'},
-        {id:'p2_ar2_s4',text:'staleTime & cacheTime configuration'},
-        {id:'p2_ar2_s5',text:'Automatic refetching (window focus, interval)'},
-        {id:'p2_ar2_s6',text:'useMutation for creating/updating/deleting'},
-        {id:'p2_ar2_s7',text:'Invalidating queries after mutations'},
-        {id:'p2_ar2_s8',text:'Pagination with useQuery'},
-        {id:'p2_ar2_s9',text:'Infinite scrolling with useInfiniteQuery'},
-        {id:'p2_ar2_s10',text:'Optimistic updates'},
-        {id:'p2_ar2_s11',text:'Loading & error states'},
-        {id:'p2_ar2_s12',text:'DevTools for debugging'}
-      ]},
-      {id:'p2_ar3',name:'Zustand / Redux Toolkit',difficulty:'Hard',time:'1-2 weeks',subs:[
-        {id:'p2_ar3_s1',text:'Zustand: creating a store'},
-        {id:'p2_ar3_s2',text:'Zustand: selectors & accessing state'},
-        {id:'p2_ar3_s3',text:'Zustand: actions & state updates'},
-        {id:'p2_ar3_s4',text:'Zustand: middleware (persist, devtools)'},
-        {id:'p2_ar3_s5',text:'Redux Toolkit: configureStore'},
-        {id:'p2_ar3_s6',text:'Redux Toolkit: createSlice'},
-        {id:'p2_ar3_s7',text:'Reducers & actions in a slice'},
-        {id:'p2_ar3_s8',text:'Selectors & useSelector'},
-        {id:'p2_ar3_s9',text:'useDispatch for dispatching actions'},
-        {id:'p2_ar3_s10',text:'Async logic with createAsyncThunk'},
-        {id:'p2_ar3_s11',text:'Redux DevTools'},
-        {id:'p2_ar3_s12',text:'Zustand vs Redux comparison'}
-      ]},
-      {id:'p2_ar4',name:'React Hook Form',difficulty:'Easy',time:'2-3 days',subs:[
-        {id:'p2_ar4_s1',text:'useForm hook setup'},
-        {id:'p2_ar4_s2',text:'register() for input fields'},
-        {id:'p2_ar4_s3',text:'handleSubmit for form submission'},
-        {id:'p2_ar4_s4',text:'Validation rules (required, minLength, pattern)'},
-        {id:'p2_ar4_s5',text:'Error messages display (formState.errors)'},
-        {id:'p2_ar4_s6',text:'watch() for watching field values'},
-        {id:'p2_ar4_s7',text:'reset() for resetting forms'},
-        {id:'p2_ar4_s8',text:'Controller component for custom inputs'},
-        {id:'p2_ar4_s9',text:'Integration with Zod/Yup validation'},
-        {id:'p2_ar4_s10',text:'DevTools for form debugging'}
-      ]},
-      {id:'p2_ar5',name:'Performance Optimization',difficulty:'Hard',time:'1 week',subs:[
-        {id:'p2_ar5_s1',text:'React.memo for preventing re-renders'},
-        {id:'p2_ar5_s2',text:'useMemo & useCallback strategically'},
-        {id:'p2_ar5_s3',text:'Virtualization for long lists (react-window)'},
-        {id:'p2_ar5_s4',text:'Bundle analysis (webpack-bundle-analyzer)'},
-        {id:'p2_ar5_s5',text:'React Profiler for identifying bottlenecks'},
-        {id:'p2_ar5_s6',text:'Avoiding unnecessary re-renders'},
-        {id:'p2_ar5_s7',text:'State colocation principle'},
-        {id:'p2_ar5_s8',text:'Debouncing & throttling user input'},
-        {id:'p2_ar5_s9',text:'Image optimization (lazy loading, WebP)'},
-        {id:'p2_ar5_s10',text:'Key optimization for list rendering'},
-        {id:'p2_ar5_s11',text:'Code splitting strategies'}
-      ]},
-      {id:'p2_ar6',name:'Lazy Loading & Code Splitting',difficulty:'Medium',time:'2-3 days',subs:[
-        {id:'p2_ar6_s1',text:'React.lazy() for dynamic imports'},
-        {id:'p2_ar6_s2',text:'Suspense component & fallback UI'},
-        {id:'p2_ar6_s3',text:'Route-based code splitting'},
-        {id:'p2_ar6_s4',text:'Component-based splitting'},
-        {id:'p2_ar6_s5',text:'Loading spinners & skeleton screens'},
-        {id:'p2_ar6_s6',text:'Preloading critical components'},
-        {id:'p2_ar6_s7',text:'Dynamic import() syntax'},
-        {id:'p2_ar6_s8',text:'Webpack chunks'},
-        {id:'p2_ar6_s9',text:'Bundle size reduction strategies'}
-      ]},
-      {id:'p2_ar7',name:'Error Boundaries',difficulty:'Easy',time:'1-2 days',subs:[
-        {id:'p2_ar7_s1',text:'What are Error Boundaries'},
-        {id:'p2_ar7_s2',text:'Class component requirement (componentDidCatch)'},
-        {id:'p2_ar7_s3',text:'getDerivedStateFromError'},
-        {id:'p2_ar7_s4',text:'Fallback UI rendering'},
-        {id:'p2_ar7_s5',text:'Error boundary placement strategy'},
-        {id:'p2_ar7_s6',text:'Granular error boundaries per section'},
-        {id:'p2_ar7_s7',text:'Error recovery mechanisms'},
-        {id:'p2_ar7_s8',text:'Logging errors to external service'},
-        {id:'p2_ar7_s9',text:'react-error-boundary library'},
-        {id:'p2_ar7_s10',text:'Error boundaries vs try/catch'}
-      ]},
-      {id:'p2_ar8',name:'Testing (React Testing Library basics)',difficulty:'Medium',time:'1 week',subs:[
-        {id:'p2_ar8_s1',text:'render() function'},
-        {id:'p2_ar8_s2',text:'screen object & queries'},
-        {id:'p2_ar8_s3',text:'getByText, getByRole, getByTestId'},
-        {id:'p2_ar8_s4',text:'queryBy vs getBy vs findBy'},
-        {id:'p2_ar8_s5',text:'fireEvent for simulating events'},
-        {id:'p2_ar8_s6',text:'userEvent for realistic interactions'},
-        {id:'p2_ar8_s7',text:'Async testing with findBy & waitFor'},
-        {id:'p2_ar8_s8',text:'Mocking API calls (MSW / jest.mock)'},
-        {id:'p2_ar8_s9',text:'Snapshot testing basics'},
-        {id:'p2_ar8_s10',text:'Testing component props & state'},
-        {id:'p2_ar8_s11',text:'Test file organization & naming'}
-      ]}
-    ]},
-    {name:'Advanced Backend',emoji:'🔧',topics:[
-      {id:'p2_ab1',name:'Input Validation (Joi / Zod)',difficulty:'Easy',time:'2-3 days',subs:[{id:'p2_ab1_s1',text:'Joi: schema definition'},{id:'p2_ab1_s2',text:'Zod: schema definition'},{id:'p2_ab1_s3',text:'String, number, boolean, date validation'},{id:'p2_ab1_s4',text:'Custom error messages'},{id:'p2_ab1_s5',text:'Nested object validation'},{id:'p2_ab1_s6',text:'Array validation'},{id:'p2_ab1_s7',text:'Optional & required fields'},{id:'p2_ab1_s8',text:'Regex pattern validation'},{id:'p2_ab1_s9',text:'Validation middleware creation'},{id:'p2_ab1_s10',text:'Returning formatted validation errors'},{id:'p2_ab1_s11',text:'Zod with TypeScript inference'}]},
-      {id:'p2_ab2',name:'File Upload (Multer)',difficulty:'Medium',time:'2-3 days',subs:[{id:'p2_ab2_s1',text:'Multer installation & configuration'},{id:'p2_ab2_s2',text:'Single file upload (upload.single)'},{id:'p2_ab2_s3',text:'Multiple file upload (upload.array)'},{id:'p2_ab2_s4',text:'File type filtering (fileFilter)'},{id:'p2_ab2_s5',text:'File size limits'},{id:'p2_ab2_s6',text:'Memory storage vs disk storage'},{id:'p2_ab2_s7',text:'Accessing uploaded file info (req.file)'},{id:'p2_ab2_s8',text:'Cloud upload integration (Cloudinary, AWS S3)'},{id:'p2_ab2_s9',text:'Image resizing (Sharp)'},{id:'p2_ab2_s10',text:'Handling upload errors'},{id:'p2_ab2_s11',text:'Deleting uploaded files'}]},
-      {id:'p2_ab3',name:'Pagination & Filtering',difficulty:'Medium',time:'2-3 days',subs:[{id:'p2_ab3_s1',text:'Skip & limit approach'},{id:'p2_ab3_s2',text:'Page & pageSize parameters'},{id:'p2_ab3_s3',text:'Calculating total pages'},{id:'p2_ab3_s4',text:'Total document count'},{id:'p2_ab3_s5',text:'Sort parameter (asc/desc)'},{id:'p2_ab3_s6',text:'Search/filter by fields'},{id:'p2_ab3_s7',text:'Advanced filtering ($gte, $lte, $regex)'},{id:'p2_ab3_s8',text:'Building a query builder utility'},{id:'p2_ab3_s9',text:'Pagination response format'},{id:'p2_ab3_s10',text:'Cursor-based pagination overview'},{id:'p2_ab3_s11',text:'Frontend pagination integration'}]},
-      {id:'p2_ab4',name:'Rate Limiting',difficulty:'Easy',time:'1-2 days',subs:[{id:'p2_ab4_s1',text:'express-rate-limit package'},{id:'p2_ab4_s2',text:'Window duration configuration'},{id:'p2_ab4_s3',text:'Max requests per window'},{id:'p2_ab4_s4',text:'Custom rate limit message'},{id:'p2_ab4_s5',text:'Rate limit headers (X-RateLimit-*)'},{id:'p2_ab4_s6',text:'IP-based rate limiting'},{id:'p2_ab4_s7',text:'API key-based rate limiting'},{id:'p2_ab4_s8',text:'Different limits for different routes'},{id:'p2_ab4_s9',text:'Slow down middleware (express-slow-down)'},{id:'p2_ab4_s10',text:'DDoS protection basics'}]},
-      {id:'p2_ab5',name:'API Documentation (Swagger)',difficulty:'Medium',time:'2-3 days',subs:[{id:'p2_ab5_s1',text:'OpenAPI Specification overview'},{id:'p2_ab5_s2',text:'swagger-jsdoc setup'},{id:'p2_ab5_s3',text:'swagger-ui-express for UI'},{id:'p2_ab5_s4',text:'Documenting endpoints with JSDoc comments'},{id:'p2_ab5_s5',text:'Request body schemas'},{id:'p2_ab5_s6',text:'Response schemas'},{id:'p2_ab5_s7',text:'Path parameters & query parameters'},{id:'p2_ab5_s8',text:'Authentication documentation'},{id:'p2_ab5_s9',text:'Try-it-out feature for testing'},{id:'p2_ab5_s10',text:'Generating API docs automatically'},{id:'p2_ab5_s11',text:'Keeping docs in sync with code'}]},
-      {id:'p2_ab6',name:'WebSockets basics (Socket.io)',difficulty:'Hard',time:'1 week',subs:[{id:'p2_ab6_s1',text:'WebSocket vs HTTP'},{id:'p2_ab6_s2',text:'Socket.io server setup'},{id:'p2_ab6_s3',text:'Socket.io client setup'},{id:'p2_ab6_s4',text:'Connection & disconnection events'},{id:'p2_ab6_s5',text:'Emitting events (emit)'},{id:'p2_ab6_s6',text:'Listening for events (on)'},{id:'p2_ab6_s7',text:'Broadcasting to all clients'},{id:'p2_ab6_s8',text:'Rooms & namespaces'},{id:'p2_ab6_s9',text:'Private messaging pattern'},{id:'p2_ab6_s10',text:'Real-time chat implementation'},{id:'p2_ab6_s11',text:'Real-time notifications'},{id:'p2_ab6_s12',text:'Socket.io with Express integration'}]},
-      {id:'p2_ab7',name:'Cron Jobs',difficulty:'Easy',time:'1-2 days',subs:[{id:'p2_ab7_s1',text:'node-cron package'},{id:'p2_ab7_s2',text:'Cron expression syntax'},{id:'p2_ab7_s3',text:'Scheduling recurring tasks'},{id:'p2_ab7_s4',text:'Database cleanup jobs'},{id:'p2_ab7_s5',text:'Sending scheduled emails'},{id:'p2_ab7_s6',text:'Report generation jobs'},{id:'p2_ab7_s7',text:'Logging scheduled task execution'},{id:'p2_ab7_s8',text:'Stopping & starting cron jobs'},{id:'p2_ab7_s9',text:'Timezone handling'},{id:'p2_ab7_s10',text:'Running jobs on server start'}]},
-      {id:'p2_ab8',name:'Email Sending (Nodemailer)',difficulty:'Easy',time:'1-2 days',subs:[{id:'p2_ab8_s1',text:'Nodemailer setup'},{id:'p2_ab8_s2',text:'SMTP transport configuration'},{id:'p2_ab8_s3',text:'Gmail, Outlook, SendGrid, Mailgun setup'},{id:'p2_ab8_s4',text:'Sending plain text emails'},{id:'p2_ab8_s5',text:'Sending HTML emails'},{id:'p2_ab8_s6',text:'Email templates (Handlebars, EJS)'},{id:'p2_ab8_s7',text:'File attachments'},{id:'p2_ab8_s8',text:'Email verification flow'},{id:'p2_ab8_s9',text:'Password reset email flow'},{id:'p2_ab8_s10',text:'Queue integration for bulk emails'},{id:'p2_ab8_s11',text:'Testing emails (Mailtrap, Ethereal)'}]}
-    ]},
-    {name:'Database Advanced',emoji:'🗃️',topics:[
-      {id:'p2_da1',name:'Aggregation Pipeline',difficulty:'Hard',time:'1 week',subs:[{id:'p2_da1_s1',text:'Pipeline concept (stages)'},{id:'p2_da1_s2',text:'$match stage — filtering'},{id:'p2_da1_s3',text:'$group stage — grouping & aggregation'},{id:'p2_da1_s4',text:'$project stage — reshaping documents'},{id:'p2_da1_s5',text:'$sort stage — ordering results'},{id:'p2_da1_s6',text:'$unwind stage — deconstructing arrays'},{id:'p2_da1_s7',text:'$lookup stage — joining collections'},{id:'p2_da1_s8',text:'$addFields stage — computed fields'},{id:'p2_da1_s9',text:'$count & $limit stages'},{id:'p2_da1_s10',text:'Aggregation expressions ($sum, $avg, $max, $min)'},{id:'p2_da1_s11',text:'Using aggregate() in Mongoose'},{id:'p2_da1_s12',text:'Real-world aggregation examples'}]},
-      {id:'p2_da2',name:'Indexing',difficulty:'Medium',time:'2-3 days',subs:[{id:'p2_da2_s1',text:'What are indexes & why they matter'},{id:'p2_da2_s2',text:'Single field index'},{id:'p2_da2_s3',text:'Compound index (multiple fields)'},{id:'p2_da2_s4',text:'Text index for search'},{id:'p2_da2_s5',text:'Unique index'},{id:'p2_da2_s6',text:'TTL index (auto-expire documents)'},{id:'p2_da2_s7',text:'Sparse index'},{id:'p2_da2_s8',text:'Creating indexes in Mongoose schema'},{id:'p2_da2_s9',text:'explain() for query analysis'},{id:'p2_da2_s10',text:'Index performance impact'},{id:'p2_da2_s11',text:'Indexing best practices'}]},
-      {id:'p2_da3',name:'Population & References',difficulty:'Medium',time:'2-3 days',subs:[{id:'p2_da3_s1',text:'ref in schema definition'},{id:'p2_da3_s2',text:'ObjectId references'},{id:'p2_da3_s3',text:'populate() method'},{id:'p2_da3_s4',text:'Populating multiple fields'},{id:'p2_da3_s5',text:'Nested population (deep populate)'},{id:'p2_da3_s6',text:'populate with select (specific fields)'},{id:'p2_da3_s7',text:'Virtual populate'},{id:'p2_da3_s8',text:'Circular reference handling'},{id:'p2_da3_s9',text:'When to embed vs reference'},{id:'p2_da3_s10',text:'Performance considerations with populate'}]},
-      {id:'p2_da4',name:'Transactions',difficulty:'Medium',time:'2-3 days',subs:[{id:'p2_da4_s1',text:'What are transactions'},{id:'p2_da4_s2',text:'ACID properties'},{id:'p2_da4_s3',text:'Session creation (startSession)'},{id:'p2_da4_s4',text:'startTransaction()'},{id:'p2_da4_s5',text:'commitTransaction()'},{id:'p2_da4_s6',text:'abortTransaction()'},{id:'p2_da4_s7',text:'try/catch with transactions'},{id:'p2_da4_s8',text:'Use cases (bank transfers, orders)'},{id:'p2_da4_s9',text:'Transaction error handling'},{id:'p2_da4_s10',text:'Replica set requirement for transactions'}]},
-      {id:'p2_da5',name:'Database Design Patterns',difficulty:'Hard',time:'1 week',subs:[{id:'p2_da5_s1',text:'Embedding vs referencing decision'},{id:'p2_da5_s2',text:'One-to-few (embed)'},{id:'p2_da5_s3',text:'One-to-many (reference or embed)'},{id:'p2_da5_s4',text:'Many-to-many (reference with array)'},{id:'p2_da5_s5',text:'Denormalization strategies'},{id:'p2_da5_s6',text:'Schema versioning pattern'},{id:'p2_da5_s7',text:'Bucket pattern (for time-series)'},{id:'p2_da5_s8',text:'Computed pattern (for aggregated fields)'},{id:'p2_da5_s9',text:'Polymorphic pattern'},{id:'p2_da5_s10',text:'Anti-patterns to avoid'},{id:'p2_da5_s11',text:'Data modeling best practices'}]},
-      {id:'p2_da6',name:'Redis (caching basics)',difficulty:'Medium',time:'3-5 days',subs:[{id:'p2_da6_s1',text:'What is Redis (in-memory data store)'},{id:'p2_da6_s2',text:'Redis installation & setup'},{id:'p2_da6_s3',text:'SET & GET commands'},{id:'p2_da6_s4',text:'Key expiration (EX, PX, TTL)'},{id:'p2_da6_s5',text:'Redis data types (strings, hashes, lists, sets)'},{id:'p2_da6_s6',text:'Cache-aside pattern'},{id:'p2_da6_s7',text:'Cache invalidation strategies'},{id:'p2_da6_s8',text:'Redis as session store'},{id:'p2_da6_s9',text:'ioredis / redis npm packages'},{id:'p2_da6_s10',text:'Connecting Redis in Node.js'},{id:'p2_da6_s11',text:'Caching API responses'},{id:'p2_da6_s12',text:'Performance improvement measurement'}]},
-      {id:'p2_da7',name:'PostgreSQL / SQL basics',difficulty:'Medium',time:'1-2 weeks',subs:[{id:'p2_da7_s1',text:'SQL vs NoSQL comparison'},{id:'p2_da7_s2',text:'CREATE TABLE & data types'},{id:'p2_da7_s3',text:'INSERT INTO'},{id:'p2_da7_s4',text:'SELECT, WHERE, ORDER BY'},{id:'p2_da7_s5',text:'UPDATE & DELETE'},{id:'p2_da7_s6',text:'JOINs (INNER, LEFT, RIGHT, FULL)'},{id:'p2_da7_s7',text:'GROUP BY & HAVING'},{id:'p2_da7_s8',text:'Aggregate functions (COUNT, SUM, AVG)'},{id:'p2_da7_s9',text:'Primary keys & foreign keys'},{id:'p2_da7_s10',text:'Migrations concept'},{id:'p2_da7_s11',text:'ORM: Prisma or Sequelize basics'},{id:'p2_da7_s12',text:'Connection setup with Node.js'}]}
-    ]},
-    {name:'DevOps Basics',emoji:'🐳',topics:[
-      {id:'p2_do1',name:'Docker basics',difficulty:'Medium',time:'1 week',subs:[{id:'p2_do1_s1',text:'What is Docker & containers'},{id:'p2_do1_s2',text:'Docker vs virtual machines'},{id:'p2_do1_s3',text:'Dockerfile syntax & instructions'},{id:'p2_do1_s4',text:'FROM, RUN, COPY, CMD, EXPOSE'},{id:'p2_do1_s5',text:'docker build — building images'},{id:'p2_do1_s6',text:'docker run — running containers'},{id:'p2_do1_s7',text:'docker-compose for multi-container setup'},{id:'p2_do1_s8',text:'docker-compose.yml structure'},{id:'p2_do1_s9',text:'Volumes for persistent data'},{id:'p2_do1_s10',text:'Environment variables in Docker'},{id:'p2_do1_s11',text:'Port mapping (-p)'},{id:'p2_do1_s12',text:'Docker Hub — pushing & pulling images'},{id:'p2_do1_s13',text:'.dockerignore file'}]},
-      {id:'p2_do2',name:'CI/CD basics (GitHub Actions)',difficulty:'Medium',time:'3-5 days',subs:[{id:'p2_do2_s1',text:'What is CI/CD'},{id:'p2_do2_s2',text:'GitHub Actions workflow files (.yml)'},{id:'p2_do2_s3',text:'Workflow triggers (push, pull_request)'},{id:'p2_do2_s4',text:'Jobs & steps structure'},{id:'p2_do2_s5',text:'Using marketplace actions'},{id:'p2_do2_s6',text:'Environment secrets in GitHub'},{id:'p2_do2_s7',text:'Build step (npm install, npm run build)'},{id:'p2_do2_s8',text:'Test step (npm test)'},{id:'p2_do2_s9',text:'Deploy step (to Vercel/Render)'},{id:'p2_do2_s10',text:'Status badges in README'},{id:'p2_do2_s11',text:'Branch protection rules'},{id:'p2_do2_s12',text:'Automated testing on PR'}]},
-      {id:'p2_do3',name:'Linux basics',difficulty:'Medium',time:'1 week',subs:[{id:'p2_do3_s1',text:'File system navigation (cd, ls, pwd)'},{id:'p2_do3_s2',text:'File operations (cp, mv, rm, mkdir, touch)'},{id:'p2_do3_s3',text:'File viewing (cat, less, head, tail, grep)'},{id:'p2_do3_s4',text:'Permissions (chmod, chown)'},{id:'p2_do3_s5',text:'Package managers (apt, yum)'},{id:'p2_do3_s6',text:'Process management (ps, top, kill)'},{id:'p2_do3_s7',text:'SSH (connecting to remote servers)'},{id:'p2_do3_s8',text:'Environment variables (export, .bashrc)'},{id:'p2_do3_s9',text:'Shell scripting basics'},{id:'p2_do3_s10',text:'Piping & redirection (|, >, >>)'},{id:'p2_do3_s11',text:'cron (scheduling tasks)'},{id:'p2_do3_s12',text:'User management basics'}]},
-      {id:'p2_do4',name:'Nginx basics',difficulty:'Medium',time:'2-3 days',subs:[{id:'p2_do4_s1',text:'What is Nginx (web server & reverse proxy)'},{id:'p2_do4_s2',text:'Installation on Linux'},{id:'p2_do4_s3',text:'Server blocks (virtual hosts)'},{id:'p2_do4_s4',text:'Reverse proxy configuration'},{id:'p2_do4_s5',text:'Proxying to Node.js app'},{id:'p2_do4_s6',text:'Serving static files'},{id:'p2_do4_s7',text:'SSL/HTTPS configuration (Let\'s Encrypt)'},{id:'p2_do4_s8',text:'Load balancing with Nginx'},{id:'p2_do4_s9',text:'Gzip compression'},{id:'p2_do4_s10',text:'Custom error pages'},{id:'p2_do4_s11',text:'Access & error logs'},{id:'p2_do4_s12',text:'Basic security headers'}]},
-      {id:'p2_do5',name:'PM2',difficulty:'Easy',time:'1-2 days',subs:[{id:'p2_do5_s1',text:'PM2 installation (global)'},{id:'p2_do5_s2',text:'Starting apps (pm2 start)'},{id:'p2_do5_s3',text:'Process listing (pm2 list)'},{id:'p2_do5_s4',text:'Restarting & stopping (pm2 restart, pm2 stop)'},{id:'p2_do5_s5',text:'Cluster mode (pm2 start -i max)'},{id:'p2_do5_s6',text:'Log management (pm2 logs)'},{id:'p2_do5_s7',text:'Monitoring (pm2 monit)'},{id:'p2_do5_s8',text:'Startup script (pm2 startup)'},{id:'p2_do5_s9',text:'Saving process list (pm2 save)'},{id:'p2_do5_s10',text:'Environment management (ecosystem.config.js)'},{id:'p2_do5_s11',text:'Zero-downtime reload (pm2 reload)'}]},
-      {id:'p2_do6',name:'Logging & Monitoring',difficulty:'Medium',time:'3-5 days',subs:[{id:'p2_do6_s1',text:'Winston logger setup'},{id:'p2_do6_s2',text:'Morgan for HTTP request logging'},{id:'p2_do6_s3',text:'Log levels (error, warn, info, debug)'},{id:'p2_do6_s4',text:'Structured logging (JSON format)'},{id:'p2_do6_s5',text:'Log rotation (winston-daily-rotate-file)'},{id:'p2_do6_s6',text:'Error tracking with Sentry'},{id:'p2_do6_s7',text:'Health check endpoints'},{id:'p2_do6_s8',text:'Application metrics (response time, memory)'},{id:'p2_do6_s9',text:'Uptime monitoring (UptimeRobot, Pingdom)'},{id:'p2_do6_s10',text:'APM tools overview (New Relic, Datadog)'},{id:'p2_do6_s11',text:'Centralized logging concepts'}]}
-    ]},
-    {name:'TypeScript',emoji:'🔷',topics:[
-      {id:'p2_ts1',name:'TypeScript fundamentals',difficulty:'Medium',time:'1 week',subs:[{id:'p2_ts1_s1',text:'What is TypeScript & why use it'},{id:'p2_ts1_s2',text:'Installation & tsconfig.json'},{id:'p2_ts1_s3',text:'Type annotations (:type)'},{id:'p2_ts1_s4',text:'Basic types: string, number, boolean'},{id:'p2_ts1_s5',text:'Arrays & tuple types'},{id:'p2_ts1_s6',text:'Union types (string | number)'},{id:'p2_ts1_s7',text:'Type aliases (type keyword)'},{id:'p2_ts1_s8',text:'Literal types'},{id:'p2_ts1_s9',text:'Enums (string & numeric)'},{id:'p2_ts1_s10',text:'Type assertions (as keyword)'},{id:'p2_ts1_s11',text:'Type narrowing (typeof, instanceof)'},{id:'p2_ts1_s12',text:'any, unknown, never, void types'},{id:'p2_ts1_s13',text:'Type inference'}]},
-      {id:'p2_ts2',name:'TypeScript with React',difficulty:'Medium',time:'1 week',subs:[{id:'p2_ts2_s1',text:'Setting up React with TypeScript'},{id:'p2_ts2_s2',text:'Typing functional component props'},{id:'p2_ts2_s3',text:'React.FC vs direct typing'},{id:'p2_ts2_s4',text:'Typing useState'},{id:'p2_ts2_s5',text:'Typing useEffect'},{id:'p2_ts2_s6',text:'Typing event handlers (ChangeEvent, FormEvent)'},{id:'p2_ts2_s7',text:'Typing useRef'},{id:'p2_ts2_s8',text:'Generic components'},{id:'p2_ts2_s9',text:'Typing children prop'},{id:'p2_ts2_s10',text:'Typing context (createContext<Type>)'},{id:'p2_ts2_s11',text:'Typing custom hooks'},{id:'p2_ts2_s12',text:'.tsx file extension'},{id:'p2_ts2_s13',text:'Discriminated unions for component variants'}]},
-      {id:'p2_ts3',name:'TypeScript with Node / Express',difficulty:'Medium',time:'1 week',subs:[{id:'p2_ts3_s1',text:'Setting up Node.js with TypeScript'},{id:'p2_ts3_s2',text:'ts-node & tsx for development'},{id:'p2_ts3_s3',text:'@types/node, @types/express'},{id:'p2_ts3_s4',text:'Typing Request & Response'},{id:'p2_ts3_s5',text:'Typing middleware'},{id:'p2_ts3_s6',text:'Extending Request interface'},{id:'p2_ts3_s7',text:'Typing Mongoose models & schemas'},{id:'p2_ts3_s8',text:'Typing environment variables'},{id:'p2_ts3_s9',text:'Building TypeScript project (tsc)'},{id:'p2_ts3_s10',text:'Source maps for debugging'},{id:'p2_ts3_s11',text:'tsconfig options for Node.js'},{id:'p2_ts3_s12',text:'Path aliases'}]},
-      {id:'p2_ts4',name:'Generics, Interfaces, Types',difficulty:'Hard',time:'1 week',subs:[{id:'p2_ts4_s1',text:'Generic functions (<T>)'},{id:'p2_ts4_s2',text:'Generic interfaces'},{id:'p2_ts4_s3',text:'Generic classes'},{id:'p2_ts4_s4',text:'Constraining generics (extends)'},{id:'p2_ts4_s5',text:'Interface declaration'},{id:'p2_ts4_s6',text:'Extending interfaces (inheritance)'},{id:'p2_ts4_s7',text:'Interface vs type alias comparison'},{id:'p2_ts4_s8',text:'Optional properties (?:)'},{id:'p2_ts4_s9',text:'Readonly properties'},{id:'p2_ts4_s10',text:'Index signatures'},{id:'p2_ts4_s11',text:'Mapped types'},{id:'p2_ts4_s12',text:'Conditional types'},{id:'p2_ts4_s13',text:'Intersection types (&)'},{id:'p2_ts4_s14',text:'Declaration merging'}]},
-      {id:'p2_ts5',name:'Utility Types',difficulty:'Medium',time:'3-5 days',subs:[{id:'p2_ts5_s1',text:'Partial<T> — all properties optional'},{id:'p2_ts5_s2',text:'Required<T> — all properties required'},{id:'p2_ts5_s3',text:'Pick<T, K> — select properties'},{id:'p2_ts5_s4',text:'Omit<T, K> — exclude properties'},{id:'p2_ts5_s5',text:'Record<K, T> — key-value mapping'},{id:'p2_ts5_s6',text:'Readonly<T> — immutable properties'},{id:'p2_ts5_s7',text:'ReturnType<T> — function return type'},{id:'p2_ts5_s8',text:'Parameters<T> — function parameter types'},{id:'p2_ts5_s9',text:'Exclude<T, U> & Extract<T, U>'},{id:'p2_ts5_s10',text:'NonNullable<T>'},{id:'p2_ts5_s11',text:'Awaited<T> for Promise types'},{id:'p2_ts5_s12',text:'Creating custom utility types'}]}
-    ]},
-    {name:'Testing',emoji:'🧪',topics:[
-      {id:'p2_te1',name:'Unit Testing (Jest)',difficulty:'Medium',time:'1 week',subs:[{id:'p2_te1_s1',text:'Jest installation & configuration'},{id:'p2_te1_s2',text:'test() & describe() blocks'},{id:'p2_te1_s3',text:'expect() & matchers (toBe, toEqual, etc.)'},{id:'p2_te1_s4',text:'Mocking functions (jest.fn, jest.mock)'},{id:'p2_te1_s5',text:'Spying on methods (jest.spyOn)'},{id:'p2_te1_s6',text:'beforeEach, afterEach, beforeAll, afterAll'},{id:'p2_te1_s7',text:'Async testing (async/await, done callback)'},{id:'p2_te1_s8',text:'Testing pure functions'},{id:'p2_te1_s9',text:'Code coverage reports'},{id:'p2_te1_s10',text:'Test file naming conventions'},{id:'p2_te1_s11',text:'Organizing test files'},{id:'p2_te1_s12',text:'Snapshot testing'}]},
-      {id:'p2_te2',name:'Integration Testing',difficulty:'Medium',time:'1 week',subs:[{id:'p2_te2_s1',text:'What is integration testing'},{id:'p2_te2_s2',text:'Testing API endpoints end-to-end'},{id:'p2_te2_s3',text:'Supertest library setup'},{id:'p2_te2_s4',text:'Testing GET, POST, PUT, DELETE endpoints'},{id:'p2_te2_s5',text:'Testing with authentication'},{id:'p2_te2_s6',text:'Test database setup (in-memory or separate DB)'},{id:'p2_te2_s7',text:'Fixture / seed data'},{id:'p2_te2_s8',text:'Database cleanup between tests'},{id:'p2_te2_s9',text:'Testing error responses'},{id:'p2_te2_s10',text:'Testing middleware behavior'},{id:'p2_te2_s11',text:'Organizing integration tests'},{id:'p2_te2_s12',text:'CI pipeline integration'}]},
-      {id:'p2_te3',name:'E2E Testing (Cypress / Playwright basics)',difficulty:'Hard',time:'1-2 weeks',subs:[{id:'p2_te3_s1',text:'Cypress installation & setup'},{id:'p2_te3_s2',text:'Playwright installation & setup'},{id:'p2_te3_s3',text:'Writing first E2E test'},{id:'p2_te3_s4',text:'Selecting elements (cy.get, page.locator)'},{id:'p2_te3_s5',text:'Assertions in E2E tests'},{id:'p2_te3_s6',text:'Simulating user flows (login, form submit)'},{id:'p2_te3_s7',text:'Fixtures for test data'},{id:'p2_te3_s8',text:'Custom commands / helpers'},{id:'p2_te3_s9',text:'Handling waits & async behavior'},{id:'p2_te3_s10',text:'Screenshot & video recording'},{id:'p2_te3_s11',text:'CI integration for E2E tests'},{id:'p2_te3_s12',text:'Visual regression testing basics'}]},
-      {id:'p2_te4',name:'API Testing (Postman advanced)',difficulty:'Easy',time:'2-3 days',subs:[{id:'p2_te4_s1',text:'Collections organization'},{id:'p2_te4_s2',text:'Environment variables (dev, staging, prod)'},{id:'p2_te4_s3',text:'Global & collection variables'},{id:'p2_te4_s4',text:'Pre-request scripts'},{id:'p2_te4_s5',text:'Test scripts & assertions'},{id:'p2_te4_s6',text:'Chaining requests (using response data)'},{id:'p2_te4_s7',text:'Runner for batch testing'},{id:'p2_te4_s8',text:'Newman CLI for command-line testing'},{id:'p2_te4_s9',text:'API documentation generation'},{id:'p2_te4_s10',text:'Mock servers'},{id:'p2_te4_s11',text:'Monitoring & scheduled runs'},{id:'p2_te4_s12',text:'Importing/exporting collections'}]}
-    ]}
-  ]
-},
-// ===== PHASE 3 =====
-{
-  id:'phase3',phase:3,emoji:'🎓',
-  title:'PHASE 3: BECOME SENIOR',
-  subtitle:'BSc + Senior Level • 1-2+ years',
-  priority:'low',priorityLabel:'LOW PRIORITY',color:'#22c55e',
-  categories:[
-    {name:'System Design',emoji:'🏗️',topics:[
-      {id:'p3_sd1',name:'Microservices basics',difficulty:'Hard',time:'2-3 weeks',subs:[{id:'p3_sd1_s1',text:'Monolith vs microservices architecture'},{id:'p3_sd1_s2',text:'Service boundaries & decomposition'},{id:'p3_sd1_s3',text:'API Gateway pattern'},{id:'p3_sd1_s4',text:'Inter-service communication (REST, gRPC, MQ)'},{id:'p3_sd1_s5',text:'Service discovery'},{id:'p3_sd1_s6',text:'Data management per service'},{id:'p3_sd1_s7',text:'Distributed transactions (Saga pattern)'},{id:'p3_sd1_s8',text:'Deployment independence'},{id:'p3_sd1_s9',text:'Monitoring & observability'},{id:'p3_sd1_s10',text:'Fault tolerance & resilience'},{id:'p3_sd1_s11',text:'Containerization with Docker'},{id:'p3_sd1_s12',text:'Orchestration with Kubernetes overview'}]},
-      {id:'p3_sd2',name:'Message Queues (RabbitMQ / Bull)',difficulty:'Hard',time:'1 week',subs:[{id:'p3_sd2_s1',text:'Message queue concepts (producer, consumer, broker)'},{id:'p3_sd2_s2',text:'RabbitMQ setup & architecture'},{id:'p3_sd2_s3',text:'Bull queue with Redis'},{id:'p3_sd2_s4',text:'Job processing & workers'},{id:'p3_sd2_s5',text:'Retry logic & dead letter queues'},{id:'p3_sd2_s6',text:'Priority queues'},{id:'p3_sd2_s7',text:'Delayed jobs'},{id:'p3_sd2_s8',text:'Job events & progress tracking'},{id:'p3_sd2_s9',text:'Queue patterns (pub/sub, work queue)'},{id:'p3_sd2_s10',text:'Use cases (email, image processing)'},{id:'p3_sd2_s11',text:'Monitoring queues'},{id:'p3_sd2_s12',text:'Error handling in job processing'}]},
-      {id:'p3_sd3',name:'Load Balancing',difficulty:'Medium',time:'3-5 days',subs:[{id:'p3_sd3_s1',text:'What is load balancing'},{id:'p3_sd3_s2',text:'Round-robin distribution'},{id:'p3_sd3_s3',text:'Least connections algorithm'},{id:'p3_sd3_s4',text:'IP hash / sticky sessions'},{id:'p3_sd3_s5',text:'Health checks for backend servers'},{id:'p3_sd3_s6',text:'Layer 4 vs Layer 7 load balancing'},{id:'p3_sd3_s7',text:'Nginx as load balancer'},{id:'p3_sd3_s8',text:'AWS Elastic Load Balancer (ELB)'},{id:'p3_sd3_s9',text:'Horizontal scaling with load balancing'},{id:'p3_sd3_s10',text:'SSL termination at load balancer'},{id:'p3_sd3_s11',text:'Auto-scaling concepts'}]},
-      {id:'p3_sd4',name:'Caching Strategies',difficulty:'Medium',time:'3-5 days',subs:[{id:'p3_sd4_s1',text:'Why caching matters'},{id:'p3_sd4_s2',text:'Cache-aside (lazy loading) pattern'},{id:'p3_sd4_s3',text:'Write-through cache'},{id:'p3_sd4_s4',text:'Write-behind (write-back) cache'},{id:'p3_sd4_s5',text:'Cache invalidation strategies'},{id:'p3_sd4_s6',text:'Time-to-live (TTL)'},{id:'p3_sd4_s7',text:'CDN caching for static assets'},{id:'p3_sd4_s8',text:'Browser caching (Cache-Control headers)'},{id:'p3_sd4_s9',text:'Application-level caching (Redis)'},{id:'p3_sd4_s10',text:'Database query caching'},{id:'p3_sd4_s11',text:'Cache stampede / thundering herd'},{id:'p3_sd4_s12',text:'Cache warming'}]},
-      {id:'p3_sd5',name:'Database Scaling',difficulty:'Hard',time:'1 week',subs:[{id:'p3_sd5_s1',text:'Vertical scaling (bigger machine)'},{id:'p3_sd5_s2',text:'Horizontal scaling (more machines)'},{id:'p3_sd5_s3',text:'Read replicas'},{id:'p3_sd5_s4',text:'Database sharding strategies'},{id:'p3_sd5_s5',text:'Partitioning (range, hash, list)'},{id:'p3_sd5_s6',text:'Connection pooling'},{id:'p3_sd5_s7',text:'Query optimization & indexing'},{id:'p3_sd5_s8',text:'Denormalization for read performance'},{id:'p3_sd5_s9',text:'Database replication'},{id:'p3_sd5_s10',text:'Eventual consistency concept'},{id:'p3_sd5_s11',text:'CAP theorem'},{id:'p3_sd5_s12',text:'Choosing the right database for scale'}]},
-      {id:'p3_sd6',name:'CDN',difficulty:'Easy',time:'1-2 days',subs:[{id:'p3_sd6_s1',text:'What is a CDN (Content Delivery Network)'},{id:'p3_sd6_s2',text:'Edge servers & PoPs'},{id:'p3_sd6_s3',text:'How CDN caching works'},{id:'p3_sd6_s4',text:'Cache-Control & Expires headers'},{id:'p3_sd6_s5',text:'CDN providers (Cloudflare, CloudFront)'},{id:'p3_sd6_s6',text:'Static asset delivery optimization'},{id:'p3_sd6_s7',text:'Cache purging / invalidation'},{id:'p3_sd6_s8',text:'CDN for images, CSS, JS, fonts'},{id:'p3_sd6_s9',text:'Performance benefits (latency reduction)'},{id:'p3_sd6_s10',text:'CDN configuration basics'}]},
-      {id:'p3_sd7',name:'Design Patterns',difficulty:'Hard',time:'2-3 weeks',subs:[{id:'p3_sd7_s1',text:'Singleton pattern'},{id:'p3_sd7_s2',text:'Factory pattern'},{id:'p3_sd7_s3',text:'Observer pattern'},{id:'p3_sd7_s4',text:'Strategy pattern'},{id:'p3_sd7_s5',text:'Repository pattern'},{id:'p3_sd7_s6',text:'MVC / MVVM architecture'},{id:'p3_sd7_s7',text:'Dependency Injection'},{id:'p3_sd7_s8',text:'Middleware pattern'},{id:'p3_sd7_s9',text:'Decorator pattern'},{id:'p3_sd7_s10',text:'Adapter pattern'},{id:'p3_sd7_s11',text:'Facade pattern'},{id:'p3_sd7_s12',text:'Publisher-Subscriber pattern'},{id:'p3_sd7_s13',text:'Command pattern'},{id:'p3_sd7_s14',text:'Applying patterns in Node.js & React'}]}
-    ]},
-    {name:'Advanced Topics',emoji:'🚀',topics:[
-      {id:'p3_at1',name:'GraphQL',difficulty:'Hard',time:'2 weeks',subs:[{id:'p3_at1_s1',text:'GraphQL vs REST comparison'},{id:'p3_at1_s2',text:'Schema Definition Language (SDL)'},{id:'p3_at1_s3',text:'Types: Query, Mutation, Subscription'},{id:'p3_at1_s4',text:'Scalar types & custom types'},{id:'p3_at1_s5',text:'Resolvers'},{id:'p3_at1_s6',text:'Apollo Server setup'},{id:'p3_at1_s7',text:'Apollo Client setup in React'},{id:'p3_at1_s8',text:'useQuery & useMutation hooks'},{id:'p3_at1_s9',text:'Variables in queries'},{id:'p3_at1_s10',text:'Fragments for reusable fields'},{id:'p3_at1_s11',text:'Pagination in GraphQL'},{id:'p3_at1_s12',text:'Caching with Apollo Client'},{id:'p3_at1_s13',text:'Error handling'},{id:'p3_at1_s14',text:'GraphQL Playground / Apollo Studio'}]},
-      {id:'p3_at2',name:'Next.js (SSR / SSG)',difficulty:'Medium',time:'2-3 weeks',subs:[{id:'p3_at2_s1',text:'Next.js project setup'},{id:'p3_at2_s2',text:'Pages Router vs App Router'},{id:'p3_at2_s3',text:'File-based routing'},{id:'p3_at2_s4',text:'Server-Side Rendering (SSR) — getServerSideProps'},{id:'p3_at2_s5',text:'Static Site Generation (SSG) — getStaticProps'},{id:'p3_at2_s6',text:'Incremental Static Regeneration (ISR)'},{id:'p3_at2_s7',text:'API routes (/api/*)'},{id:'p3_at2_s8',text:'Dynamic routes ([id].js)'},{id:'p3_at2_s9',text:'Middleware in Next.js'},{id:'p3_at2_s10',text:'Image optimization (next/image)'},{id:'p3_at2_s11',text:'next/link for navigation'},{id:'p3_at2_s12',text:'Head & metadata management'},{id:'p3_at2_s13',text:'Deployment on Vercel'},{id:'p3_at2_s14',text:'Server Components (App Router)'}]},
-      {id:'p3_at3',name:'AWS basics (S3, EC2, Lambda)',difficulty:'Hard',time:'2-3 weeks',subs:[{id:'p3_at3_s1',text:'AWS account setup & IAM basics'},{id:'p3_at3_s2',text:'S3: creating buckets, uploading files'},{id:'p3_at3_s3',text:'S3: permissions & access policies'},{id:'p3_at3_s4',text:'S3: static website hosting'},{id:'p3_at3_s5',text:'EC2: launching an instance'},{id:'p3_at3_s6',text:'EC2: SSH access & security groups'},{id:'p3_at3_s7',text:'EC2: deploying Node.js app'},{id:'p3_at3_s8',text:'Lambda: serverless functions'},{id:'p3_at3_s9',text:'Lambda: triggers & events'},{id:'p3_at3_s10',text:'API Gateway with Lambda'},{id:'p3_at3_s11',text:'CloudWatch: logs & monitoring'},{id:'p3_at3_s12',text:'RDS: managed databases overview'},{id:'p3_at3_s13',text:'SQS: message queues'},{id:'p3_at3_s14',text:'AWS SDK for Node.js'}]},
-      {id:'p3_at4',name:'OAuth 2.0 / SSO',difficulty:'Hard',time:'1 week',subs:[{id:'p3_at4_s1',text:'OAuth 2.0 protocol overview'},{id:'p3_at4_s2',text:'Authorization Code Grant flow'},{id:'p3_at4_s3',text:'Access tokens & refresh tokens'},{id:'p3_at4_s4',text:'Social login: Google OAuth'},{id:'p3_at4_s5',text:'Social login: GitHub OAuth'},{id:'p3_at4_s6',text:'Passport.js setup & strategies'},{id:'p3_at4_s7',text:'OpenID Connect (OIDC)'},{id:'p3_at4_s8',text:'SSO (Single Sign-On) concepts'},{id:'p3_at4_s9',text:'Token exchange flow'},{id:'p3_at4_s10',text:'Securing OAuth callback URLs'},{id:'p3_at4_s11',text:'Storing & refreshing tokens'},{id:'p3_at4_s12',text:'OAuth scopes & permissions'}]},
-      {id:'p3_at5',name:'Payment Integration (Stripe)',difficulty:'Medium',time:'1 week',subs:[{id:'p3_at5_s1',text:'Stripe account setup'},{id:'p3_at5_s2',text:'Stripe API keys (publishable & secret)'},{id:'p3_at5_s3',text:'Checkout Sessions (hosted checkout)'},{id:'p3_at5_s4',text:'Payment Intents (custom checkout)'},{id:'p3_at5_s5',text:'Stripe Elements (embedded forms)'},{id:'p3_at5_s6',text:'Webhooks for payment events'},{id:'p3_at5_s7',text:'Handling successful payments'},{id:'p3_at5_s8',text:'Handling failed payments'},{id:'p3_at5_s9',text:'Subscription billing basics'},{id:'p3_at5_s10',text:'Refunds processing'},{id:'p3_at5_s11',text:'Testing with Stripe test mode'},{id:'p3_at5_s12',text:'Stripe Dashboard & reporting'}]},
-      {id:'p3_at6',name:'PWA basics',difficulty:'Medium',time:'1 week',subs:[{id:'p3_at6_s1',text:'What is a Progressive Web App'},{id:'p3_at6_s2',text:'Service Workers registration'},{id:'p3_at6_s3',text:'Service Worker lifecycle (install, activate, fetch)'},{id:'p3_at6_s4',text:'Caching strategies (cache-first, network-first)'},{id:'p3_at6_s5',text:'manifest.json configuration'},{id:'p3_at6_s6',text:'App icons & splash screen'},{id:'p3_at6_s7',text:'Offline capability'},{id:'p3_at6_s8',text:'Push notifications (overview)'},{id:'p3_at6_s9',text:'Installability criteria'},{id:'p3_at6_s10',text:'Lighthouse PWA audit'},{id:'p3_at6_s11',text:'Workbox library overview'},{id:'p3_at6_s12',text:'Background sync basics'}]},
-      {id:'p3_at7',name:'Web Security (OWASP Top 10)',difficulty:'Medium',time:'1 week',subs:[{id:'p3_at7_s1',text:'XSS (Cross-Site Scripting) prevention'},{id:'p3_at7_s2',text:'Input sanitization & output encoding'},{id:'p3_at7_s3',text:'CSRF (Cross-Site Request Forgery) protection'},{id:'p3_at7_s4',text:'SQL / NoSQL injection prevention'},{id:'p3_at7_s5',text:'Broken authentication prevention'},{id:'p3_at7_s6',text:'Security headers (Helmet.js)'},{id:'p3_at7_s7',text:'HTTPS enforcement'},{id:'p3_at7_s8',text:'Rate limiting & brute force protection'},{id:'p3_at7_s9',text:'Secure cookie configuration'},{id:'p3_at7_s10',text:'Content Security Policy (CSP)'},{id:'p3_at7_s11',text:'Dependency vulnerability scanning (npm audit)'},{id:'p3_at7_s12',text:'Sensitive data exposure prevention'}]},
-      {id:'p3_at8',name:'Performance & SEO',difficulty:'Medium',time:'1 week',subs:[{id:'p3_at8_s1',text:'Core Web Vitals (LCP, FID/INP, CLS)'},{id:'p3_at8_s2',text:'Lighthouse performance audit'},{id:'p3_at8_s3',text:'Lazy loading images & components'},{id:'p3_at8_s4',text:'Image optimization (WebP, AVIF)'},{id:'p3_at8_s5',text:'Code splitting & tree shaking'},{id:'p3_at8_s6',text:'Meta tags (title, description, og:tags)'},{id:'p3_at8_s7',text:'Structured data (JSON-LD)'},{id:'p3_at8_s8',text:'Sitemap.xml generation'},{id:'p3_at8_s9',text:'robots.txt configuration'},{id:'p3_at8_s10',text:'Canonical URLs'},{id:'p3_at8_s11',text:'Server-side rendering for SEO'},{id:'p3_at8_s12',text:'Performance monitoring tools'}]},
-      {id:'p3_at9',name:'Accessibility (a11y)',difficulty:'Medium',time:'1 week',subs:[{id:'p3_at9_s1',text:'ARIA attributes (aria-label, aria-hidden, aria-live)'},{id:'p3_at9_s2',text:'Semantic HTML for accessibility'},{id:'p3_at9_s3',text:'Keyboard navigation support'},{id:'p3_at9_s4',text:'Focus management & focus trapping'},{id:'p3_at9_s5',text:'Screen reader testing (NVDA, VoiceOver)'},{id:'p3_at9_s6',text:'Color contrast requirements (WCAG)'},{id:'p3_at9_s7',text:'Alt text for images'},{id:'p3_at9_s8',text:'Skip navigation links'},{id:'p3_at9_s9',text:'Form labels & error announcements'},{id:'p3_at9_s10',text:'ARIA roles & landmarks'},{id:'p3_at9_s11',text:'axe DevTools for auditing'},{id:'p3_at9_s12',text:'Accessible component patterns'}]},
-      {id:'p3_at10',name:'Monorepo (Turborepo)',difficulty:'Medium',time:'1 week',subs:[{id:'p3_at10_s1',text:'What is a monorepo'},{id:'p3_at10_s2',text:'Monorepo vs polyrepo'},{id:'p3_at10_s3',text:'Turborepo setup & configuration'},{id:'p3_at10_s4',text:'Workspaces (npm/yarn/pnpm)'},{id:'p3_at10_s5',text:'Shared packages & libraries'},{id:'p3_at10_s6',text:'turbo.json pipeline configuration'},{id:'p3_at10_s7',text:'Task dependencies & ordering'},{id:'p3_at10_s8',text:'Remote caching'},{id:'p3_at10_s9',text:'Building & deploying from monorepo'},{id:'p3_at10_s10',text:'Code sharing between frontend & backend'},{id:'p3_at10_s11',text:'Versioning strategies'},{id:'p3_at10_s12',text:'Lerna overview (alternative)'}]}
-    ]},
-    {name:'Computer Science (BSc Related)',emoji:'🎓',topics:[
-      {id:'p3_cs1',name:'Data Structures & Algorithms',difficulty:'Hard',time:'2-3 months',subs:[{id:'p3_cs1_s1',text:'Arrays & dynamic arrays'},{id:'p3_cs1_s2',text:'Linked lists (singly, doubly)'},{id:'p3_cs1_s3',text:'Stacks & queues'},{id:'p3_cs1_s4',text:'Hash tables / hash maps'},{id:'p3_cs1_s5',text:'Trees (binary tree, BST)'},{id:'p3_cs1_s6',text:'Heaps (min-heap, max-heap)'},{id:'p3_cs1_s7',text:'Graphs (adjacency list, adjacency matrix)'},{id:'p3_cs1_s8',text:'Sorting algorithms (merge sort, quick sort)'},{id:'p3_cs1_s9',text:'Searching algorithms (binary search, BFS, DFS)'},{id:'p3_cs1_s10',text:'Big O notation (time & space complexity)'},{id:'p3_cs1_s11',text:'Recursion & backtracking'},{id:'p3_cs1_s12',text:'Dynamic programming basics'},{id:'p3_cs1_s13',text:'Greedy algorithms'},{id:'p3_cs1_s14',text:'Sliding window & two pointers'},{id:'p3_cs1_s15',text:'Common LeetCode patterns'}]},
-      {id:'p3_cs2',name:'OOP Concepts',difficulty:'Medium',time:'1-2 weeks',subs:[{id:'p3_cs2_s1',text:'Classes & objects'},{id:'p3_cs2_s2',text:'Constructor functions'},{id:'p3_cs2_s3',text:'Encapsulation (public, private, protected)'},{id:'p3_cs2_s4',text:'Inheritance (extends, super)'},{id:'p3_cs2_s5',text:'Polymorphism (method overriding)'},{id:'p3_cs2_s6',text:'Abstraction'},{id:'p3_cs2_s7',text:'SOLID principles overview'},{id:'p3_cs2_s8',text:'Composition vs inheritance'},{id:'p3_cs2_s9',text:'Getters & setters'},{id:'p3_cs2_s10',text:'Static methods & properties'},{id:'p3_cs2_s11',text:'Design patterns using OOP'},{id:'p3_cs2_s12',text:'OOP in JavaScript & TypeScript'}]},
-      {id:'p3_cs3',name:'Database Theory (Normalization, ACID)',difficulty:'Medium',time:'1 week',subs:[{id:'p3_cs3_s1',text:'Relational database concepts'},{id:'p3_cs3_s2',text:'Primary keys & foreign keys'},{id:'p3_cs3_s3',text:'1NF (First Normal Form)'},{id:'p3_cs3_s4',text:'2NF (Second Normal Form)'},{id:'p3_cs3_s5',text:'3NF (Third Normal Form)'},{id:'p3_cs3_s6',text:'BCNF overview'},{id:'p3_cs3_s7',text:'ACID properties'},{id:'p3_cs3_s8',text:'CAP theorem'},{id:'p3_cs3_s9',text:'ER diagrams (Entity-Relationship)'},{id:'p3_cs3_s10',text:'Relational vs NoSQL tradeoffs'},{id:'p3_cs3_s11',text:'Query optimization theory'},{id:'p3_cs3_s12',text:'Database transactions & isolation levels'}]},
-      {id:'p3_cs4',name:'Networking basics (HTTP, TCP/IP, DNS)',difficulty:'Medium',time:'1-2 weeks',subs:[{id:'p3_cs4_s1',text:'OSI model overview (7 layers)'},{id:'p3_cs4_s2',text:'TCP/IP model (4 layers)'},{id:'p3_cs4_s3',text:'HTTP protocol & request/response cycle'},{id:'p3_cs4_s4',text:'HTTP methods & status codes'},{id:'p3_cs4_s5',text:'HTTPS & SSL/TLS handshake'},{id:'p3_cs4_s6',text:'DNS resolution process'},{id:'p3_cs4_s7',text:'IP addresses (IPv4, IPv6)'},{id:'p3_cs4_s8',text:'Ports & port numbers'},{id:'p3_cs4_s9',text:'TCP vs UDP comparison'},{id:'p3_cs4_s10',text:'WebSocket protocol'},{id:'p3_cs4_s11',text:'HTTP/2 & HTTP/3 improvements'},{id:'p3_cs4_s12',text:'REST vs WebSocket vs gRPC'},{id:'p3_cs4_s13',text:'Cookies, sessions, tokens'},{id:'p3_cs4_s14',text:'CORS & same-origin policy'}]},
-      {id:'p3_cs5',name:'Operating System basics',difficulty:'Medium',time:'1-2 weeks',subs:[{id:'p3_cs5_s1',text:'What an OS does (resource management)'},{id:'p3_cs5_s2',text:'Processes vs threads'},{id:'p3_cs5_s3',text:'Process lifecycle & states'},{id:'p3_cs5_s4',text:'CPU scheduling algorithms (overview)'},{id:'p3_cs5_s5',text:'Memory management (stack, heap)'},{id:'p3_cs5_s6',text:'Virtual memory & paging'},{id:'p3_cs5_s7',text:'File systems overview'},{id:'p3_cs5_s8',text:'Concurrency & parallelism'},{id:'p3_cs5_s9',text:'Deadlock concept & prevention'},{id:'p3_cs5_s10',text:'I/O management'},{id:'p3_cs5_s11',text:'Inter-process communication (IPC)'},{id:'p3_cs5_s12',text:'Virtualization & containers concept'}]},
-      {id:'p3_cs6',name:'Software Engineering Principles (SOLID, DRY, KISS)',difficulty:'Medium',time:'1 week',subs:[{id:'p3_cs6_s1',text:'Single Responsibility Principle (S)'},{id:'p3_cs6_s2',text:'Open/Closed Principle (O)'},{id:'p3_cs6_s3',text:'Liskov Substitution Principle (L)'},{id:'p3_cs6_s4',text:'Interface Segregation Principle (I)'},{id:'p3_cs6_s5',text:'Dependency Inversion Principle (D)'},{id:'p3_cs6_s6',text:'DRY — Don\'t Repeat Yourself'},{id:'p3_cs6_s7',text:'KISS — Keep It Simple, Stupid'},{id:'p3_cs6_s8',text:'YAGNI — You Aren\'t Gonna Need It'},{id:'p3_cs6_s9',text:'Separation of Concerns'},{id:'p3_cs6_s10',text:'Clean Code principles'},{id:'p3_cs6_s11',text:'Code review best practices'},{id:'p3_cs6_s12',text:'Refactoring techniques'},{id:'p3_cs6_s13',text:'Technical debt management'}]},
-      {id:'p3_cs7',name:'Agile / Scrum methodology',difficulty:'Easy',time:'3-5 days',subs:[{id:'p3_cs7_s1',text:'Agile Manifesto & principles'},{id:'p3_cs7_s2',text:'Scrum framework overview'},{id:'p3_cs7_s3',text:'Roles: Product Owner, Scrum Master, Dev Team'},{id:'p3_cs7_s4',text:'Sprint planning meeting'},{id:'p3_cs7_s5',text:'Daily standup (daily scrum)'},{id:'p3_cs7_s6',text:'Sprint review / demo'},{id:'p3_cs7_s7',text:'Sprint retrospective'},{id:'p3_cs7_s8',text:'User stories & acceptance criteria'},{id:'p3_cs7_s9',text:'Product backlog & sprint backlog'},{id:'p3_cs7_s10',text:'Story points & estimation'},{id:'p3_cs7_s11',text:'Kanban board & WIP limits'},{id:'p3_cs7_s12',text:'Velocity & burndown charts'},{id:'p3_cs7_s13',text:'Agile tools (Jira, Trello, Linear)'}]}
-    ]}
-  ]
-}
-];
+<body class="text-white min-h-screen">
 
-// ===== STATE =====
-let completed=new Set(JSON.parse(localStorage.getItem('roadmap_done')||'[]'));
-let subCompleted=new Set(JSON.parse(localStorage.getItem('roadmap_sub_done')||'[]'));
-let filter='all';
-let query='';
-let shutPhases=new Set();
-let shutCats=new Set();
-let openSubs=new Set();
+    <!-- Floating Background Elements -->
+    <div class="fixed inset-0 overflow-hidden pointer-events-none z-0">
+        <div class="absolute top-20 left-10 w-72 h-72 bg-indigo-600/10 rounded-full blur-3xl animate-pulse-glow"></div>
+        <div class="absolute bottom-20 right-10 w-96 h-96 bg-emerald-600/10 rounded-full blur-3xl animate-pulse-glow" style="animation-delay:1s"></div>
+        <div class="absolute top-1/2 left-1/2 w-64 h-64 bg-amber-600/5 rounded-full blur-3xl animate-pulse-glow" style="animation-delay:2s"></div>
+    </div>
 
-// ===== HELPERS =====
-const save=()=>{
-    localStorage.setItem('roadmap_done',JSON.stringify([...completed]));
-    localStorage.setItem('roadmap_sub_done',JSON.stringify([...subCompleted]));
-};
-const allTopics=()=>{const t=[];ROADMAP.forEach(p=>p.categories.forEach(c=>c.topics.forEach(x=>t.push(x))));return t};
-const phaseStats=id=>{let t=0,d=0;ROADMAP.find(p=>p.id===id).categories.forEach(c=>c.topics.forEach(x=>{t++;if(completed.has(x.id))d++}));return{t,d,pct:t?Math.round(d/t*100):0}};
-const catStats=c=>{const t=c.topics.length,d=c.topics.filter(x=>completed.has(x.id)).length;return{t,d,pct:t?Math.round(d/t*100):0}};
-const overallStats=()=>{const a=allTopics(),t=a.length,d=a.filter(x=>completed.has(x.id)).length;return{t,d,pct:t?Math.round(d/t*100):0}};
-const subStats=(subs)=>{if(!subs||!subs.length)return{t:0,d:0};const t=subs.length,d=subs.filter(s=>subCompleted.has(s.id)).length;return{t,d}};
-const visible=topic=>{
-    const done=completed.has(topic.id);
-    const fOk=filter==='all'||(filter==='completed'&&done)||(filter==='incomplete'&&!done);
-    const sOk=!query||topic.name.toLowerCase().includes(query.toLowerCase())||
-              (topic.subs&&topic.subs.some(s=>s.text.toLowerCase().includes(query.toLowerCase())));
-    return fOk&&sOk;
-};
-function circSvg(pct,color,sz=64){
-    const r=sz/2-5,c=2*Math.PI*r,off=c-(c*pct/100);
-    return `<div class="circ-wrap" style="width:${sz}px;height:${sz}px">
-      <svg width="${sz}" height="${sz}" viewBox="0 0 ${sz} ${sz}">
-        <circle class="circ-bg" cx="${sz/2}" cy="${sz/2}" r="${r}"/>
-        <circle class="circ-fg" cx="${sz/2}" cy="${sz/2}" r="${r}" stroke="${color}" stroke-dasharray="${c}" stroke-dashoffset="${off}"/>
-      </svg><span class="circ-pct" style="color:${color}">${pct}%</span></div>`;
-}
+    <!-- Main Layout -->
+    <div class="relative z-10 flex min-h-screen">
 
-// ===== RENDER =====
-function render(){
-    const scrollY=window.scrollY;
-    const wasFocus=document.activeElement&&document.activeElement.classList.contains('search-input');
-    const cursor=wasFocus?document.activeElement.selectionStart:0;
-
-    const ov=overallStats();
-    const s1=phaseStats('phase1'),s2=phaseStats('phase2'),s3=phaseStats('phase3');
-
-    let h=`<header class="header"><h1>Full Stack Web Developer Roadmap</h1>
-      <p>Track your journey from zero to senior developer · ${ov.t} topics to master</p></header>
-      <div class="overall-progress"><div class="overall-progress-header">
-        <h3>📊 Overall Progress</h3><span>${ov.d} / ${ov.t} topics · ${ov.pct}%</span></div>
-        <div class="progress-bar-track"><div class="progress-bar-fill" style="width:${ov.pct}%"></div></div></div>
-      <div class="stats-grid">
-        <div class="stat-card"><div class="stat-label">Total Topics</div><div class="stat-value">${ov.t}</div></div>
-        <div class="stat-card"><div class="stat-label">Completed</div><div class="stat-value" style="color:var(--success)">${ov.d}</div></div>
-        <div class="stat-card phase-stat"><div class="stat-label">🚀 Phase 1</div>${circSvg(s1.pct,'#ef4444')}<div style="font-size:10px;color:var(--text-muted)">${s1.d}/${s1.t}</div></div>
-        <div class="stat-card phase-stat"><div class="stat-label">💼 Phase 2</div>${circSvg(s2.pct,'#eab308')}<div style="font-size:10px;color:var(--text-muted)">${s2.d}/${s2.t}</div></div>
-        <div class="stat-card phase-stat"><div class="stat-label">🎓 Phase 3</div>${circSvg(s3.pct,'#22c55e')}<div style="font-size:10px;color:var(--text-muted)">${s3.d}/${s3.t}</div></div>
-      </div>
-      <div class="toolbar">
-        <div class="search-wrap"><input type="text" class="search-input" placeholder="Search topics & subtopics…" value="${escHtml(query)}"></div>
-        <div class="filter-btns">
-          <button class="filter-btn ${filter==='all'?'active':''}" data-f="all">All</button>
-          <button class="filter-btn ${filter==='completed'?'active':''}" data-f="completed">✅ Done</button>
-          <button class="filter-btn ${filter==='incomplete'?'active':''}" data-f="incomplete">⬜ Todo</button>
-        </div>
-        <button class="reset-btn">🔄 Reset</button>
-      </div><div class="phases-wrap">`;
-
-    let anyVis=false;
-    ROADMAP.forEach(phase=>{
-        const st=phaseStats(phase.id);
-        const pShut=shutPhases.has(phase.id);
-        let phaseVis=false;
-        phase.categories.forEach(c=>c.topics.forEach(t=>{if(visible(t))phaseVis=true}));
-        if(!phaseVis&&(query||filter!=='all'))return;
-        if(phaseVis)anyVis=true;
-
-        h+=`<div class="phase-section p-${phase.priority}">
-          <div class="phase-hdr" data-pid="${phase.id}">
-            <div class="phase-hdr-left">
-              <span class="phase-badge ${phase.priority}">${phase.priorityLabel}</span>
-              <div class="phase-title-wrap">
-                <div class="phase-title">${phase.emoji} ${phase.title}</div>
-                <div class="phase-sub">${phase.subtitle}</div>
-              </div>
-            </div>
-            <div class="phase-hdr-right">
-              <span class="phase-prog">${st.d}/${st.t} · ${st.pct}%</span>
-              <span class="chevron ${pShut?'shut':''}">▼</span>
-            </div>
-          </div>
-          <div class="phase-body ${pShut?'shut':''}">`;
-
-        phase.categories.forEach((cat,ci)=>{
-            const cs=catStats(cat);
-            const cid=phase.id+'_c'+ci;
-            const cShut=shutCats.has(cid);
-            const visTops=cat.topics.filter(t=>visible(t));
-            if(visTops.length===0&&(query||filter!=='all'))return;
-            const allDone=cs.d===cs.t&&cs.t>0;
-
-            h+=`<div class="cat">
-              <div class="cat-hdr" data-cid="${cid}">
-                <div class="cat-hdr-left"><span class="cat-emoji">${cat.emoji}</span><span class="cat-name">${cat.name}</span></div>
-                <div class="cat-hdr-right">
-                  <span class="cat-prog ${allDone?'done':''}">${cs.d}/${cs.t}</span>
-                  <span class="chevron ${cShut?'shut':''}">▼</span>
+        <!-- Sidebar -->
+        <aside id="sidebar" class="fixed left-0 top-0 h-full w-72 glass-strong z-50 flex flex-col transition-transform duration-300 lg:translate-x-0 -translate-x-full">
+            <div class="p-6 border-b border-white/10">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center text-lg font-bold">FS</div>
+                    <div>
+                        <h1 class="text-lg font-bold">FS Dev Roadmap</h1>
+                        <p class="text-xs text-gray-400">Track Your Journey</p>
+                    </div>
                 </div>
-              </div>
-              <div class="cat-body ${cShut?'shut':''}">`;
+            </div>
 
-            cat.topics.forEach(t=>{
-                const isDone=completed.has(t.id);
-                const show=visible(t);
-                const isOpen=openSubs.has(t.id);
-                const subCount=t.subs?t.subs.length:0;
-                const ss=subStats(t.subs);
-                const subAllDone=ss.t>0&&ss.d===ss.t;
-                h+=`<div class="t-item ${isDone?'done':''} ${show?'':'gone'}">
-                  <div class="t-row">
-                    <input type="checkbox" class="t-cb" id="${t.id}" data-tid="${t.id}" ${isDone?'checked':''}>
-                    <label for="${t.id}" class="t-label">
-                      <span class="t-name">${t.name}</span>
-                      <div class="t-meta">`;
-                if(subCount>0){
-                    h+=`<button class="sub-toggle" data-sid="${t.id}"><span class="arrow ${isOpen?'open':''}">▶</span> ${subCount} sub-topics</button>`;
-                    h+=`<span class="sub-prog-pill ${subAllDone?'alldone':''}">${ss.d}/${ss.t}</span>`;
-                }
-                h+=`      <span class="diff ${t.difficulty.toLowerCase()}">${t.difficulty}</span>
-                        <span class="t-time">⏱ ${t.time}</span>
-                      </div>
-                    </label>
-                  </div>`;
-                if(subCount>0){
-                    h+=`<div class="subs-list ${isOpen?'open':''}">`;
-                    t.subs.forEach(s=>{
-                        const sDone=subCompleted.has(s.id);
-                        h+=`<div class="sub-item ${sDone?'sub-done':''}">
-                          <input type="checkbox" class="sub-cb" data-subid="${s.id}" ${sDone?'checked':''}>
-                          <span class="sub-text">${s.text}</span>
-                        </div>`;
-                    });
-                    h+=`</div>`;
-                }
-                h+=`</div>`;
+            <!-- Overall Progress in Sidebar -->
+            <div class="p-4 border-b border-white/10">
+                <div class="flex justify-between text-sm mb-2">
+                    <span class="text-gray-400">Overall Progress</span>
+                    <span id="sidebarProgress" class="font-bold text-emerald-400">0%</span>
+                </div>
+                <div class="progress-bar-bg rounded-full h-2">
+                    <div id="sidebarProgressBar" class="progress-fill h-full rounded-full bg-gradient-to-r from-indigo-500 via-emerald-500 to-amber-500" style="width:0%"></div>
+                </div>
+            </div>
+
+            <!-- Nav Links -->
+            <nav class="flex-1 overflow-y-auto p-3 space-y-1" id="sidebarNav">
+                <a href="#overview" class="sidebar-link block px-4 py-2.5 rounded-lg text-sm text-gray-300 border-l-3 border-transparent">📊 Overview</a>
+                <div class="pt-3 pb-1 px-4 text-xs font-semibold text-gray-500 uppercase tracking-wider">🚀 Job-Ready Phase</div>
+                <div id="sidebarJobLinks"></div>
+                <div class="pt-3 pb-1 px-4 text-xs font-semibold text-gray-500 uppercase tracking-wider">📈 On-the-Job Growth</div>
+                <div id="sidebarGrowLinks"></div>
+                <div class="pt-3 pb-1 px-4 text-xs font-semibold text-gray-500 uppercase tracking-wider">⚡ Advanced Topics</div>
+                <div id="sidebarAdvLinks"></div>
+                <div class="pt-3 pb-1 px-4 text-xs font-semibold text-gray-500 uppercase tracking-wider">🏆 Expert Level</div>
+                <div id="sidebarExpLinks"></div>
+            </nav>
+
+            <!-- Reset Button -->
+            <div class="p-4 border-t border-white/10">
+                <button onclick="resetAll()" class="w-full py-2 rounded-lg bg-red-500/10 hover:bg-red-500/20 text-red-400 text-sm font-medium transition-all border border-red-500/20">🗑️ Reset All Progress</button>
+            </div>
+        </aside>
+
+        <!-- Mobile Header -->
+        <div class="fixed top-0 left-0 right-0 lg:hidden z-40 glass-strong px-4 py-3 flex items-center justify-between">
+            <button onclick="toggleSidebar()" class="text-2xl">☰</button>
+            <span class="font-bold">FS Dev Roadmap</span>
+            <span id="mobileProgress" class="text-emerald-400 font-bold text-sm">0%</span>
+        </div>
+
+        <!-- Main Content -->
+        <main class="flex-1 lg:ml-72 p-4 lg:p-8 pt-16 lg:pt-8">
+
+            <!-- Hero Section -->
+            <section id="overview" class="hero-gradient rounded-2xl p-6 lg:p-10 mb-8 glass">
+                <div class="max-w-4xl">
+                    <h1 class="text-3xl lg:text-5xl font-black mb-3 bg-gradient-to-r from-indigo-400 via-emerald-400 to-amber-400 bg-clip-text text-transparent">
+                        Full Stack Web Developer Roadmap
+                    </h1>
+                    <p class="text-gray-400 text-lg mb-6 max-w-2xl">Entry Level থেকে Expert Level পর্যন্ত — সব Topics ও Sub-topics track করো, Job-ready হও, এবং Career গড়ো। 🚀</p>
+
+                    <!-- Search -->
+                    <div class="relative max-w-lg mb-6">
+                        <input type="text" id="searchInput" placeholder="🔍 Search any topic..." class="w-full px-5 py-3 rounded-xl bg-white/5 border border-white/10 text-white placeholder-gray-500 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500" oninput="searchTopics(this.value)">
+                        <div id="searchResults" class="absolute top-full left-0 right-0 mt-2 rounded-xl glass-strong max-h-60 overflow-y-auto hidden z-50"></div>
+                    </div>
+
+                    <!-- Legend -->
+                    <div class="flex flex-wrap gap-3 text-sm">
+                        <span class="badge-most px-3 py-1 rounded-full font-medium">🔥 Most Used</span>
+                        <span class="badge-mid px-3 py-1 rounded-full font-medium">⚡ Mid Use</span>
+                        <span class="badge-less px-3 py-1 rounded-full font-medium">💡 Less Used</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Stats Cards -->
+            <section class="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+                <div class="stat-card glass rounded-2xl p-5 glow-green">
+                    <div class="text-3xl mb-2">✅</div>
+                    <div id="completedCount" class="text-2xl font-bold text-emerald-400">0</div>
+                    <div class="text-gray-400 text-sm">Completed</div>
+                </div>
+                <div class="stat-card glass rounded-2xl p-5 glow-indigo">
+                    <div class="text-3xl mb-2">📚</div>
+                    <div id="totalCount" class="text-2xl font-bold text-indigo-400">0</div>
+                    <div class="text-gray-400 text-sm">Total Topics</div>
+                </div>
+                <div class="stat-card glass rounded-2xl p-5 glow-amber">
+                    <div class="text-3xl mb-2">📈</div>
+                    <div id="overallPercent" class="text-2xl font-bold text-amber-400">0%</div>
+                    <div class="text-gray-400 text-sm">Progress</div>
+                </div>
+                <div class="stat-card glass rounded-2xl p-5 glow-rose">
+                    <div class="text-3xl mb-2">🎯</div>
+                    <div id="jobReadyPercent" class="text-2xl font-bold text-rose-400">0%</div>
+                    <div class="text-gray-400 text-sm">Job Ready</div>
+                </div>
+            </section>
+
+            <!-- Overall Progress Bar -->
+            <section class="glass rounded-2xl p-6 mb-8">
+                <div class="flex justify-between items-center mb-3">
+                    <h3 class="text-lg font-bold">🚀 Overall Mastery</h3>
+                    <span id="mainProgressText" class="text-2xl font-black bg-gradient-to-r from-indigo-400 to-emerald-400 bg-clip-text text-transparent">0%</span>
+                </div>
+                <div class="progress-bar-bg rounded-full h-4">
+                    <div id="mainProgressBar" class="progress-fill h-full rounded-full bg-gradient-to-r from-indigo-500 via-emerald-500 to-amber-500" style="width:0%"></div>
+                </div>
+                <div class="grid grid-cols-4 gap-2 mt-4">
+                    <div class="text-center">
+                        <div class="text-xs text-gray-500 mb-1">Job Ready</div>
+                        <div class="progress-bar-bg rounded-full h-2"><div id="phase1Bar" class="progress-fill h-full rounded-full bg-emerald-500" style="width:0%"></div></div>
+                        <div id="phase1Text" class="text-xs text-emerald-400 mt-1">0%</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-xs text-gray-500 mb-1">Growing</div>
+                        <div class="progress-bar-bg rounded-full h-2"><div id="phase2Bar" class="progress-fill h-full rounded-full bg-indigo-500" style="width:0%"></div></div>
+                        <div id="phase2Text" class="text-xs text-indigo-400 mt-1">0%</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-xs text-gray-500 mb-1">Advanced</div>
+                        <div class="progress-bar-bg rounded-full h-2"><div id="phase3Bar" class="progress-fill h-full rounded-full bg-amber-500" style="width:0%"></div></div>
+                        <div id="phase3Text" class="text-xs text-amber-400 mt-1">0%</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-xs text-gray-500 mb-1">Expert</div>
+                        <div class="progress-bar-bg rounded-full h-2"><div id="phase4Bar" class="progress-fill h-full rounded-full bg-rose-500" style="width:0%"></div></div>
+                        <div id="phase4Text" class="text-xs text-rose-400 mt-1">0%</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Topics Container -->
+            <div id="topicsContainer"></div>
+
+            <!-- Footer -->
+            <footer class="text-center py-10 text-gray-600 text-sm">
+                <p>Built with ❤️ for aspiring Full Stack Developers</p>
+                <p class="mt-1">Keep learning, keep building! 🚀</p>
+            </footer>
+        </main>
+    </div>
+
+    <!-- Overlay for mobile sidebar -->
+    <div id="sidebarOverlay" class="fixed inset-0 bg-black/50 z-40 hidden lg:hidden" onclick="toggleSidebar()"></div>
+
+    <script>
+    // ============================================================
+    // COMPLETE FULL STACK WEB DEVELOPER ROADMAP DATA
+    // ============================================================
+    const roadmapData = [
+        // ===================== PHASE 1: JOB-READY =====================
+        {
+            phase: 1,
+            phaseLabel: "🚀 Phase 1: Job-Ready Essentials",
+            phaseDesc: "এই topics গুলো শিখলে Entry Level Job এ ঢুকতে পারবে",
+            badgeClass: "phase-badge-job",
+            sections: [
+                {
+                    id: "html",
+                    title: "HTML5 — Structure of the Web",
+                    icon: "🏗️",
+                    usage: "most",
+                    topics: [
+                        { name: "HTML Document Structure (DOCTYPE, html, head, body)", usage: "most" },
+                        { name: "Headings (h1-h6), Paragraphs, Text Formatting", usage: "most" },
+                        { name: "Links (a tag) & Navigation", usage: "most" },
+                        { name: "Images, Audio, Video (img, audio, video)", usage: "most" },
+                        { name: "Lists (ol, ul, li, dl)", usage: "most" },
+                        { name: "Tables (table, thead, tbody, tr, td, th)", usage: "mid" },
+                        { name: "Forms (input, textarea, select, button, label)", usage: "most" },
+                        { name: "Form Validation (required, pattern, min, max)", usage: "most" },
+                        { name: "Semantic HTML (header, nav, main, section, article, footer, aside)", usage: "most" },
+                        { name: "Div & Span (Block vs Inline Elements)", usage: "most" },
+                        { name: "HTML Attributes (id, class, data-*, aria-*)", usage: "most" },
+                        { name: "Meta Tags & SEO Basics (title, description, og tags)", usage: "mid" },
+                        { name: "Favicon & External Resources", usage: "mid" },
+                        { name: "iFrames", usage: "less" },
+                        { name: "HTML Entities & Special Characters", usage: "less" },
+                        { name: "Accessibility Basics (alt text, roles, aria labels)", usage: "most" },
+                    ]
+                },
+                {
+                    id: "css",
+                    title: "CSS3 — Styling & Layout",
+                    icon: "🎨",
+                    usage: "most",
+                    topics: [
+                        { name: "CSS Selectors (element, class, id, attribute, pseudo)", usage: "most" },
+                        { name: "Colors, Backgrounds & Gradients", usage: "most" },
+                        { name: "Typography (font-family, size, weight, line-height)", usage: "most" },
+                        { name: "Box Model (margin, padding, border, content)", usage: "most" },
+                        { name: "Display Property (block, inline, inline-block, none)", usage: "most" },
+                        { name: "CSS Units (px, em, rem, %, vw, vh)", usage: "most" },
+                        { name: "Flexbox Layout (Complete Guide)", usage: "most" },
+                        { name: "CSS Grid Layout (Complete Guide)", usage: "most" },
+                        { name: "Positioning (static, relative, absolute, fixed, sticky)", usage: "most" },
+                        { name: "Float & Clear", usage: "less" },
+                        { name: "Overflow & Text Overflow", usage: "mid" },
+                        { name: "CSS Variables (Custom Properties)", usage: "most" },
+                        { name: "Transitions & Hover Effects", usage: "most" },
+                        { name: "CSS Animations & Keyframes", usage: "mid" },
+                        { name: "Transforms (translate, rotate, scale)", usage: "mid" },
+                        { name: "Shadows (box-shadow, text-shadow)", usage: "mid" },
+                        { name: "Border Radius & Clip Path", usage: "mid" },
+                        { name: "Z-index & Stacking Context", usage: "most" },
+                        { name: "Media Queries & Responsive Design", usage: "most" },
+                        { name: "Mobile-First Design Approach", usage: "most" },
+                        { name: "CSS Specificity & Cascade", usage: "most" },
+                        { name: "Pseudo Elements (::before, ::after)", usage: "mid" },
+                        { name: "CSS Filters (blur, brightness, etc.)", usage: "less" },
+                    ]
+                },
+                {
+                    id: "cssfw",
+                    title: "CSS Frameworks & Tools",
+                    icon: "⚡",
+                    usage: "most",
+                    topics: [
+                        { name: "Tailwind CSS (Utility-First Framework)", usage: "most" },
+                        { name: "Bootstrap 5 (Component Framework)", usage: "mid" },
+                        { name: "Responsive Grid Systems", usage: "most" },
+                        { name: "CSS-in-JS Concept (Styled Components, Emotion)", usage: "mid" },
+                        { name: "SASS/SCSS Basics (Variables, Nesting, Mixins)", usage: "mid" },
+                        { name: "CSS Modules", usage: "mid" },
+                        { name: "Material UI / Shadcn UI / DaisyUI (Component Libraries)", usage: "mid" },
+                    ]
+                },
+                {
+                    id: "js",
+                    title: "JavaScript — Core Language",
+                    icon: "⚙️",
+                    usage: "most",
+                    topics: [
+                        { name: "Variables (var, let, const) & Data Types", usage: "most" },
+                        { name: "Operators (Arithmetic, Comparison, Logical, Ternary)", usage: "most" },
+                        { name: "Strings & String Methods", usage: "most" },
+                        { name: "Numbers & Math Object", usage: "most" },
+                        { name: "Template Literals (Backtick Strings)", usage: "most" },
+                        { name: "Conditional Statements (if, else if, else, switch)", usage: "most" },
+                        { name: "Loops (for, while, do-while, for...of, for...in)", usage: "most" },
+                        { name: "Functions (Declaration, Expression, Arrow Functions)", usage: "most" },
+                        { name: "Parameters, Arguments, Default & Rest Parameters", usage: "most" },
+                        { name: "Return Values & Function Scope", usage: "most" },
+                        { name: "Arrays & Array Methods (map, filter, reduce, find, forEach, etc.)", usage: "most" },
+                        { name: "Objects & Object Methods", usage: "most" },
+                        { name: "Destructuring (Array & Object)", usage: "most" },
+                        { name: "Spread & Rest Operator (...)", usage: "most" },
+                        { name: "Type Coercion & Comparison (== vs ===)", usage: "most" },
+                        { name: "Truthy & Falsy Values", usage: "mid" },
+                        { name: "Nullish Coalescing (??) & Optional Chaining (?.)", usage: "most" },
+                        { name: "Error Handling (try, catch, finally, throw)", usage: "most" },
+                        { name: "JSON (parse, stringify)", usage: "most" },
+                        { name: "Date & Time", usage: "mid" },
+                        { name: "Regular Expressions (Basics)", usage: "mid" },
+                        { name: "Console Methods (log, warn, error, table)", usage: "most" },
+                    ]
+                },
+                {
+                    id: "jsadv",
+                    title: "JavaScript — Advanced Concepts",
+                    icon: "🧠",
+                    usage: "most",
+                    topics: [
+                        { name: "Scope (Global, Function, Block) & Hoisting", usage: "most" },
+                        { name: "Closures", usage: "most" },
+                        { name: "Callbacks & Callback Hell", usage: "most" },
+                        { name: "Promises (resolve, reject, then, catch, finally)", usage: "most" },
+                        { name: "Async/Await", usage: "most" },
+                        { name: "Event Loop & Call Stack", usage: "most" },
+                        { name: "Microtasks vs Macrotasks", usage: "mid" },
+                        { name: "this Keyword & Context", usage: "most" },
+                        { name: "Prototypes & Prototype Chain", usage: "mid" },
+                        { name: "ES6+ Classes & Inheritance", usage: "most" },
+                        { name: "Modules (import/export, ES Modules)", usage: "most" },
+                        { name: "Higher-Order Functions", usage: "most" },
+                        { name: "Map, Set, WeakMap, WeakSet", usage: "mid" },
+                        { name: "Iterators & Generators", usage: "less" },
+                        { name: "Symbol Type", usage: "less" },
+                        { name: "Proxy & Reflect", usage: "less" },
+                        { name: "Memory Management & Garbage Collection", usage: "less" },
+                    ]
+                },
+                {
+                    id: "dom",
+                    title: "DOM Manipulation & Browser APIs",
+                    icon: "🌐",
+                    usage: "most",
+                    topics: [
+                        { name: "DOM Tree & Node Types", usage: "most" },
+                        { name: "Selecting Elements (getElementById, querySelector, etc.)", usage: "most" },
+                        { name: "Creating & Removing Elements", usage: "most" },
+                        { name: "Modifying Content (innerHTML, textContent, innerText)", usage: "most" },
+                        { name: "Attributes & Dataset (setAttribute, data-*)", usage: "most" },
+                        { name: "CSS Class Manipulation (classList)", usage: "most" },
+                        { name: "Inline Style Manipulation", usage: "mid" },
+                        { name: "Event Listeners (addEventListener)", usage: "most" },
+                        { name: "Event Object & Event Types (click, submit, keydown, etc.)", usage: "most" },
+                        { name: "Event Bubbling, Capturing & Delegation", usage: "most" },
+                        { name: "Form Handling & FormData API", usage: "most" },
+                        { name: "Local Storage & Session Storage", usage: "most" },
+                        { name: "Fetch API & HTTP Requests", usage: "most" },
+                        { name: "Window & Document Object", usage: "mid" },
+                        { name: "setTimeout, setInterval, requestAnimationFrame", usage: "mid" },
+                        { name: "Intersection Observer API", usage: "mid" },
+                        { name: "Geolocation API", usage: "less" },
+                        { name: "Clipboard API", usage: "less" },
+                        { name: "Notification API", usage: "less" },
+                    ]
+                },
+                {
+                    id: "git",
+                    title: "Git & GitHub — Version Control",
+                    icon: "📦",
+                    usage: "most",
+                    topics: [
+                        { name: "Git Basics (init, add, commit, status, log)", usage: "most" },
+                        { name: "Branching & Merging", usage: "most" },
+                        { name: "Git Remote (clone, push, pull, fetch)", usage: "most" },
+                        { name: "Pull Requests & Code Review", usage: "most" },
+                        { name: "Merge Conflicts & Resolution", usage: "most" },
+                        { name: "Git Ignore (.gitignore)", usage: "most" },
+                        { name: "Git Stash", usage: "mid" },
+                        { name: "Git Rebase vs Merge", usage: "mid" },
+                        { name: "Git Reset & Revert", usage: "mid" },
+                        { name: "GitHub Pages Deployment", usage: "mid" },
+                        { name: "GitHub Issues & Project Board", usage: "mid" },
+                        { name: "Conventional Commits", usage: "mid" },
+                        { name: "Git Flow / GitHub Flow", usage: "mid" },
+                    ]
+                },
+                {
+                    id: "react",
+                    title: "React.js — Frontend Framework",
+                    icon: "⚛️",
+                    usage: "most",
+                    topics: [
+                        { name: "React Basics & JSX Syntax", usage: "most" },
+                        { name: "Components (Functional Components)", usage: "most" },
+                        { name: "Props & Prop Drilling", usage: "most" },
+                        { name: "State Management with useState", usage: "most" },
+                        { name: "useEffect Hook (Side Effects & Lifecycle)", usage: "most" },
+                        { name: "Conditional Rendering", usage: "most" },
+                        { name: "Lists & Keys (Rendering Arrays)", usage: "most" },
+                        { name: "Event Handling in React", usage: "most" },
+                        { name: "Controlled vs Uncontrolled Components", usage: "most" },
+                        { name: "Form Handling in React", usage: "most" },
+                        { name: "useRef Hook", usage: "most" },
+                        { name: "useContext Hook & Context API", usage: "most" },
+                        { name: "useMemo & useCallback (Performance)", usage: "mid" },
+                        { name: "Custom Hooks", usage: "most" },
+                        { name: "React Router (Routing & Navigation)", usage: "most" },
+                        { name: "Dynamic Routes & URL Parameters", usage: "most" },
+                        { name: "Protected/Private Routes", usage: "most" },
+                        { name: "Fetching Data in React (useEffect + fetch/axios)", usage: "most" },
+                        { name: "Loading & Error States", usage: "most" },
+                        { name: "Component Lifecycle Understanding", usage: "mid" },
+                        { name: "React Developer Tools", usage: "most" },
+                        { name: "Environment Variables (.env)", usage: "most" },
+                    ]
+                },
+                {
+                    id: "node",
+                    title: "Node.js & Express.js — Backend",
+                    icon: "🖥️",
+                    usage: "most",
+                    topics: [
+                        { name: "Node.js Basics & Runtime Understanding", usage: "most" },
+                        { name: "NPM & Package Management (package.json)", usage: "most" },
+                        { name: "Node.js Modules (require, module.exports, ES import)", usage: "most" },
+                        { name: "File System Module (fs)", usage: "mid" },
+                        { name: "Path Module", usage: "mid" },
+                        { name: "Express.js Setup & Basics", usage: "most" },
+                        { name: "Routing in Express", usage: "most" },
+                        { name: "Middleware (Built-in, Custom, Third-party)", usage: "most" },
+                        { name: "Request & Response Objects", usage: "most" },
+                        { name: "Body Parsing (express.json, express.urlencoded)", usage: "most" },
+                        { name: "Static Files Serving", usage: "mid" },
+                        { name: "Error Handling Middleware", usage: "most" },
+                        { name: "CORS (Cross-Origin Resource Sharing)", usage: "most" },
+                        { name: "Environment Variables (dotenv)", usage: "most" },
+                        { name: "MVC Architecture Pattern", usage: "most" },
+                        { name: "REST API Design Principles", usage: "most" },
+                        { name: "CRUD Operations (Create, Read, Update, Delete)", usage: "most" },
+                        { name: "HTTP Methods (GET, POST, PUT, PATCH, DELETE)", usage: "most" },
+                        { name: "HTTP Status Codes (200, 201, 400, 401, 403, 404, 500)", usage: "most" },
+                        { name: "Query Parameters & Route Parameters", usage: "most" },
+                        { name: "File Upload Handling (Multer)", usage: "mid" },
+                    ]
+                },
+                {
+                    id: "mongodb",
+                    title: "MongoDB & Mongoose — Database",
+                    icon: "🗄️",
+                    usage: "most",
+                    topics: [
+                        { name: "MongoDB Basics & NoSQL Concepts", usage: "most" },
+                        { name: "MongoDB Atlas (Cloud Database Setup)", usage: "most" },
+                        { name: "Collections & Documents", usage: "most" },
+                        { name: "CRUD Operations in MongoDB", usage: "most" },
+                        { name: "MongoDB Query Operators ($eq, $gt, $lt, $in, $regex, etc.)", usage: "most" },
+                        { name: "Mongoose ODM Setup & Connection", usage: "most" },
+                        { name: "Mongoose Schema & Model", usage: "most" },
+                        { name: "Schema Validation & Types", usage: "most" },
+                        { name: "Mongoose CRUD Methods (find, create, update, delete)", usage: "most" },
+                        { name: "Mongoose Middleware (pre, post hooks)", usage: "mid" },
+                        { name: "Population & References (Relationships)", usage: "most" },
+                        { name: "Indexing Basics", usage: "mid" },
+                        { name: "Aggregation Pipeline Basics", usage: "mid" },
+                        { name: "Data Modeling (Embedding vs Referencing)", usage: "most" },
+                    ]
+                },
+                {
+                    id: "auth",
+                    title: "Authentication & Authorization",
+                    icon: "🔐",
+                    usage: "most",
+                    topics: [
+                        { name: "Authentication vs Authorization Concepts", usage: "most" },
+                        { name: "Password Hashing (bcrypt)", usage: "most" },
+                        { name: "JSON Web Tokens (JWT) — Sign, Verify", usage: "most" },
+                        { name: "JWT Storage (Cookie vs LocalStorage)", usage: "most" },
+                        { name: "Token-Based Auth Flow (Login, Register, Logout)", usage: "most" },
+                        { name: "Middleware for Protected Routes", usage: "most" },
+                        { name: "Role-Based Access Control (RBAC)", usage: "mid" },
+                        { name: "Firebase Authentication", usage: "mid" },
+                        { name: "OAuth 2.0 & Social Login (Google, GitHub)", usage: "mid" },
+                        { name: "Session-Based Authentication", usage: "less" },
+                        { name: "Refresh Tokens", usage: "mid" },
+                    ]
+                },
+                {
+                    id: "deploy",
+                    title: "Deployment & Hosting",
+                    icon: "🚀",
+                    usage: "most",
+                    topics: [
+                        { name: "Vercel Deployment (Frontend)", usage: "most" },
+                        { name: "Netlify Deployment", usage: "mid" },
+                        { name: "Render / Railway (Backend)", usage: "most" },
+                        { name: "GitHub Pages", usage: "mid" },
+                        { name: "Environment Variables in Production", usage: "most" },
+                        { name: "Domain & DNS Basics", usage: "mid" },
+                        { name: "SSL/HTTPS Basics", usage: "mid" },
+                        { name: "Build Process (npm run build)", usage: "most" },
+                        { name: "Surge.sh for Quick Deploys", usage: "less" },
+                    ]
+                },
+                {
+                    id: "tools",
+                    title: "Developer Tools & Workflow",
+                    icon: "🛠️",
+                    usage: "most",
+                    topics: [
+                        { name: "VS Code Setup & Extensions", usage: "most" },
+                        { name: "Chrome DevTools (Elements, Console, Network, Sources)", usage: "most" },
+                        { name: "Terminal / Command Line Basics", usage: "most" },
+                        { name: "Postman / Thunder Client (API Testing)", usage: "most" },
+                        { name: "Prettier & ESLint (Code Formatting & Linting)", usage: "most" },
+                        { name: "Figma Basics (Design to Code)", usage: "mid" },
+                        { name: "Vite (Build Tool & Dev Server)", usage: "most" },
+                        { name: "npm vs yarn vs pnpm", usage: "mid" },
+                        { name: "Emmet Shortcuts", usage: "mid" },
+                    ]
+                },
+                {
+                    id: "project1",
+                    title: "Portfolio & Job-Ready Projects",
+                    icon: "💼",
+                    usage: "most",
+                    topics: [
+                        { name: "Personal Portfolio Website", usage: "most" },
+                        { name: "Responsive Landing Page", usage: "most" },
+                        { name: "Todo App (Full CRUD)", usage: "most" },
+                        { name: "Blog Website (MERN Stack)", usage: "most" },
+                        { name: "E-commerce Product Page", usage: "most" },
+                        { name: "Authentication System (Register/Login)", usage: "most" },
+                        { name: "REST API Project", usage: "most" },
+                        { name: "Resume / CV (PDF or Online)", usage: "most" },
+                        { name: "GitHub Profile & Repositories Setup", usage: "most" },
+                        { name: "LinkedIn Profile Optimization", usage: "mid" },
+                    ]
+                },
+            ]
+        },
+
+        // ===================== PHASE 2: ON-THE-JOB GROWTH =====================
+        {
+            phase: 2,
+            phaseLabel: "📈 Phase 2: On-the-Job Growth",
+            phaseDesc: "Job পাওয়ার পর এবং BSc করার সময় এগুলো শেখো",
+            badgeClass: "phase-badge-growing",
+            sections: [
+                {
+                    id: "ts",
+                    title: "TypeScript",
+                    icon: "🔷",
+                    usage: "most",
+                    topics: [
+                        { name: "TypeScript Basics & Setup", usage: "most" },
+                        { name: "Type Annotations (string, number, boolean, any)", usage: "most" },
+                        { name: "Interfaces & Type Aliases", usage: "most" },
+                        { name: "Union & Intersection Types", usage: "most" },
+                        { name: "Generics", usage: "most" },
+                        { name: "Enums", usage: "mid" },
+                        { name: "Type Narrowing & Type Guards", usage: "most" },
+                        { name: "Utility Types (Partial, Required, Pick, Omit, Record)", usage: "mid" },
+                        { name: "TypeScript with React (Props, State Typing)", usage: "most" },
+                        { name: "TypeScript with Node.js/Express", usage: "most" },
+                        { name: "Declaration Files (.d.ts)", usage: "less" },
+                        { name: "tsconfig.json Configuration", usage: "mid" },
+                    ]
+                },
+                {
+                    id: "nextjs",
+                    title: "Next.js — React Framework",
+                    icon: "▲",
+                    usage: "most",
+                    topics: [
+                        { name: "Next.js App Router Basics", usage: "most" },
+                        { name: "File-Based Routing", usage: "most" },
+                        { name: "Server Components vs Client Components", usage: "most" },
+                        { name: "SSR (Server-Side Rendering)", usage: "most" },
+                        { name: "SSG (Static Site Generation)", usage: "most" },
+                        { name: "ISR (Incremental Static Regeneration)", usage: "mid" },
+                        { name: "API Routes in Next.js", usage: "most" },
+                        { name: "Dynamic Routes & Catch-All Routes", usage: "most" },
+                        { name: "Layouts & Templates", usage: "most" },
+                        { name: "Loading & Error Boundaries", usage: "most" },
+                        { name: "Image & Font Optimization", usage: "mid" },
+                        { name: "Metadata & SEO in Next.js", usage: "most" },
+                        { name: "Server Actions", usage: "mid" },
+                        { name: "Middleware in Next.js", usage: "mid" },
+                        { name: "Deployment on Vercel", usage: "most" },
+                    ]
+                },
+                {
+                    id: "statemgmt",
+                    title: "State Management",
+                    icon: "🔄",
+                    usage: "most",
+                    topics: [
+                        { name: "Context API (Advanced Patterns)", usage: "most" },
+                        { name: "useReducer Hook", usage: "mid" },
+                        { name: "Redux Toolkit (RTK)", usage: "most" },
+                        { name: "RTK Query (Data Fetching)", usage: "mid" },
+                        { name: "Zustand (Lightweight Alternative)", usage: "mid" },
+                        { name: "TanStack Query / React Query", usage: "most" },
+                        { name: "Jotai / Recoil", usage: "less" },
+                        { name: "State Management Patterns & Best Practices", usage: "mid" },
+                    ]
+                },
+                {
+                    id: "testing",
+                    title: "Testing",
+                    icon: "🧪",
+                    usage: "mid",
+                    topics: [
+                        { name: "Testing Fundamentals (Unit, Integration, E2E)", usage: "most" },
+                        { name: "Jest (Unit Testing)", usage: "most" },
+                        { name: "React Testing Library", usage: "most" },
+                        { name: "Component Testing", usage: "mid" },
+                        { name: "Mocking & Spying", usage: "mid" },
+                        { name: "Cypress (E2E Testing)", usage: "mid" },
+                        { name: "Playwright", usage: "mid" },
+                        { name: "API Testing with Supertest", usage: "less" },
+                        { name: "Test Coverage Reports", usage: "less" },
+                        { name: "TDD (Test-Driven Development) Basics", usage: "less" },
+                    ]
+                },
+                {
+                    id: "sql",
+                    title: "SQL & Relational Databases",
+                    icon: "🗃️",
+                    usage: "mid",
+                    topics: [
+                        { name: "SQL Basics (SELECT, INSERT, UPDATE, DELETE)", usage: "most" },
+                        { name: "WHERE, ORDER BY, GROUP BY, HAVING", usage: "most" },
+                        { name: "JOINs (INNER, LEFT, RIGHT, FULL)", usage: "most" },
+                        { name: "PostgreSQL Setup & Usage", usage: "most" },
+                        { name: "MySQL Basics", usage: "mid" },
+                        { name: "Database Normalization", usage: "mid" },
+                        { name: "Prisma ORM", usage: "most" },
+                        { name: "Drizzle ORM", usage: "mid" },
+                        { name: "Database Migrations", usage: "mid" },
+                        { name: "Transactions", usage: "mid" },
+                        { name: "Indexes & Performance", usage: "mid" },
+                        { name: "SQL vs NoSQL — When to Use What", usage: "most" },
+                    ]
+                },
+                {
+                    id: "api-adv",
+                    title: "API Advanced Concepts",
+                    icon: "🔌",
+                    usage: "mid",
+                    topics: [
+                        { name: "RESTful API Best Practices", usage: "most" },
+                        { name: "API Versioning", usage: "mid" },
+                        { name: "Rate Limiting & Throttling", usage: "mid" },
+                        { name: "Pagination (Offset, Cursor-based)", usage: "most" },
+                        { name: "Filtering, Sorting & Searching APIs", usage: "most" },
+                        { name: "API Documentation (Swagger / OpenAPI)", usage: "mid" },
+                        { name: "GraphQL Basics (Queries, Mutations, Schema)", usage: "mid" },
+                        { name: "Apollo Client & Server", usage: "less" },
+                        { name: "WebSockets & Real-Time Communication", usage: "mid" },
+                        { name: "Socket.io", usage: "mid" },
+                        { name: "Webhooks", usage: "mid" },
+                        { name: "Third-Party API Integration (Stripe, SendGrid, etc.)", usage: "mid" },
+                    ]
+                },
+                {
+                    id: "performance",
+                    title: "Performance Optimization",
+                    icon: "⚡",
+                    usage: "mid",
+                    topics: [
+                        { name: "React Performance (memo, useMemo, useCallback)", usage: "most" },
+                        { name: "Code Splitting & Lazy Loading", usage: "most" },
+                        { name: "Image Optimization (WebP, lazy loading, srcset)", usage: "most" },
+                        { name: "Bundle Size Optimization", usage: "mid" },
+                        { name: "Caching Strategies (Browser, CDN, API)", usage: "mid" },
+                        { name: "Lighthouse & Core Web Vitals", usage: "mid" },
+                        { name: "Debouncing & Throttling", usage: "most" },
+                        { name: "Virtual Lists (React Virtualized / TanStack Virtual)", usage: "less" },
+                        { name: "Database Query Optimization", usage: "mid" },
+                        { name: "Redis Caching Basics", usage: "mid" },
+                    ]
+                },
+            ]
+        },
+
+        // ===================== PHASE 3: ADVANCED =====================
+        {
+            phase: 3,
+            phaseLabel: "⚡ Phase 3: Advanced Topics",
+            phaseDesc: "Mid-level Developer হতে হলে এগুলো শেখো",
+            badgeClass: "phase-badge-advanced",
+            sections: [
+                {
+                    id: "docker",
+                    title: "Docker & Containerization",
+                    icon: "🐳",
+                    usage: "mid",
+                    topics: [
+                        { name: "Docker Basics & Concepts", usage: "most" },
+                        { name: "Dockerfile & Building Images", usage: "most" },
+                        { name: "Docker Compose", usage: "most" },
+                        { name: "Container Management (run, stop, rm, logs)", usage: "most" },
+                        { name: "Docker Volumes & Networking", usage: "mid" },
+                        { name: "Multi-Stage Builds", usage: "mid" },
+                        { name: "Docker Hub & Container Registry", usage: "mid" },
+                        { name: "Dockerizing Node.js & React Apps", usage: "most" },
+                    ]
+                },
+                {
+                    id: "cicd",
+                    title: "CI/CD & DevOps Basics",
+                    icon: "🔄",
+                    usage: "mid",
+                    topics: [
+                        { name: "CI/CD Concepts & Benefits", usage: "most" },
+                        { name: "GitHub Actions (Workflows, Jobs, Steps)", usage: "most" },
+                        { name: "Automated Testing in CI", usage: "mid" },
+                        { name: "Automated Deployment", usage: "mid" },
+                        { name: "Linting & Formatting in CI", usage: "mid" },
+                        { name: "Environment Management (Staging, Production)", usage: "mid" },
+                        { name: "Monitoring & Logging Basics", usage: "mid" },
+                    ]
+                },
+                {
+                    id: "cloud",
+                    title: "Cloud Services (AWS/GCP/Azure)",
+                    icon: "☁️",
+                    usage: "mid",
+                    topics: [
+                        { name: "Cloud Computing Concepts (IaaS, PaaS, SaaS)", usage: "mid" },
+                        { name: "AWS S3 (File Storage)", usage: "most" },
+                        { name: "AWS EC2 (Virtual Servers)", usage: "mid" },
+                        { name: "AWS Lambda (Serverless Functions)", usage: "mid" },
+                        { name: "AWS RDS (Managed Databases)", usage: "mid" },
+                        { name: "Cloudflare (CDN & Security)", usage: "mid" },
+                        { name: "Firebase (Firestore, Auth, Hosting, Storage)", usage: "mid" },
+                        { name: "Supabase (Open-source Firebase Alternative)", usage: "mid" },
+                        { name: "Serverless Architecture Basics", usage: "mid" },
+                    ]
+                },
+                {
+                    id: "security",
+                    title: "Web Security",
+                    icon: "🛡️",
+                    usage: "mid",
+                    topics: [
+                        { name: "OWASP Top 10 Vulnerabilities", usage: "most" },
+                        { name: "XSS (Cross-Site Scripting) Prevention", usage: "most" },
+                        { name: "CSRF (Cross-Site Request Forgery) Prevention", usage: "most" },
+                        { name: "SQL Injection Prevention", usage: "most" },
+                        { name: "Input Validation & Sanitization", usage: "most" },
+                        { name: "HTTPS & TLS", usage: "mid" },
+                        { name: "Content Security Policy (CSP)", usage: "mid" },
+                        { name: "Helmet.js (Express Security Headers)", usage: "mid" },
+                        { name: "Rate Limiting & DDoS Protection", usage: "mid" },
+                        { name: "Secure Cookie Configuration", usage: "mid" },
+                        { name: "Data Encryption Basics", usage: "less" },
+                    ]
+                },
+                {
+                    id: "design",
+                    title: "System Design & Architecture",
+                    icon: "🏛️",
+                    usage: "mid",
+                    topics: [
+                        { name: "Monolithic vs Microservices", usage: "mid" },
+                        { name: "Client-Server Architecture", usage: "most" },
+                        { name: "Database Design & ER Diagrams", usage: "most" },
+                        { name: "Caching Strategies (Redis, CDN)", usage: "mid" },
+                        { name: "Load Balancing Concepts", usage: "mid" },
+                        { name: "Message Queues (RabbitMQ, Bull)", usage: "less" },
+                        { name: "Event-Driven Architecture", usage: "less" },
+                        { name: "API Gateway Pattern", usage: "less" },
+                        { name: "Design Patterns (Singleton, Factory, Observer, etc.)", usage: "mid" },
+                        { name: "SOLID Principles", usage: "mid" },
+                        { name: "Clean Code Principles", usage: "most" },
+                        { name: "DRY, KISS, YAGNI", usage: "most" },
+                    ]
+                },
+                {
+                    id: "mobile",
+                    title: "Mobile Development (Cross-Platform)",
+                    icon: "📱",
+                    usage: "mid",
+                    topics: [
+                        { name: "React Native Basics", usage: "mid" },
+                        { name: "React Native Navigation", usage: "mid" },
+                        { name: "React Native Components & Styling", usage: "mid" },
+                        { name: "Expo Framework", usage: "mid" },
+                        { name: "Flutter/Dart Overview", usage: "less" },
+                        { name: "PWA (Progressive Web Apps)", usage: "mid" },
+                        { name: "Service Workers", usage: "mid" },
+                        { name: "App Store / Play Store Deployment", usage: "less" },
+                    ]
+                },
+            ]
+        },
+
+        // ===================== PHASE 4: EXPERT =====================
+        {
+            phase: 4,
+            phaseLabel: "🏆 Phase 4: Expert Level",
+            phaseDesc: "Senior Developer বা Lead হতে হলে এগুলো master করো",
+            badgeClass: "phase-badge-expert",
+            sections: [
+                {
+                    id: "dsa",
+                    title: "Data Structures & Algorithms",
+                    icon: "🧮",
+                    usage: "mid",
+                    topics: [
+                        { name: "Big O Notation (Time & Space Complexity)", usage: "most" },
+                        { name: "Arrays & Strings (Problems & Patterns)", usage: "most" },
+                        { name: "Hash Maps & Sets", usage: "most" },
+                        { name: "Linked Lists (Singly, Doubly)", usage: "mid" },
+                        { name: "Stacks & Queues", usage: "mid" },
+                        { name: "Trees (Binary Tree, BST)", usage: "mid" },
+                        { name: "Graphs (BFS, DFS)", usage: "mid" },
+                        { name: "Sorting Algorithms (Merge, Quick, Bubble)", usage: "mid" },
+                        { name: "Searching Algorithms (Binary Search)", usage: "mid" },
+                        { name: "Recursion & Dynamic Programming Basics", usage: "mid" },
+                        { name: "Two Pointers & Sliding Window", usage: "mid" },
+                        { name: "LeetCode / HackerRank Practice", usage: "most" },
+                    ]
+                },
+                {
+                    id: "micro",
+                    title: "Microservices & Distributed Systems",
+                    icon: "🌐",
+                    usage: "less",
+                    topics: [
+                        { name: "Microservices Architecture", usage: "mid" },
+                        { name: "Service Discovery", usage: "less" },
+                        { name: "API Gateway (Kong, AWS API Gateway)", usage: "less" },
+                        { name: "gRPC", usage: "less" },
+                        { name: "Message Brokers (Kafka, RabbitMQ)", usage: "less" },
+                        { name: "CQRS & Event Sourcing", usage: "less" },
+                        { name: "Distributed Caching", usage: "less" },
+                        { name: "Saga Pattern", usage: "less" },
+                    ]
+                },
+                {
+                    id: "k8s",
+                    title: "Kubernetes & Orchestration",
+                    icon: "⚓",
+                    usage: "less",
+                    topics: [
+                        { name: "Kubernetes Basics (Pods, Services, Deployments)", usage: "mid" },
+                        { name: "kubectl Commands", usage: "mid" },
+                        { name: "YAML Configuration Files", usage: "mid" },
+                        { name: "Ingress & Load Balancing", usage: "less" },
+                        { name: "Helm Charts", usage: "less" },
+                        { name: "Kubernetes Scaling (HPA)", usage: "less" },
+                        { name: "Monitoring (Prometheus, Grafana)", usage: "less" },
+                    ]
+                },
+                {
+                    id: "leadership",
+                    title: "Soft Skills & Leadership",
+                    icon: "👥",
+                    usage: "most",
+                    topics: [
+                        { name: "Code Review Best Practices", usage: "most" },
+                        { name: "Technical Writing & Documentation", usage: "most" },
+                        { name: "Agile & Scrum Methodology", usage: "most" },
+                        { name: "Team Collaboration & Communication", usage: "most" },
+                        { name: "Mentoring Junior Developers", usage: "mid" },
+                        { name: "Technical Decision Making", usage: "mid" },
+                        { name: "Project Estimation & Planning", usage: "mid" },
+                        { name: "Presentation Skills", usage: "mid" },
+                        { name: "Open Source Contribution", usage: "mid" },
+                        { name: "Continuous Learning Mindset", usage: "most" },
+                    ]
+                },
+                {
+                    id: "ai",
+                    title: "AI & Emerging Technologies",
+                    icon: "🤖",
+                    usage: "mid",
+                    topics: [
+                        { name: "AI Tools for Developers (GitHub Copilot, ChatGPT)", usage: "most" },
+                        { name: "Prompt Engineering for Coding", usage: "most" },
+                        { name: "OpenAI API Integration", usage: "mid" },
+                        { name: "LangChain Basics", usage: "less" },
+                        { name: "Vector Databases (Pinecone, ChromaDB)", usage: "less" },
+                        { name: "RAG (Retrieval-Augmented Generation)", usage: "less" },
+                        { name: "Web3 & Blockchain Overview", usage: "less" },
+                        { name: "WebAssembly (WASM) Overview", usage: "less" },
+                    ]
+                },
+            ]
+        },
+    ];
+
+    // ============================================================
+    // STATE & PERSISTENCE
+    // ============================================================
+    let checkedState = JSON.parse(localStorage.getItem('fsRoadmapState') || '{}');
+
+    function saveState() {
+        localStorage.setItem('fsRoadmapState', JSON.stringify(checkedState));
+    }
+
+    function getTopicKey(sectionId, topicIdx) {
+        return `${sectionId}_${topicIdx}`;
+    }
+
+    // ============================================================
+    // RENDER
+    // ============================================================
+    function getUsageBadge(usage) {
+        if (usage === 'most') return '<span class="badge-most text-xs px-2 py-0.5 rounded-full font-medium whitespace-nowrap">🔥 Most Used</span>';
+        if (usage === 'mid') return '<span class="badge-mid text-xs px-2 py-0.5 rounded-full font-medium whitespace-nowrap">⚡ Mid Use</span>';
+        return '<span class="badge-less text-xs px-2 py-0.5 rounded-full font-medium whitespace-nowrap">💡 Less Used</span>';
+    }
+
+    function renderAll() {
+        const container = document.getElementById('topicsContainer');
+        let html = '';
+        const sidebarLinks = { 1: '', 2: '', 3: '', 4: '' };
+
+        roadmapData.forEach(phase => {
+            html += `
+                <div class="mb-10">
+                    <div class="flex items-center gap-4 mb-6">
+                        <span class="${phase.badgeClass} px-4 py-2 rounded-xl text-sm font-bold text-white shadow-lg">${phase.phaseLabel}</span>
+                        <span class="text-gray-500 text-sm hidden sm:inline">${phase.phaseDesc}</span>
+                    </div>
+            `;
+
+            phase.sections.forEach(section => {
+                const totalTopics = section.topics.length;
+                let completedTopics = 0;
+                section.topics.forEach((t, i) => {
+                    if (checkedState[getTopicKey(section.id, i)]) completedTopics++;
+                });
+                const pct = totalTopics > 0 ? Math.round((completedTopics / totalTopics) * 100) : 0;
+                const isComplete = pct === 100;
+
+                const progressColor = phase.phase === 1 ? 'bg-emerald-500' : phase.phase === 2 ? 'bg-indigo-500' : phase.phase === 3 ? 'bg-amber-500' : 'bg-rose-500';
+
+                html += `
+                    <div id="section-${section.id}" class="glass rounded-2xl mb-4 overflow-hidden topic-card">
+                        <div class="section-toggle p-5 flex items-center justify-between" onclick="toggleSection('${section.id}')">
+                            <div class="flex items-center gap-3 flex-1 min-w-0">
+                                <span class="text-2xl flex-shrink-0">${section.icon}</span>
+                                <div class="min-w-0 flex-1">
+                                    <div class="flex items-center gap-2 flex-wrap">
+                                        <h3 class="text-lg font-bold ${isComplete ? 'text-emerald-400 line-through' : ''}">${section.title}</h3>
+                                        ${getUsageBadge(section.usage)}
+                                        ${isComplete ? '<span class="text-emerald-400 text-sm">✅ Complete!</span>' : ''}
+                                    </div>
+                                    <div class="flex items-center gap-3 mt-2">
+                                        <div class="progress-bar-bg rounded-full h-2 flex-1 max-w-xs">
+                                            <div class="progress-fill h-full rounded-full ${progressColor}" style="width:${pct}%"></div>
+                                        </div>
+                                        <span class="text-xs text-gray-400 whitespace-nowrap">${completedTopics}/${totalTopics} (${pct}%)</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <svg class="chevron w-5 h-5 text-gray-400 flex-shrink-0 ml-3" id="chevron-${section.id}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                            </svg>
+                        </div>
+                        <div class="section-content" id="content-${section.id}">
+                            <div class="px-5 pb-5 space-y-1">
+                                <div class="flex justify-end mb-2">
+                                    <button onclick="toggleAllInSection('${section.id}', ${totalTopics}, event)" class="text-xs px-3 py-1 rounded-lg bg-white/5 hover:bg-white/10 text-gray-400 hover:text-white transition-all">
+                                        ☑️ Toggle All
+                                    </button>
+                                </div>
+                `;
+
+                section.topics.forEach((topic, idx) => {
+                    const key = getTopicKey(section.id, idx);
+                    const isChecked = checkedState[key] ? 'checked' : '';
+                    html += `
+                                <label class="flex items-start gap-3 p-3 rounded-xl hover:bg-white/5 cursor-pointer transition-all group" data-topic-name="${topic.name.toLowerCase()}">
+                                    <input type="checkbox" class="checkbox-custom mt-0.5" ${isChecked}
+                                        onchange="onCheck('${key}', this.checked, '${section.id}')">
+                                    <span class="flex-1 text-sm ${isChecked ? 'text-gray-500 line-through' : 'text-gray-300 group-hover:text-white'} transition-all">${topic.name}</span>
+                                    ${getUsageBadge(topic.usage)}
+                                </label>
+                    `;
+                });
+
+                html += `
+                            </div>
+                        </div>
+                    </div>
+                `;
+
+                // Sidebar link
+                const sidebarLinkClass = isComplete ? 'text-emerald-400' : 'text-gray-400';
+                sidebarLinks[phase.phase] += `
+                    <a href="#section-${section.id}" class="sidebar-link block px-4 py-1.5 rounded-lg text-xs ${sidebarLinkClass} border-l-3 border-transparent truncate"
+                        onclick="closeSidebarMobile()">
+                        ${section.icon} ${section.title.split('—')[0].trim()} <span class="text-gray-600">${pct}%</span>
+                    </a>
+                `;
             });
-            h+=`</div></div>`;
+
+            html += `</div>`;
         });
-        h+=`</div></div>`;
-    });
 
-    if(!anyVis)h+=`<div class="no-res"><span class="big">🔍</span><p>No topics match your search or filter.</p></div>`;
-    h+=`</div>`;
+        container.innerHTML = html;
+        document.getElementById('sidebarJobLinks').innerHTML = sidebarLinks[1];
+        document.getElementById('sidebarGrowLinks').innerHTML = sidebarLinks[2];
+        document.getElementById('sidebarAdvLinks').innerHTML = sidebarLinks[3];
+        document.getElementById('sidebarExpLinks').innerHTML = sidebarLinks[4];
 
-    document.getElementById('app').innerHTML=h;
-    window.scrollTo(0,scrollY);
-    if(wasFocus){
-        const inp=document.querySelector('.search-input');
-        if(inp){inp.focus();inp.setSelectionRange(cursor,cursor)}
+        updateProgress();
     }
-}
 
-function escHtml(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;')}
+    // ============================================================
+    // INTERACTIONS
+    // ============================================================
+    function toggleSection(id) {
+        const content = document.getElementById('content-' + id);
+        const chevron = document.getElementById('chevron-' + id);
+        content.classList.toggle('open');
+        chevron.classList.toggle('rotated');
+    }
 
-// ===== RESET MODAL =====
-function showReset(){
-    const ov=document.createElement('div');
-    ov.className='modal-ov';
-    ov.innerHTML=`<div class="modal-box">
-      <h3>⚠️ Reset All Progress?</h3>
-      <p>This will uncheck all <strong>${completed.size}</strong> completed topics and <strong>${subCompleted.size}</strong> completed sub-topics. This cannot be undone.</p>
-      <div class="modal-btns">
-        <button class="m-btn cancel" data-act="cancel">Cancel</button>
-        <button class="m-btn confirm" data-act="confirm">Reset Everything</button>
-      </div></div>`;
-    document.body.appendChild(ov);
-    ov.addEventListener('click',e=>{
-        if(e.target.dataset.act==='cancel'||e.target===ov)ov.remove();
-        if(e.target.dataset.act==='confirm'){completed.clear();subCompleted.clear();save();ov.remove();render()}
-    });
-}
+    function onCheck(key, isChecked, sectionId) {
+        checkedState[key] = isChecked;
+        if (!isChecked) delete checkedState[key];
+        saveState();
+        updateProgress();
+        updateSectionUI(sectionId);
 
-// ===== EVENT DELEGATION =====
-const app=document.getElementById('app');
+        // Check overall completion
+        const totalAll = getAllTopicCount();
+        const checkedAll = Object.keys(checkedState).length;
+        if (checkedAll === totalAll) triggerConfetti();
+    }
 
-app.addEventListener('change',e=>{
-    if(e.target.classList.contains('t-cb')){
-        const tid=e.target.dataset.tid;
-        e.target.checked?completed.add(tid):completed.delete(tid);
-        // Auto-mark all subtopics when main topic is checked
-        const topic=allTopics().find(t=>t.id===tid);
-        if(topic&&topic.subs){
-            topic.subs.forEach(s=>{
-                e.target.checked?subCompleted.add(s.id):subCompleted.delete(s.id);
+    function toggleAllInSection(sectionId, totalTopics, event) {
+        event.stopPropagation();
+        let allChecked = true;
+        for (let i = 0; i < totalTopics; i++) {
+            if (!checkedState[getTopicKey(sectionId, i)]) {
+                allChecked = false;
+                break;
+            }
+        }
+        for (let i = 0; i < totalTopics; i++) {
+            const key = getTopicKey(sectionId, i);
+            if (allChecked) {
+                delete checkedState[key];
+            } else {
+                checkedState[key] = true;
+            }
+        }
+        saveState();
+        renderAll();
+    }
+
+    function updateSectionUI(sectionId) {
+        // Quick update without full re-render
+        let section = null;
+        roadmapData.forEach(p => p.sections.forEach(s => { if (s.id === sectionId) section = s; }));
+        if (!section) return;
+
+        const el = document.getElementById('section-' + sectionId);
+        if (!el) return;
+
+        const checkboxes = el.querySelectorAll('input[type="checkbox"]');
+        const labels = el.querySelectorAll('label');
+        let count = 0;
+        checkboxes.forEach((cb, i) => {
+            const key = getTopicKey(sectionId, i);
+            cb.checked = !!checkedState[key];
+            const span = labels[i]?.querySelector('span');
+            if (span) {
+                if (cb.checked) {
+                    span.classList.add('text-gray-500', 'line-through');
+                    span.classList.remove('text-gray-300');
+                } else {
+                    span.classList.remove('text-gray-500', 'line-through');
+                    span.classList.add('text-gray-300');
+                }
+            }
+            if (cb.checked) count++;
+        });
+    }
+
+    function getAllTopicCount() {
+        let total = 0;
+        roadmapData.forEach(p => p.sections.forEach(s => total += s.topics.length));
+        return total;
+    }
+
+    function getPhaseTopicCount(phaseNum) {
+        let total = 0, checked = 0;
+        const phase = roadmapData.find(p => p.phase === phaseNum);
+        if (!phase) return { total: 0, checked: 0 };
+        phase.sections.forEach(s => {
+            s.topics.forEach((t, i) => {
+                total++;
+                if (checkedState[getTopicKey(s.id, i)]) checked++;
             });
-        }
-        save();render();
+        });
+        return { total, checked };
     }
-    if(e.target.classList.contains('sub-cb')){
-        const sid=e.target.dataset.subid;
-        e.target.checked?subCompleted.add(sid):subCompleted.delete(sid);
-        // Auto-check parent topic if all subs are done
-        const parentTopic=allTopics().find(t=>t.subs&&t.subs.some(s=>s.id===sid));
-        if(parentTopic){
-            const allSubsDone=parentTopic.subs.every(s=>subCompleted.has(s.id));
-            if(allSubsDone){completed.add(parentTopic.id)}
-            else{completed.delete(parentTopic.id)}
-        }
-        save();render();
+
+    function updateProgress() {
+        const totalAll = getAllTopicCount();
+        const checkedAll = Object.keys(checkedState).length;
+        const overallPct = totalAll > 0 ? Math.round((checkedAll / totalAll) * 100) : 0;
+
+        document.getElementById('mainProgressText').textContent = overallPct + '%';
+        document.getElementById('mainProgressBar').style.width = overallPct + '%';
+        document.getElementById('sidebarProgress').textContent = overallPct + '%';
+        document.getElementById('sidebarProgressBar').style.width = overallPct + '%';
+        document.getElementById('mobileProgress').textContent = overallPct + '%';
+        document.getElementById('completedCount').textContent = checkedAll;
+        document.getElementById('totalCount').textContent = totalAll;
+        document.getElementById('overallPercent').textContent = overallPct + '%';
+
+        // Phase progress
+        [1,2,3,4].forEach(p => {
+            const { total, checked } = getPhaseTopicCount(p);
+            const pct = total > 0 ? Math.round((checked / total) * 100) : 0;
+            document.getElementById(`phase${p}Bar`).style.width = pct + '%';
+            document.getElementById(`phase${p}Text`).textContent = pct + '%';
+        });
+
+        // Job ready
+        const jr = getPhaseTopicCount(1);
+        const jrPct = jr.total > 0 ? Math.round((jr.checked / jr.total) * 100) : 0;
+        document.getElementById('jobReadyPercent').textContent = jrPct + '%';
     }
-});
 
-app.addEventListener('click',e=>{
-    const ph=e.target.closest('.phase-hdr');
-    if(ph){const id=ph.dataset.pid;shutPhases.has(id)?shutPhases.delete(id):shutPhases.add(id);render();return}
-    const ch=e.target.closest('.cat-hdr');
-    if(ch){const id=ch.dataset.cid;shutCats.has(id)?shutCats.delete(id):shutCats.add(id);render();return}
-    const st=e.target.closest('.sub-toggle');
-    if(st){e.preventDefault();e.stopPropagation();const id=st.dataset.sid;openSubs.has(id)?openSubs.delete(id):openSubs.add(id);render();return}
-    const fb=e.target.closest('.filter-btn');
-    if(fb){filter=fb.dataset.f;render();return}
-    if(e.target.closest('.reset-btn')){showReset();return}
-});
+    // ============================================================
+    // SEARCH
+    // ============================================================
+    function searchTopics(query) {
+        const resultsEl = document.getElementById('searchResults');
+        if (!query.trim()) {
+            resultsEl.classList.add('hidden');
+            resultsEl.innerHTML = '';
+            // Show all labels
+            document.querySelectorAll('[data-topic-name]').forEach(el => el.style.display = '');
+            return;
+        }
 
-app.addEventListener('input',e=>{
-    if(e.target.classList.contains('search-input')){query=e.target.value;render()}
-});
+        const q = query.toLowerCase();
+        let results = [];
 
-// ===== INIT =====
-render();
-setTimeout(()=>document.body.classList.add('loaded'),600);
-</script>
+        roadmapData.forEach(phase => {
+            phase.sections.forEach(section => {
+                // Check section title
+                if (section.title.toLowerCase().includes(q)) {
+                    results.push({ type: 'section', section, phase, name: section.title });
+                }
+                section.topics.forEach((topic, idx) => {
+                    if (topic.name.toLowerCase().includes(q)) {
+                        results.push({ type: 'topic', section, phase, topic, idx, name: topic.name });
+                    }
+                });
+            });
+        });
+
+        if (results.length === 0) {
+            resultsEl.innerHTML = '<div class="p-4 text-gray-500 text-sm">No topics found</div>';
+            resultsEl.classList.remove('hidden');
+            return;
+        }
+
+        let html = '';
+        results.slice(0, 15).forEach(r => {
+            const sectionId = r.section.id;
+            html += `
+                <div class="px-4 py-2.5 hover:bg-white/10 cursor-pointer text-sm border-b border-white/5 transition-all"
+                    onclick="jumpToSection('${sectionId}'); document.getElementById('searchInput').value=''; document.getElementById('searchResults').classList.add('hidden');">
+                    <span class="text-white">${r.section.icon} ${r.name}</span>
+                    <span class="text-gray-500 text-xs ml-2">${r.section.title.split('—')[0].trim()}</span>
+                </div>
+            `;
+        });
+        resultsEl.innerHTML = html;
+        resultsEl.classList.remove('hidden');
+    }
+
+    function jumpToSection(sectionId) {
+        const el = document.getElementById('section-' + sectionId);
+        if (el) {
+            el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            // Open the section
+            const content = document.getElementById('content-' + sectionId);
+            const chevron = document.getElementById('chevron-' + sectionId);
+            if (!content.classList.contains('open')) {
+                content.classList.add('open');
+                chevron.classList.add('rotated');
+            }
+            // Flash effect
+            el.style.boxShadow = '0 0 30px rgba(99,102,241,0.5)';
+            setTimeout(() => el.style.boxShadow = '', 1500);
+        }
+    }
+
+    // ============================================================
+    // SIDEBAR
+    // ============================================================
+    function toggleSidebar() {
+        const sidebar = document.getElementById('sidebar');
+        const overlay = document.getElementById('sidebarOverlay');
+        sidebar.classList.toggle('-translate-x-full');
+        overlay.classList.toggle('hidden');
+    }
+
+    function closeSidebarMobile() {
+        if (window.innerWidth < 1024) {
+            document.getElementById('sidebar').classList.add('-translate-x-full');
+            document.getElementById('sidebarOverlay').classList.add('hidden');
+        }
+    }
+
+    // ============================================================
+    // RESET
+    // ============================================================
+    function resetAll() {
+        if (confirm('⚠️ Are you sure you want to reset ALL progress? This cannot be undone!')) {
+            checkedState = {};
+            saveState();
+            renderAll();
+        }
+    }
+
+    // ============================================================
+    // CONFETTI
+    // ============================================================
+    function triggerConfetti() {
+        const colors = ['#6366f1', '#10b981', '#f59e0b', '#f43f5e', '#8b5cf6', '#ec4899'];
+        for (let i = 0; i < 80; i++) {
+            const confetti = document.createElement('div');
+            confetti.className = 'confetti';
+            confetti.style.left = Math.random() * 100 + 'vw';
+            confetti.style.animationDelay = Math.random() * 2 + 's';
+            confetti.style.background = colors[Math.floor(Math.random() * colors.length)];
+            confetti.style.width = Math.random() * 10 + 5 + 'px';
+            confetti.style.height = Math.random() * 10 + 5 + 'px';
+            confetti.style.borderRadius = Math.random() > 0.5 ? '50%' : '0';
+            document.body.appendChild(confetti);
+            setTimeout(() => confetti.remove(), 3500);
+        }
+    }
+
+    // ============================================================
+    // INIT
+    // ============================================================
+    document.addEventListener('DOMContentLoaded', renderAll);
+
+    // Close search results on click outside
+    document.addEventListener('click', (e) => {
+        if (!e.target.closest('#searchInput') && !e.target.closest('#searchResults')) {
+            document.getElementById('searchResults').classList.add('hidden');
+        }
+    });
+    </script>
 </body>
 </html>
